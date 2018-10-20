@@ -4,6 +4,7 @@
   "description": "Spot That Fire project of NASA Space App Challenge",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/fire-marshal/fire-marshal/issues"
   },
-  "homepage": "https://github.com/fire-marshal/fire-marshal#readme"
+  "homepage": "https://github.com/fire-marshal/fire-marshal#readme",
+  "dependencies": {
+    "google-trends-api": "^4.7.0"
+  }
 }
