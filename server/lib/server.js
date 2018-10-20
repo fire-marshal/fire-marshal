@@ -1,4 +1,4 @@
-const Koa = require('koa');
+const Koa = require('koa')
 
 /**
  * Run server
@@ -7,17 +7,17 @@ const Koa = require('koa');
  * @returns {module.Application|*}
  */
 function bootstrap (config) {
-  const app = new Koa();
+  const app = new Koa()
 
   app.use(async ctx => {
-    ctx.body = 'Hello World';
-  });
+    ctx.body = 'Hello World'
+  })
 
-  app.listen(config.server.port);
+  app.listen(config.server.port)
 
-  return app;
+  return app
 }
 
 module.exports = {
-  bootstrap,
-};
+  bootstrap
+}

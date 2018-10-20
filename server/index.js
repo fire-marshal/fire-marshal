@@ -1,10 +1,9 @@
-const {server} = require('./lib');
-
+const { server } = require('./lib')
 
 const config = {
   server: {
-    port: 8080,
-  },
-};
+    port: 8080
+  }
+}
 
-server.bootstrap(config);
+server.bootstrap(config)

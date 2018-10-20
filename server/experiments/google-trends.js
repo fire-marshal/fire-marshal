@@ -1,4 +1,4 @@
-const googleTrends = require('google-trends-api');
+const googleTrends = require('google-trends-api')
 
 // googleTrends.interestByRegion({
 //   keyword: 'fire',
@@ -22,9 +22,9 @@ googleTrends.interestByRegion({
   resolution: 'CITY'
 })
   .then((res) => {
-    console.log(typeof res);
-    console.log(JSON.stringify(JSON.parse(res), null, 2));
+    console.log(typeof res)
+    console.log(JSON.stringify(JSON.parse(res), null, 2))
   })
   .catch((err) => {
-    console.log(err);
-  });
+    console.log(err)
+  })
