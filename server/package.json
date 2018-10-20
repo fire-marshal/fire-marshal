@@ -2,7 +2,7 @@
   "name": "fire-marshal",
   "version": "0.1.0",
   "description": "Spot That Fire project of NASA Space App Challenge",
-  "main": "index.js",
+  "main": "experiments/google-trends.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
