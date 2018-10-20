@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
+    "start": "parcel -p 8081 watch index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -34,6 +35,7 @@
   "dependencies": {
     "immutable": "^3.8.2",
     "lodash": "^4.17.11",
+    "parcel-bundler": "^1.10.3",
     "react": "^16.5.2",
     "react-redux": "^5.0.7",
     "recompose": "^0.30.0",
