@@ -6,7 +6,7 @@ const Koa = require('koa')
  * @param config
  * @returns {module.Application|*}
  */
-function bootstrap(config) {
+function bootstrap (config) {
   const app = new Koa()
 
   // logger
