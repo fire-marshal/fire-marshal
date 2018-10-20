@@ -19,7 +19,7 @@ And I hope it would be useful for the others and I'm always open for contributio
 
 # Author
 
-[Eugene Krevenets](@hyzhak)
+- Eugene Krevenets ([@hyzhak](https://github.com/hyzhak))
 
 ## Plans
 _sorted by priority_
