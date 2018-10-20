@@ -1,11 +1,9 @@
 {
-  "name": "fire-marshal",
+  "name": "fire-marshal-static",
   "version": "0.1.0",
-  "description": "Spot That Fire project of NASA Space App Challenge",
-  "main": "experiments/google-trends.js",
+  "description": "static project of fire-marshal",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "lint": "standard",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,7 +14,7 @@
     "fire",
     "wildfire",
     "nasa",
-    "space app challange",
+    "space-app-challenge",
     "hackathon"
   ],
   "author": {
@@ -28,12 +26,5 @@
   "bugs": {
     "url": "https://github.com/fire-marshal/fire-marshal/issues"
   },
-  "homepage": "https://github.com/fire-marshal/fire-marshal#readme",
-  "dependencies": {
-    "google-trends-api": "^4.7.0",
-    "koa": "^2.5.3"
-  },
-  "devDependencies": {
-    "standard": "^12.0.1"
-  }
+  "homepage": "https://github.com/fire-marshal/fire-marshal#readme"
 }
