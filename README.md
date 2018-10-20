@@ -29,39 +29,39 @@ _sorted by priority_
   - Offer the description (a story) of why this app or solution is important and what insights or future capabilities it provides with regard to fighting wildfires
 - **Make app mobile friendly**
   - web
-  - mobile app (react native) #18
+  - mobile app (react native) [#18](/../../../issues/18)
 - **Track and visualize fire**
-  - stream of fires near my #4
-  - realtime map #5
-  - realtime stream #6
+  - stream of fires near my [#4](/../../../issues/4)
+  - realtime map [#5](/../../../issues/5)
+  - realtime stream [#6](/../../../issues/6)
 - **Report a fire**
-  - I see a fire (+ few categories of wildness) + location, text message, attach photo #9
-  - send tweet with images, message and location about fire #7
-  - send fb message (bot) #8
+  - I see a fire (+ few categories of wildness) + location, text message, attach photo [#9](/../../../issues/9)
+  - send tweet with images, message and location about fire [#7](/../../../issues/7)
+  - send fb message (bot) [#8](/../../../issues/8)
   - share from other sources 
 - **Notify communities at risk**
-  - subscribe on fire alarm near your #10
+  - subscribe on fire alarm near your [#10](/../../../issues/10)
   - give API to subscribe to fire incidents
 - **Build mashups**
-  - merge with NASA data (Leverage NASA state-of-the-art technology, including: near-real-time fire database and satellite image processing APIs accessible through the NASA OpenNEX App Store) #11
+  - merge with NASA data (Leverage NASA state-of-the-art technology, including: near-real-time fire database and satellite image processing APIs accessible through the NASA OpenNEX App Store) [#11](/../../../issues/11)
   - add information about weather
   - listen twitter, instagram, fb and show related warnings
 - **Community/Social**
-  - create user's profile #12
-  - like each other messages #13
+  - create user's profile [#12](/../../../issues/12)
+  - like each other messages [#13](/../../../issues/13)
   - ask to proof fire alerts if user is near
   - report on message
 - **Verify and screen fire reports**
   - validate crowd data
 - **Gamefication**
-  - scores for successful actions  #14
+  - scores for successful actions  [#14](/../../../issues/14)
   - badges for reported fires, for saved people and etc
   - could become local "fire marshal" if one is good lifeguard
   - ask about fire activity near you and give rewards on help
 - **Analysis and prediction**
   - analyze and predict fire based on other data (weather)
 - **Other**
-  - localization #15
+  - localization [#15](/../../../issues/15)
 
 
 ## Contribution / How to help
