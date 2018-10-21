@@ -1,16 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
+import { NavBar } from '../navbar'
 
 const Container = ({ children }) => (
   <div>
-    <ul>
-      <li>
-        <Link to='/add-new-item'>Add New</Link>
-      </li>
-      <li>
-        <Link to='/stream'>Stream</Link>
-      </li>
-    </ul>
+    <NavBar />
     {children}
   </div>
 )
