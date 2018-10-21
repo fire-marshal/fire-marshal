@@ -62,7 +62,26 @@ _sorted by priority_
   - analyze and predict fire based on other data (weather)
 - **Other**
   - localization [#15](/../../../issues/15)
+  
+  
+## Architecture
 
+### Containers
+- [docker, docker-compose](http://docker.io)
+- [nginx](https://www.nginx.com/)
+- [postgresql](https://www.postgresql.org/)
+
+### Server
+- [koa](https://koajs.com)
+- [node.js](https://nodejs.org/)
+- [standard.js](https://standardjs.com)
+
+### Static
+- [immutable.js](https://facebook.github.io/immutable-js/)
+- [parcel](https://parceljs.org)
+- [react](https://reactjs.org/)
+- [redux](http://redux.js.org)
+- [standard.js](https://standardjs.com)
 
 ## Contribution / How to help
 
