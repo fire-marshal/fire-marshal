@@ -4,6 +4,7 @@
   "description": "static project of fire-marshal",
   "main": "index.js",
   "scripts": {
+    "build": "cd public && parcel --out-dir ../build build index.html",
     "lint": "standard",
     "start": "cd public && parcel -p 8081 --out-dir ../build watch index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
