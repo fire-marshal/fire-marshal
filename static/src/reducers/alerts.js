@@ -6,7 +6,7 @@ export const APPEND_ALERT = 'ALERT:APPEND'
 export const REMOVE_ALERT = 'ALERT:REMOVE'
 
 export default createReducer(
-  Immutable.Map(),
+  Immutable.List(),
   {
     [APPEND_ALERT]: (state, action) => state,
     [REMOVE_ALERT]: (state, action) => state

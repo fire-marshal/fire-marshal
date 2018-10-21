@@ -1,13 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Container = ({ children }) => (
   <div>
     <ul>
       <li>
-        <a href='/add-new-item'>Add New</a>
+        <Link to='/add-new-item'>Add New</Link>
       </li>
       <li>
-        <a href='/stream'>Stream</a>
+        <Link to='/stream'>Stream</Link>
       </li>
     </ul>
     {children}
