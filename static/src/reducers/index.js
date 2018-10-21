@@ -1,5 +1,5 @@
-import alerts from './alerts'
+import evidences from './evidences'
 
 export default {
-  alerts
+  evidences
 }
