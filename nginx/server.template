@@ -2,12 +2,11 @@ server {
     listen ${NGINX_PORT};
 
     location / {
-        try_files $uri $uri/ @api;
         root ${STATIC_LOCATION};
-        expires 30d;
+        try_files $uri $uri/ /index.html;
     }
 
-    location @api {
+    location /api {
         proxy_pass ${API_LOCATION};
 
         # include proxy_params;
