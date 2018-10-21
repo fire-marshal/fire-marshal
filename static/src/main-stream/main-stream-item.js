@@ -2,9 +2,20 @@ import './main-stream-item.scss'
 
 import React from 'react'
 
+const MainStreamItemImage = ({ img, title }) => {
+  if (img && img.src) {
+    return <img className='card-img-top' src={img.src} alt={title} />
+  } else {
+    // placeholder in case we don't have image
+    // TODO: letter when we don't have image
+    // it would be cool just show small piece of map here
+    return null
+  }
+}
+
 const MainStreamItem = ({ item }) => (
   <div className='card alert-card'>
-    <img className='card-img-top' src={item.img.src} alt={item.title} />
+    <MainStreamItemImage img={item.img} />
     <div className='card-body'>
       <h5 className='card-title'>{item.title}</h5>
       <div className='card-text'>
