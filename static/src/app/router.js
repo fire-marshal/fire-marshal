@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router'
 
 import { AddNewItemForm } from '../add-new-item'
+import { MainStream } from '../main-stream'
+
 import AppContainer from './container'
 
 // it isn't ok to pass component inside of another one but because we should have the same deps here and in app/index.js
@@ -15,17 +17,11 @@ const AppRouter = ({ ConnectedRouter, history, store }) => (
         <Switch>
           <Route exact path='/' render={() => (
             <div>
-              <ul>
-                <li>
-                  <a href='/add-new-item'>Add New</a>
-                </li>
-                <li>
-                  <a href='/stream'>Stream</a>
-                </li>
-              </ul>
+              <h1>TODO: Default Page</h1>
             </div>
           )} />
           <Route path='/add-new-item' render={() => <AddNewItemForm />} />
+          <Route path='/stream' render={() => <MainStream />} />
           <Route render={() => (<div>Miss</div>)} />
         </Switch>
       </AppContainer>
