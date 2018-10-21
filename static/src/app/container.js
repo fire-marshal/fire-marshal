@@ -1,5 +1,11 @@
 import React from 'react'
 
-export default () => (
-  <div>Container</div>
+const Container = ({ children }) => (
+  <div>
+    {children}
+  </div>
 )
+
+Container.displayName = 'Container'
+
+export default Container

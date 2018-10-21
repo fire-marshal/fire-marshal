@@ -33,12 +33,16 @@
     "standard": "^12.0.1"
   },
   "dependencies": {
+    "connected-react-router": "^4.5.0",
+    "history": "^4.7.2",
     "immutable": "^3.8.2",
     "lodash": "^4.17.11",
     "parcel-bundler": "^1.10.3",
+    "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
     "redux-immutable": "^4.0.0",
