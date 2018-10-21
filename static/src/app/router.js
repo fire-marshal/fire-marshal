@@ -21,7 +21,7 @@ const AppRouter = ({ ConnectedRouter, history, store }) => (
 )
 
 AppRouter.propTypes = {
-  ConnectedRouter: PropTypes.object.isRequired,
+  ConnectedRouter: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   store: PropTypes.object.isRequired
 }
