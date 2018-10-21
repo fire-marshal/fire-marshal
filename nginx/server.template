@@ -4,6 +4,9 @@ server {
     location / {
         root ${STATIC_LOCATION};
         try_files $uri $uri/ /index.html;
+
+        gzip_static on;
+        expires 30d;
     }
 
     location /api {
