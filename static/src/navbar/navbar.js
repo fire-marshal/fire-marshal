@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Navbar = () => (
   <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
-    <a className='navbar-brand' href='/'>
-      Fire Marshal
-    </a>
+    <Link className='navbar-brand' to='/'>Fire Marshal</Link>
     <button
       className='navbar-toggler'
       type='button'

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router'
 
 import { AddNewItemForm } from '../add-new-item'
+import { Landing } from '../landing'
 import { MainStream } from '../main-stream'
 
 import AppContainer from './container'
@@ -15,11 +16,7 @@ const AppRouter = ({ ConnectedRouter, history, store }) => (
     <ConnectedRouter history={history}>
       <AppContainer>
         <Switch>
-          <Route exact path='/' render={() => (
-            <div>
-              <h1>TODO: Default Page</h1>
-            </div>
-          )} />
+          <Route exact path='/' render={() => <Landing />} />
           <Route path='/add-new-item' render={() => <AddNewItemForm />} />
           <Route path='/stream' render={() => <MainStream />} />
           <Route render={() => (<div>Miss</div>)} />
