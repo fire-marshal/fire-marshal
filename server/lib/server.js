@@ -1,4 +1,7 @@
 const Koa = require('koa')
+const mount = require('koa-mount')
+
+const routers = require('./routers')
 
 /**
  * Run server
@@ -23,6 +26,8 @@ function bootstrap (config) {
     const ms = Date.now() - start
     ctx.set('X-Response-Time', `${ms}ms`)
   })
+
+  app.use(mount('/api', routers()))
 
   app.use(async ctx => {
     ctx.body = 'Hello World'
