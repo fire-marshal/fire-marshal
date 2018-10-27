@@ -1,4 +1,4 @@
-module.exports = () => {
+module.exports = (config) => {
   return async (ctx, next) => {
     // TODO: fetch actual fires
     await next()

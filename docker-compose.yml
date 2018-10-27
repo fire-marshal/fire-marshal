@@ -11,9 +11,13 @@ services:
       - ./server:/code
     depends_on:
       - db
+      - mongo
 
   db:
     image: postgres
+
+  mongo:
+    image: mongo
 
   static:
     build: ./static
