@@ -1,0 +1,15 @@
+openapi: "3.0.1"
+
+host: localhost:8080
+basePath: /
+
+shemes:
+  - http
+
+consumers:
+  - application/json
+
+produces:
+  - application/json
+
+paths:

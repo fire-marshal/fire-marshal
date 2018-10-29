@@ -25,6 +25,15 @@ services:
     volumes:
       - static-sync:/code/build
 
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    environment:
+      - API_URL=/code/static/api/swagger/swagger.json
+    volumes:
+      - static-sync:/code/static
+    ports:
+      - "8001:8080"
+
   web:
     image: nginx
     volumes:
