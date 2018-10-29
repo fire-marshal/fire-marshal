@@ -9,6 +9,6 @@ const fires = require('./fires')
 module.exports = (config) => {
   const router = new Router()
   router.use(mount('/', home(config)))
-  router.use(mount('/fires', fires(config)))
+  router.use(mount('/v1/fires', fires(config)))
   return router.middleware()
 }
