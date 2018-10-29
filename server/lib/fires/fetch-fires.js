@@ -3,10 +3,15 @@ module.exports = (config) => {
    * @swagger
    * /api/v1/fires:
    *   get:
-   *     description: Returns the fires
+   *     description: Returns list of fires around
    *     responses:
    *       200:
-   *         description: hello world
+   *         description: list of fires
+   *           content:
+   *             application/json:
+   *               type: array
+   *               items:
+   *                 $ref: '#/components/schemas/Fire'
    */
   return async (ctx, next) => {
     // TODO: fetch actual fires
