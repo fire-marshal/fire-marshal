@@ -7,11 +7,11 @@ module.exports = (config) => {
    *     responses:
    *       200:
    *         description: list of fires
-   *           content:
-   *             application/json:
-   *               type: array
-   *               items:
-   *                 $ref: '#/components/schemas/Fire'
+   *         content:
+   *           application/json:
+   *             type: array
+   *             items:
+   *               $ref: '#/components/schemas/Fire'
    */
   return async (ctx, next) => {
     // TODO: fetch actual fires
