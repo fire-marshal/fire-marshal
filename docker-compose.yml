@@ -14,11 +14,11 @@ services:
       - ./server:/code
       - api-docs:/code/api/swagger
     depends_on:
-      - db
+#      - postgis
       - mongo
 
-  db:
-    image: postgres
+#  postgis:
+#    image: postgis
 
   mongo:
     image: mongo
@@ -39,19 +39,19 @@ services:
   web:
     image: nginx
     volumes:
-     - ./nginx/server.template:/etc/nginx/conf.d/server.template
-     - api-docs:/code/api-docs
-     - static-sync:/code/static
+      - ./nginx/server.template:/etc/nginx/conf.d/server.template
+      - api-docs:/code/api-docs
+      - static-sync:/code/static
     ports:
-     - "8000:80"
+      - "8000:80"
     environment:
-     - API_LOCATION=http://api:8080
-     - NGINX_PORT=80
-     - STATIC_LOCATION=/code/static
-     - SWAGGER_JSON_LOCATION=/code/api-docs/swagger.json
-     - SWAGGER_UI_LOCATION=http://swagger-ui
+      - API_LOCATION=http://api:8080
+      - NGINX_PORT=80
+      - STATIC_LOCATION=/code/static
+      - SWAGGER_JSON_LOCATION=/code/api-docs/swagger.json
+      - SWAGGER_UI_LOCATION=http://swagger-ui
     command: /bin/bash -c "envsubst '$${API_LOCATION}, $${NGINX_PORT}, $${STATIC_LOCATION}, $${SWAGGER_JSON_LOCATION} $${SWAGGER_UI_LOCATION}' < /etc/nginx/conf.d/server.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
     depends_on:
-    - api
-    - static
-    - swagger-ui
+      - api
+      - static
+      - swagger-ui
