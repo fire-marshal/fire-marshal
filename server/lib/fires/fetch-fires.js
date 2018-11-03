@@ -1,3 +1,5 @@
+const MongoClient = require('mongodb').MongoClient
+
 module.exports = (config) => {
   /**
    * @swagger
@@ -14,9 +16,28 @@ module.exports = (config) => {
    *               $ref: '#/components/schemas/Fire'
    */
   return async (ctx, next) => {
+    let fires = []
+    const client = new MongoClient(config.mongo.url, {
+      useNewUrlParser: true,
+      authSource: 'admin'
+    })
+    try {
+      client.on('error', (error) => {
+        console.log('Error connecting to MongoDB', error);
+      });
+      await client.connect()
+      const db = client.db(config.mongo.db)
+      const fireCollection = await db.collection('fires')
+      fires = await fireCollection.find({}).toArray()
+      client.close()
+    } catch (err) {
+      console.error(err)
+      console.log(err.stack)
+    }
+
     // TODO: fetch actual fires
     await next()
     ctx.type = 'json'
-    ctx.body = ['fire1', 'fire2']
+    ctx.body = fires // ['fire1', 'fire2']
   }
 }

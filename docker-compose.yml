@@ -9,7 +9,11 @@ services:
     build: ./server
     command: >
       bash -c "npm run build:api-docs
-      && npm start"
+      && npm run watch"
+# DEV MODE:
+#      && npm run watch"
+# PROD MODE:
+#      && npm start"
     volumes:
       - ./server:/code
       - api-docs:/code/api/swagger
