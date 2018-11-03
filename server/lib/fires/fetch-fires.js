@@ -22,9 +22,6 @@ module.exports = (config) => {
       authSource: 'admin'
     })
     try {
-      client.on('error', (error) => {
-        console.log('Error connecting to MongoDB', error);
-      });
       await client.connect()
       const db = client.db(config.mongo.db)
       const fireCollection = await db.collection('fires')
