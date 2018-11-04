@@ -29,7 +29,7 @@ function bootstrap (config) {
     ctx.set('X-Response-Time', `${ms}ms`)
   })
 
-  app.use(mount('/api', routers(config, {db})))
+  app.use(mount('/api', routers(config, { db })))
 
   app.use(async ctx => {
     ctx.body = 'Hello World'
