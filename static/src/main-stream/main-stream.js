@@ -7,9 +7,9 @@ import MainStreamItem from './main-stream-item'
 
 import { getEvidenceItems } from '../selectors/evidences'
 
-const MainStream = ({ items }) => (
+const MainStream = ({ dataOrError }) => (
   <div className='container main-stream-container'>
-    {items.map(item => <MainStreamItem key={item.id} item={item} />)}
+    {dataOrError.data.map(item => <MainStreamItem key={item.id} item={item} />)}
   </div>
 )
 

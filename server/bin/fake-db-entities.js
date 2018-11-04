@@ -7,6 +7,8 @@ async function fakeCollections (config) {
 }
 
 async function fakeFireCollection (db) {
+  // use data from https://en.wikipedia.org/wiki/Conflagration
+
   console.log('fake fire collection')
   const col = await db.collection('fires')
   const r = await col.insertMany(require('./fixtures/fires.json'))
