@@ -16,8 +16,7 @@ module.exports = (config, app) => {
   return async (ctx, next) => {
     let fires = []
     try {
-      const db = await app.db.getDB()
-      const fireCollection = await db.collection('fires')
+      const fireCollection = await app.db.collection('fires')
       fires = await fireCollection.find({}).toArray()
     } catch (err) {
       console.error(err)
