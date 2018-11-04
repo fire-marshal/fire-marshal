@@ -29,7 +29,7 @@ class MainStream extends React.PureComponent {
       <div className='container main-st ream-container'>
         {items.inProgress && <div>TODO: spinner</div>}
         {items.error && <div>TODO: show error</div>}
-        {items.data && items.data.map(item => <MainStreamItem key={item.id} item={item} />)}
+        {items.data && items.data.map(item => <MainStreamItem key={item._id} item={item} />)}
       </div>
     )
   }
