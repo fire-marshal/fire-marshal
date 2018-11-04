@@ -17,6 +17,11 @@ export const getEvidenceItemsInProgress = createSelector(
   (evidences) => evidences.get('inProgress')
 )
 
+export const getEvidenceItemsInvalid = createSelector(
+  [getEvidences],
+  (evidences) => evidences.get('invalid')
+)
+
 export const getEvidenceError = createSelector(
   [getEvidences],
   (evidences) => evidences.get('error')

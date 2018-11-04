@@ -29,6 +29,7 @@ export const fetchEvidences = fetchActionSimplified({
 //
 export default createReducer(
   Immutable.fromJS({
+    invalid: true,
     error: null,
     data: null,
     updateAt: null
