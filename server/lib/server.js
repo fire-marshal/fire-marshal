@@ -1,6 +1,7 @@
 const Koa = require('koa')
 const mount = require('koa-mount')
 
+const DB = require('./db')
 const routers = require('./routers')
 
 /**
@@ -10,6 +11,7 @@ const routers = require('./routers')
  * @returns {module.Application|*}
  */
 function bootstrap (config) {
+  const db = new DB(config)
   const app = new Koa()
 
   // logger
@@ -27,7 +29,7 @@ function bootstrap (config) {
     ctx.set('X-Response-Time', `${ms}ms`)
   })
 
-  app.use(mount('/api', routers(config)))
+  app.use(mount('/api', routers(config, {db})))
 
   app.use(async ctx => {
     ctx.body = 'Hello World'

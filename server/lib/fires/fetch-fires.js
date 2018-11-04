@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient
 
-module.exports = (config) => {
+module.exports = (config, app) => {
   /**
    * @swagger
    * /api/v1/fires:
@@ -17,16 +17,10 @@ module.exports = (config) => {
    */
   return async (ctx, next) => {
     let fires = []
-    const client = new MongoClient(config.mongo.url, {
-      useNewUrlParser: true,
-      authSource: 'admin'
-    })
     try {
-      await client.connect()
-      const db = client.db(config.mongo.db)
+      const db = await app.db.getDB()
       const fireCollection = await db.collection('fires')
       fires = await fireCollection.find({}).toArray()
-      await client.close()
     } catch (err) {
       console.error(err)
       console.log(err.stack)
@@ -35,6 +29,6 @@ module.exports = (config) => {
     // TODO: fetch actual fires
     await next()
     ctx.type = 'json'
-    ctx.body = fires // ['fire1', 'fire2']
+    ctx.body = fires
   }
 }
