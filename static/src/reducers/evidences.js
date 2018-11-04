@@ -2,8 +2,26 @@ import Immutable from 'immutable'
 
 import { createReducer } from './_helper'
 
+import config from '../config'
+
+import { fetchActionSimplified } from '../async-queue/fetch-action'
+
+import { prepareUrl } from '../requests/api-url-processor'
+
 export const APPEND_ALERT = 'ALERT:APPEND'
 export const REMOVE_ALERT = 'ALERT:REMOVE'
+
+export const EVIDENCES_REQEUST = 'EVIDENCES:REQUEST'
+export const EVIDENCES_RECEIVED = 'EVIDENCES:RECEIVED'
+export const EVIDENCES_ERROR = 'EVIDENCES:ERROR'
+
+export const fetchEvidences = fetchActionSimplified({
+  getUrl: ({ lat, long }) => prepareUrl(config.evidences.api_url, {
+    lat, long
+  }),
+
+  actions: [EVIDENCES_REQEUST, EVIDENCES_RECEIVED, EVIDENCES_ERROR]
+})
 
 // TODO: data structure
 // it would be better to store information about some bigger events or related (connected)
