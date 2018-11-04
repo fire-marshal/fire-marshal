@@ -7,9 +7,7 @@ volumes:
 services:
   api:
     build: ./server
-    command: >
-      bash -c "npm run build:api-docs
-      && npm run watch"
+    command: ./bin/start-dev.sh
 # DEV MODE:
 #      && npm run watch"
 # PROD MODE:

@@ -8,6 +8,7 @@
     "watch": "nodemon index.js",
     "lint": "standard",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build:fake-db": "node ./bin/fake-db-entities.js",
     "build:api-docs": "swagger-jsdoc -d ./api/swagger-def.js -o ./api/swagger/swagger.json ./lib/*/*.js"
   },
   "repository": {
