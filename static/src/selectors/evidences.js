@@ -2,9 +2,14 @@ import { createSelector } from 'reselect'
 
 export const getEvidences = state => state.get('evidences')
 
-export const getEvidenceItems = createSelector(
+const getEvidenceItemsRaw = createSelector(
   [getEvidences],
-  (evidences) => evidences.get('data').toJS()
+  (evidences) => evidences.get('data')
+)
+
+export const getEvidenceItems = createSelector(
+  [getEvidenceItemsRaw],
+  (raw) => raw && raw.toJS()
 )
 
 export const getEvidenceItemsInProgress = createSelector(
