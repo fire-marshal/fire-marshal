@@ -11,15 +11,20 @@
  */
 module.exports = function asyncReducer ([request, receive, error = null], processResult = res => res) {
   const res = {
-    [request]: (state, action) => state.set('updateAt', action.updatedAt),
-    [receive]: (state, action) => state.set('updateAt', action.updatedAt)
+    [request]: (state, action) => state
+      .set('updateAt', action.updatedAt)
+      .set('inProgress', true),
+    [receive]: (state, action) => state
+      .set('updateAt', action.updatedAt)
       .set('data', processResult(action.res))
+      .set('inProgress', false)
   }
 
   if (error) {
     res[error] = (state, action) => state
       .set('updateAt', action.updatedAt)
       .set('error', action.error)
+      .set('inProgress', false)
   }
 
   return res
