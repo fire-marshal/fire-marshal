@@ -26,7 +26,7 @@ module.exports = (config) => {
       const db = client.db(config.mongo.db)
       const fireCollection = await db.collection('fires')
       fires = await fireCollection.find({}).toArray()
-      client.close()
+      await client.close()
     } catch (err) {
       console.error(err)
       console.log(err.stack)

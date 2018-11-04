@@ -16,6 +16,7 @@ services:
 #      && npm start"
     volumes:
       - ./server:/code
+      - /code/node_modules
       - api-docs:/code/api/swagger
     depends_on:
 #      - postgis
@@ -45,6 +46,8 @@ services:
     build: ./static
     command: npm run build
     volumes:
+      - ./static:/code
+      - /code/node_modules
       - static-sync:/code/build
 
   swagger-ui:
