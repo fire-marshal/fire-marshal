@@ -1,0 +1,5 @@
+version: '3'
+
+services:
+  static:
+    command: npm run build

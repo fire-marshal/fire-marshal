@@ -1,81 +1,9 @@
 version: '3'
 
-volumes:
-  static-sync: {}
-  api-docs: {}
-
 services:
-  api:
-    build: ./server
-    command: ./bin/start-dev.sh
-# DEV MODE:
-#      && npm run watch"
-# PROD MODE:
-#      && npm start"
-    volumes:
-      - ./server:/code
-      - /code/node_modules
-      - api-docs:/code/api/swagger
-    depends_on:
-#      - postgis
-      - mongo
-
-#  postgis:
-#    image: postgis
-
-  mongo:
-    image: mongo
-    restart: always
-    env_file:
-      - ./config/mongo.env
-
-  # admin panel to mongo
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    env_file:
-      - ./config/mongo-express.env
-    depends_on:
-      - mongo
-
   static:
-    build: ./static
     command: npm start
     ports:
       # open for hmr websocket communication
       # details in static/package.json
       - "7001:7001"
-    volumes:
-      - ./static:/code
-      - /code/node_modules
-      - static-sync:/code/build
-
-  swagger-ui:
-    image: swaggerapi/swagger-ui
-    environment:
-      - API_URL=/api/swagger.json
-      - BASE_URL=/api/docs
-      - PORT=80
-
-  web:
-    image: nginx
-    volumes:
-      - ./nginx/server.dev.template:/etc/nginx/conf.d/server.template
-      - api-docs:/code/api-docs
-      - static-sync:/code/static
-    ports:
-      - "8000:80"
-    environment:
-      - API_LOCATION=http://api:8080
-      - STATIC_LOCATION=http://static:1234
-      - NGINX_PORT=80
-      - STATIC_PATH=/code/static
-      - SWAGGER_JSON_LOCATION=/code/api-docs/swagger.json
-      - SWAGGER_UI_LOCATION=http://swagger-ui
-    command: /bin/bash -c "envsubst '$${API_LOCATION}, $${NGINX_PORT}, $${STATIC_LOCATION}, $${STATIC_PATH}, $${SWAGGER_JSON_LOCATION} $${SWAGGER_UI_LOCATION}' < /etc/nginx/conf.d/server.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
-    depends_on:
-      - api
-      - static
-      - swagger-ui
