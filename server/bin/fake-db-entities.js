@@ -1,15 +1,61 @@
+const faker = require('faker')
+const _ = require('lodash')
+
 const DB = require('../lib/db')
 const config = require('../lib/config')
 
 async function fakeCollections (config) {
   const db = new DB(config)
-  await Promise.all([fakeFireCollection(db)])
+  await Promise.all([fakeFireCollection(db, 1000)])
 }
 
-async function fakeFireCollection (db) {
-  // use data from https://en.wikipedia.org/wiki/Conflagration
+function randomDateBetween (start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
 
+function generateFakeEvent () {
+  const createAt = randomDateBetween(new Date(2000, 0, 0), new Date())
+  const uploadAt = randomDateBetween(createAt, new Date())
+  return {
+    'author': faker.name.findName(),
+    createAt,
+    'details': faker.lorem.paragraph(),
+    'img': faker.image.image(),
+    'location': {
+      'center': [
+        38.25 + 10 * Math.random(),
+        -120 + 10 * Math.random()
+      ],
+      'radius': 1 * Math.random()
+    },
+    'power': Math.random(),
+    'tags': faker.lorem.words().split(' '),
+    'title': faker.lorem.sentence(),
+    'when': {
+      'exactlyAt': uploadAt
+    }
+  }
+}
+
+/**
+ * genereate many fake cases
+ */
+async function fakeFireCollection (db, count) {
   console.log('fake fire collection')
+  const col = await db.collection('fires')
+  const r = await col.insertMany(_.range(count).map(generateFakeEvent))
+  console.log('r', r)
+  return r.insertedCount
+}
+
+/**
+ * Upload 3 fire case
+ * use data from https://en.wikipedia.org/wiki/Conflagration
+ * @param db
+ * @returns {Promise<*|number|Number>}
+ */
+async function wikiFireCollection (db) {
+  console.log('wiki fire collection')
   const col = await db.collection('fires')
   const r = await col.insertMany(require('./fixtures/fires.json'))
   console.log('r', r)
