@@ -2,7 +2,7 @@ server {
     listen ${NGINX_PORT};
 
     location / {
-        root ${STATIC_LOCATION};
+        root ${STATIC_PATH};
         try_files $uri $uri/ /index.html;
 
         gzip_static on;
