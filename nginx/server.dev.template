@@ -1,0 +1,39 @@
+server {
+    listen ${NGINX_PORT};
+
+    location / {
+        proxy_pass ${STATIC_LOCATION};
+
+        # include proxy_params;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /api {
+        proxy_pass ${API_LOCATION};
+
+        # include proxy_params;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /api/swagger.json {
+        alias ${SWAGGER_JSON_LOCATION};
+        gzip_static on;
+        expires 60s;
+    }
+
+    location /api/docs {
+        proxy_pass ${SWAGGER_UI_LOCATION};
+
+        # include proxy_params;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
