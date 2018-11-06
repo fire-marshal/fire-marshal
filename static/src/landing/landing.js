@@ -3,11 +3,13 @@ import './landing.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import packageJSON from '../../package'
+
 import logoUrl from './hell-mandala-512x512.png'
 
 const Landing = () => (
   <div className='landing jumbotron'>
-    <h1 className='display-4'>Fire Marshal!</h1>
+    <h1 className='display-4'>Fire Marshal! <small className='text-muted'>v{packageJSON.version}</small></h1>
     <p className='lead'>Where there's smoke there's fire</p>
     <img src={logoUrl} width={256} height={256} alt='' />
     <hr className='my-4' />

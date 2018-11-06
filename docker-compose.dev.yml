@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  static:
+    command: npm start
+    ports:
+      # open for hmr websocket communication
+      # details in static/package.json
+      - "7001:7001"
