@@ -10,7 +10,7 @@ async function fakeCollections (config) {
 }
 
 function randomDateBetween (start, end) {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
 }
 
 function generateFakeEvent () {
