@@ -54,13 +54,13 @@ async function fakeFireCollection (db, count) {
  * @param db
  * @returns {Promise<*|number|Number>}
  */
-async function wikiFireCollection (db) {
-  console.log('wiki fire collection')
-  const col = await db.collection('fires')
-  const r = await col.insertMany(require('./fixtures/fires.json'))
-  console.log('r', r)
-  return r.insertedCount
-}
+// async function wikiFireCollection (db) {
+//   console.log('wiki fire collection')
+//   const col = await db.collection('fires')
+//   const r = await col.insertMany(require('./fixtures/fires.json'))
+//   console.log('r', r)
+//   return r.insertedCount
+// }
 
 fakeCollections(config).then((count) => {
   console.log('done', count)
