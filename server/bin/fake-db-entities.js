@@ -17,22 +17,24 @@ function generateFakeEvent () {
   const createAt = randomDateBetween(new Date(2000, 0, 0), new Date())
   const uploadAt = randomDateBetween(createAt, new Date())
   return {
-    'author': faker.name.findName(),
+    author: faker.name.findName(),
     createAt,
-    'details': faker.lorem.paragraph(),
-    'img': faker.image.image(),
-    'location': {
-      'center': [
+    details: faker.lorem.paragraph(),
+    img: {
+      medium: faker.image.image()
+    },
+    location: {
+      center: [
         38.25 + 10 * Math.random(),
         -120 + 10 * Math.random()
       ],
-      'radius': 1 * Math.random()
+      radius: 1 * Math.random()
     },
-    'power': Math.random(),
-    'tags': faker.lorem.words().split(' '),
-    'title': faker.lorem.sentence(),
-    'when': {
-      'exactlyAt': uploadAt
+    power: Math.random(),
+    tags: faker.lorem.words().split(' '),
+    title: faker.lorem.sentence(),
+    when: {
+      exactlyAt: uploadAt
     }
   }
 }
