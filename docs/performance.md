@@ -16,31 +16,31 @@ Document Path:          /api/v1/fires
 Document Length:        12518 bytes
 
 Concurrency Level:      1
-Time taken for tests:   18.763 seconds
+Time taken for tests:   10.864 seconds
 Complete requests:      500
 Failed requests:        0
-Total transferred:      6353500 bytes
+Total transferred:      6353501 bytes
 HTML transferred:       6259000 bytes
-Requests per second:    26.65 [#/sec] (mean)
-Time per request:       37.525 [ms] (mean)
-Time per request:       37.525 [ms] (mean, across all concurrent requests)
-Transfer rate:          330.69 [Kbytes/sec] received
+Requests per second:    46.02 [#/sec] (mean)
+Time per request:       21.728 [ms] (mean)
+Time per request:       21.728 [ms] (mean, across all concurrent requests)
+Transfer rate:          571.11 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        2   15  29.7      7     279
-Processing:     9   22  28.9     14     291
-Waiting:        4   15  21.3      9     199
-Total:         13   37  48.4     22     418
+Connect:        2    7  17.7      5     279
+Processing:     9   14   7.3     13     127
+Waiting:        4    9   6.6      8     125
+Total:         13   22  19.4     19     292
 
 Percentage of the requests served within a certain time (ms)
-  50%     22
-  66%     26
-  75%     31
-  80%     35
-  90%     70
-  95%    149
-  98%    221
-  99%    289
- 100%    418 (longest request)
+  50%     19
+  66%     20
+  75%     22
+  80%     22
+  90%     26
+  95%     30
+  98%     41
+  99%     77
+ 100%    292 (longest request)
 ```

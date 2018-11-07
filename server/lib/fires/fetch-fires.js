@@ -1,3 +1,5 @@
+const isValidDate = require('../utils/is-valid-date')
+
 module.exports = (config, app) => {
   /**
    * @swagger
@@ -6,6 +8,14 @@ module.exports = (config, app) => {
    *     description: Returns list of fires around
    *
    *     parameters:
+   *        - in: query
+   *          name: start_date
+   *          schema:
+   *            type: string
+   *            format: date
+   *          description: >
+   *            The Start date for the list of items
+   *
    *        - in: query
    *          name: limit
    *          schema:
@@ -39,17 +49,31 @@ module.exports = (config, app) => {
     return Math.min(len, maxLimit)
   }
 
+  function _getStartDate (ctx) {
+    return new Date(ctx.query.start_date)
+  }
+
   return async (ctx, next) => {
     let fires = []
     try {
       let limit = _getLimit(ctx)
+      let startDate = _getStartDate(ctx)
 
       const fireCollection = await app.db.collection('fires')
-      fires = await fireCollection
-        .find({})
+
+      // construct modngodb request
+      let query = {}
+
+      if (isValidDate(startDate)) {
+        query = { ...query, 'when.exactlyAt': { '$lt': startDate } }
+      }
+
+      let cursor = fireCollection
+        .find(query)
         .sort({ 'when.exactlyAt': -1 })
         .limit(limit)
-        .toArray()
+
+      fires = await cursor.toArray()
     } catch (err) {
       console.error(err)
       console.log(err.stack)
