@@ -65,12 +65,12 @@ module.exports = (config, app) => {
       let query = {}
 
       if (isValidDate(startDate)) {
-        query = { ...query, 'when.exactlyAt': { '$lt': startDate } }
+        query = { ...query, 'when.estimation': { '$lt': startDate } }
       }
 
       let cursor = fireCollection
         .find(query)
-        .sort({ 'when.exactlyAt': -1 })
+        .sort({ 'when.estimation': -1 })
         .limit(limit)
 
       fires = await cursor.toArray()

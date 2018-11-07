@@ -18,7 +18,7 @@ function generateFakeEvent () {
   const uploadAt = randomDateBetween(createAt, new Date())
   return {
     author: faker.name.findName(),
-    createAt,
+    uploadAt,
     details: faker.lorem.paragraph(),
     img: {
       medium: faker.image.image()
@@ -34,7 +34,8 @@ function generateFakeEvent () {
     tags: faker.lorem.words().split(' '),
     title: faker.lorem.sentence(),
     when: {
-      exactlyAt: uploadAt
+      exactlyAt: createAt,
+      estimation: createAt
     }
   }
 }

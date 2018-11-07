@@ -12,3 +12,10 @@ echo '## GET /api/v1/fires' >> ./docs/performance.md
 echo '```' >> ./docs/performance.md
 ab -n 500 http://192.168.100.13:8000/api/v1/fires >> ./docs/performance.md
 echo '```' >> ./docs/performance.md
+
+echo 'estimate /api/v1/fires?start_date=2010'
+
+echo '## GET /api/v1/fires?start_date=2010' >> ./docs/performance.md
+echo '```' >> ./docs/performance.md
+ab -n 500 http://192.168.100.13:8000/api/v1/fires?start_date=2010 >> ./docs/performance.md
+echo '```' >> ./docs/performance.md
