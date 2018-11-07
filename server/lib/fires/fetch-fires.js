@@ -17,7 +17,11 @@ module.exports = (config, app) => {
     let fires = []
     try {
       const fireCollection = await app.db.collection('fires')
-      fires = await fireCollection.find({}).toArray()
+      fires = await fireCollection
+        .find({})
+        .sort({ 'when.exactlyAt': -1 })
+        .limit(10)
+        .toArray()
     } catch (err) {
       console.error(err)
       console.log(err.stack)
