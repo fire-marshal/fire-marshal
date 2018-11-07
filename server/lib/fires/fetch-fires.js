@@ -35,38 +35,36 @@ module.exports = (config, app) => {
    * Server Port:            8000
    *
    * Document Path:          /api/v1/fires
-   * Document Length:        6352 bytes
+   * Document Length:        12518 bytes
    *
    * Concurrency Level:      1
-   * Time taken for tests:   7.985 seconds
+   * Time taken for tests:   10.249 seconds
    * Complete requests:      500
-   * Failed requests:        8
-   *    (Connect: 0, Receive: 0, Length: 8, Exceptions: 0)
-   * Non-2xx responses:      8
-   * Total transferred:      3220153 bytes
-   * HTML transferred:       3126440 bytes
-   * Requests per second:    62.61 [#/sec] (mean)
-   * Time per request:       15.971 [ms] (mean)
-   * Time per request:       15.971 [ms] (mean, across all concurrent requests)
-   * Transfer rate:          393.81 [Kbytes/sec] received
+   * Failed requests:        0
+   * Total transferred:      6353501 bytes
+   * HTML transferred:       6259000 bytes
+   * Requests per second:    48.78 [#/sec] (mean)
+   * Time per request:       20.498 [ms] (mean)
+   * Time per request:       20.498 [ms] (mean, across all concurrent requests)
+   * Transfer rate:          605.38 [Kbytes/sec] received
    *
    * Connection Times (ms)
    *               min  mean[+/-sd] median   max
-   * Connect:        3    6  12.4      5     278
-   * Processing:     4   10   4.9      9      84
-   * Waiting:        3    8   4.8      7      83
-   * Total:          7   16  15.3     14     337
+   * Connect:        2    7   4.4      5      47
+   * Processing:     9   14   4.9     13      68
+   * Waiting:        4    9   4.9      8      66
+   * Total:         13   20   6.5     19      73
    *
    * Percentage of the requests served within a certain time (ms)
-   *   50%     14
-   *   66%     15
-   *   75%     16
-   *   80%     17
-   *   90%     19
-   *   95%     21
-   *   98%     28
-   *   99%     39
-   *  100%    337 (longest request)
+   *   50%     19
+   *   66%     20
+   *   75%     21
+   *   80%     23
+   *   90%     26
+   *   95%     31
+   *   98%     42
+   *   99%     57
+   *  100%     73 (longest request)
    */
 
   /**
