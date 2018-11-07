@@ -13,36 +13,36 @@ Server Hostname:        192.168.100.13
 Server Port:            8000
 
 Document Path:          /api/v1/fires
-Document Length:        13242 bytes
+Document Length:        13270 bytes
 
 Concurrency Level:      1
-Time taken for tests:   9.990 seconds
+Time taken for tests:   51.814 seconds
 Complete requests:      500
 Failed requests:        0
-Total transferred:      6715500 bytes
-HTML transferred:       6621000 bytes
-Requests per second:    50.05 [#/sec] (mean)
-Time per request:       19.980 [ms] (mean)
-Time per request:       19.980 [ms] (mean, across all concurrent requests)
-Transfer rate:          656.48 [Kbytes/sec] received
+Total transferred:      6730000 bytes
+HTML transferred:       6635000 bytes
+Requests per second:    9.65 [#/sec] (mean)
+Time per request:       103.628 [ms] (mean)
+Time per request:       103.628 [ms] (mean, across all concurrent requests)
+Transfer rate:          126.84 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        2    6   3.5      5      38
-Processing:     9   14  11.4     12     248
-Waiting:        4    8   4.1      8      59
-Total:         13   20  11.8     18     251
+Connect:        2    8  17.4      6     278
+Processing:    90   96   4.1     95     115
+Waiting:       86   91   3.7     90     113
+Total:         95  104  18.1    101     380
 
 Percentage of the requests served within a certain time (ms)
-  50%     18
-  66%     20
-  75%     21
-  80%     22
-  90%     25
-  95%     29
-  98%     42
-  99%     48
- 100%    251 (longest request)
+  50%    101
+  66%    103
+  75%    104
+  80%    105
+  90%    110
+  95%    115
+  98%    121
+  99%    139
+ 100%    380 (longest request)
 ```
 ## GET /api/v1/fires?start_date=2010
 ```
@@ -58,34 +58,34 @@ Server Hostname:        192.168.100.13
 Server Port:            8000
 
 Document Path:          /api/v1/fires?start_date=2010
-Document Length:        13569 bytes
+Document Length:        13277 bytes
 
 Concurrency Level:      1
-Time taken for tests:   10.061 seconds
+Time taken for tests:   47.850 seconds
 Complete requests:      500
 Failed requests:        0
-Total transferred:      6879000 bytes
-HTML transferred:       6784500 bytes
-Requests per second:    49.70 [#/sec] (mean)
-Time per request:       20.122 [ms] (mean)
-Time per request:       20.122 [ms] (mean, across all concurrent requests)
-Transfer rate:          667.69 [Kbytes/sec] received
+Total transferred:      6733500 bytes
+HTML transferred:       6638500 bytes
+Requests per second:    10.45 [#/sec] (mean)
+Time per request:       95.699 [ms] (mean)
+Time per request:       95.699 [ms] (mean, across all concurrent requests)
+Transfer rate:          137.42 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        2    6   4.2      5      39
-Processing:     9   14   9.2     12     198
-Waiting:        4    8   9.2      7     193
-Total:         13   20  10.2     18     203
+Connect:        2    8  17.9      6     280
+Processing:    81   87   5.4     86     125
+Waiting:       78   83   5.0     82     121
+Total:         85   96  18.6     93     366
 
 Percentage of the requests served within a certain time (ms)
-  50%     18
-  66%     19
-  75%     21
-  80%     22
-  90%     26
-  95%     31
-  98%     42
-  99%     50
- 100%    203 (longest request)
+  50%     93
+  66%     95
+  75%     97
+  80%     98
+  90%    102
+  95%    109
+  98%    122
+  99%    141
+ 100%    366 (longest request)
 ```

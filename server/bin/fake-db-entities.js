@@ -6,7 +6,7 @@ const config = require('../lib/config')
 
 async function fakeCollections (config) {
   const db = new DB(config)
-  await Promise.all([fakeFireCollection(db, 1000)])
+  await Promise.all([fakeFireCollection(db, 1e5)])
 }
 
 function randomDateBetween (start, end) {
