@@ -6,7 +6,12 @@ const config = require('../lib/config')
 
 async function fakeCollections (config) {
   const db = new DB(config)
-  await Promise.all([fakeFireCollection(db, 1e5)])
+  await Promise.all(
+    // we can't use 1e6 here because it is too big for node.js
+    // FATAL ERROR:
+    // Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+    [fakeFireCollection(db, 1e5)]
+  )
 }
 
 function randomDateBetween (start, end) {
