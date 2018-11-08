@@ -38,6 +38,11 @@ export default createReducer(
     [APPEND_ALERT]: (state, action) => state,
     [REMOVE_ALERT]: (state, action) => state,
 
-    ...asyncReducer([EVIDENCES_REQUEST, EVIDENCES_RECEIVE, EVIDENCES_ERROR])
+    ...asyncReducer(
+      [EVIDENCES_REQUEST, EVIDENCES_RECEIVE, EVIDENCES_ERROR],
+      // TODO: we should get total and store it as well
+      // so later we be able to check whether we need to show more or not
+      (res) => res.items
+    )
   }
 )

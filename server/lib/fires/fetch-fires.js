@@ -54,7 +54,8 @@ module.exports = (config, app) => {
   }
 
   return async (ctx, next) => {
-    let fires = []
+    let items = []
+    let total = 0
     try {
       let limit = _getLimit(ctx)
       let startDate = _getStartDate(ctx)
@@ -73,7 +74,18 @@ module.exports = (config, app) => {
         .sort({ 'when.estimation': -1 })
         .limit(limit)
 
-      fires = await cursor.toArray()
+        // What is more efficient for MongoDB?
+        // [1] serial
+        // @performance: 134.121 [ms]
+        // items = await cursor.toArray()
+        // total = await cursor.count()
+
+        // [2] parallel
+        // @performance: 95.222 [ms]
+      ;[items, total] = await Promise.all([
+        cursor.toArray(),
+        cursor.count()
+      ])
     } catch (err) {
       console.error(err)
       console.log(err.stack)
@@ -81,6 +93,9 @@ module.exports = (config, app) => {
 
     await next()
     ctx.type = 'json'
-    ctx.body = fires
+    ctx.body = {
+      total,
+      items
+    }
   }
 }
