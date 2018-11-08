@@ -2,6 +2,7 @@ import './main-stream.scss'
 
 import { bind, debounce } from 'decko'
 import React from 'react'
+import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../config'
@@ -15,8 +16,13 @@ class MainStream extends React.PureComponent {
   @debounce(config.evidences)
   validateItems () {
     // TODO: we should pass real user's position
-    console.log('validateItems')
     this.props.validateItems({ lat: 0, long: 0 })
+  }
+
+  @bind
+  @debounce(config.evidences)
+  loadAfter () {
+
   }
 
   render () {
@@ -26,11 +32,16 @@ class MainStream extends React.PureComponent {
     }
 
     return (
-      <div className='container main-st ream-container'>
-        {items.inProgress && <div>TODO: spinner</div>}
-        {items.error && <div>TODO: show error</div>}
-        {items.data && items.data.map(item => <MainStreamItem key={item._id} item={item} />)}
-      </div>
+      <InfiniteScroll
+        loadMore={this.loadAfter}
+        hasMore={items.data /* FIXME just temporal solution */}
+        loader={<div className='loader' key={0}>Loading ...</div>}>
+        <div className='container main-st ream-container'>
+          {items.inProgress && <div>TODO: spinner</div>}
+          {items.error && <div>TODO: show error</div>}
+          {items.data && items.data.map(item => <MainStreamItem key={item._id} item={item} />)}
+        </div>
+      </InfiniteScroll>
     )
   }
 }
