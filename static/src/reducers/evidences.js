@@ -8,7 +8,7 @@ import config from '../config'
 import { fetchActionSimplified } from '../async-queue/fetch-action'
 import asyncReducer from '../async-queue/reducer-builder'
 
-import { prepareUrl } from '../requests/api-url-processor'
+import { prepareUrl } from '../utils/api-url-processor'
 
 //
 // actions
@@ -38,7 +38,7 @@ export const fetchEvidences = fetchActionSimplified({
 
 export const fetchEvidencesAfterDate = fetchActionSimplified({
   getUrl: ({ lat, long, startDate }) => prepareUrl(config.evidences.api_url_with_start_date, {
-    lat, long, startDate
+    lat, long, ops: { start_date: startDate.toISOString() }
   }),
 
   actions: [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR]
