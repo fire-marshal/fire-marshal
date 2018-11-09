@@ -62,6 +62,7 @@ export default createReducer(
     ...asyncReducer(
       [NEW_EVIDENCES_REQUEST, NEW_EVIDENCES_RECEIVE, NEW_EVIDENCES_ERROR],
       (res) => Immutable.fromJS({
+        ids: Immutable.Set(getIds(res.items)),
         items: res.items,
         total: res.total,
         lastDate: getLastDate(res.items)
@@ -70,14 +71,19 @@ export default createReducer(
 
     ...asyncReducer(
       [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR],
-      (res, previousData) => Immutable.Map({
-        // TODO: should left only new items
-        // it seems I need set of item's ids
-        // and left items only with new ids
-        items: previousData.get('items').push(...res.items),
-        total: res.total,
-        lastDate: getLastDate(res.items)
-      })
+      (res, previousData) => {
+        // we should left only new items
+        const previousIds = previousData.get('ids')
+        const newItems = filterByIds(res.items, previousIds)
+        const newIds = getIds(newItems)
+
+        return Immutable.Map({
+          ids: previousIds.union(newIds),
+          items: previousData.get('items').push(...newItems),
+          total: res.total,
+          lastDate: getLastDate(res.items)
+        })
+      }
     )
   }
 )
@@ -97,4 +103,25 @@ function getLastDate (items) {
     return null
   }
   return item.when.estimation
+}
+
+/**
+ * get all ids
+ *
+ * @param items {Array}
+ * @returns {Array}
+ */
+function getIds (items) {
+  return items.map(i => i._id)
+}
+
+/**
+ * Filter items by Immutable.Set of ids
+ *
+ * @param items {Array}
+ * @param ids {Immutable.Set}
+ * @returns {Array}
+ */
+function filterByIds (items, ids) {
+  return items.filter(i => !ids.has(i._id))
 }
