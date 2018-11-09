@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import _ from 'lodash'
 
 import { createReducer } from './_helper'
 
@@ -9,20 +10,43 @@ import asyncReducer from '../async-queue/reducer-builder'
 
 import { prepareUrl } from '../requests/api-url-processor'
 
-export const APPEND_ALERT = 'ALERT:APPEND'
-export const REMOVE_ALERT = 'ALERT:REMOVE'
+//
+// actions
+//
 
-export const EVIDENCES_REQUEST = 'EVIDENCES:REQUEST'
-export const EVIDENCES_RECEIVE = 'EVIDENCES:RECEIVE'
-export const EVIDENCES_ERROR = 'EVIDENCES:ERROR'
+// add new list of items
+export const NEW_EVIDENCES_REQUEST = 'EVIDENCES.NEW:REQUEST'
+export const NEW_EVIDENCES_RECEIVE = 'EVIDENCES.NEW:RECEIVE'
+export const NEW_EVIDENCES_ERROR = 'EVIDENCES.NEW:ERROR'
+
+// append items to already existing list
+export const APPEND_EVIDENCES_REQUEST = 'EVIDENCES.APPEND:REQUEST'
+export const APPEND_EVIDENCES_RECEIVE = 'EVIDENCES.APPEND:RECEIVE'
+export const APPEND_EVIDENCES_ERROR = 'EVIDENCES.APPEND:ERROR'
+
+//
+// action creators
+//
 
 export const fetchEvidences = fetchActionSimplified({
   getUrl: ({ lat, long }) => prepareUrl(config.evidences.api_url, {
     lat, long
   }),
 
-  actions: [EVIDENCES_REQUEST, EVIDENCES_RECEIVE, EVIDENCES_ERROR]
+  actions: [NEW_EVIDENCES_REQUEST, NEW_EVIDENCES_RECEIVE, NEW_EVIDENCES_ERROR]
 })
+
+export const fetchEvidencesAfterDate = fetchActionSimplified({
+  getUrl: ({ lat, long, startDate }) => prepareUrl(config.evidences.api_url_with_start_date, {
+    lat, long, startDate
+  }),
+
+  actions: [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR]
+})
+
+//
+// reducers
+//
 
 // TODO: data structure
 // it would be better to store information about some bigger events or related (connected)
@@ -35,14 +59,42 @@ export default createReducer(
     updateAt: null
   }),
   {
-    [APPEND_ALERT]: (state, action) => state,
-    [REMOVE_ALERT]: (state, action) => state,
+    ...asyncReducer(
+      [NEW_EVIDENCES_REQUEST, NEW_EVIDENCES_RECEIVE, NEW_EVIDENCES_ERROR],
+      (res) => Immutable.fromJS({
+        items: res.items,
+        total: res.total,
+        lastDate: getLastDate(res.items)
+      })
+    ),
 
     ...asyncReducer(
-      [EVIDENCES_REQUEST, EVIDENCES_RECEIVE, EVIDENCES_ERROR],
-      // TODO: we should get total and store it as well
-      // so later we be able to check whether we need to show more or not
-      (res) => res.items
+      [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR],
+      (res, previousData) => Immutable.Map({
+        // TODO: should left only new items
+        // it seems I need set of item's ids
+        // and left items only with new ids
+        items: previousData.get('items').push(...res.items),
+        total: res.total,
+        lastDate: getLastDate(res.items)
+      })
     )
   }
 )
+
+/**
+ * TODO: should find a single place for item's structure functionality
+ *
+ * Get item's date
+ *
+ * @private
+ * @param items
+ * @returns {null}
+ */
+function getLastDate (items) {
+  const item = _.last(items)
+  if (!item) {
+    return null
+  }
+  return item.when.estimation
+}

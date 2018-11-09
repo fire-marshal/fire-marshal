@@ -11,7 +11,7 @@ import Immutable from 'immutable'
  * @param processResult
  * @returns {{}}
  */
-module.exports = function asyncReducer ([request, receive, error = null], processResult = res => res) {
+module.exports = function asyncReducer ([request, receive, error = null], processResult = Immutable.fromJS) {
   const res = {
     [request]: (state, action) => state
       .set('updateAt', action.updatedAt)
@@ -19,7 +19,7 @@ module.exports = function asyncReducer ([request, receive, error = null], proces
 
     [receive]: (state, action) => state
       .set('updateAt', action.updatedAt)
-      .set('data', Immutable.fromJS(processResult(action.res)))
+      .set('data', processResult(action.res, state.get('data')))
       .set('inProgress', false)
       .set('invalid', false)
   }
