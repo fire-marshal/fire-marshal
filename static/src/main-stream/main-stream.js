@@ -6,21 +6,21 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../config'
-import { fetchEvidences, fetchEvidencesAfterDate } from '../reducers/evidences'
+import { fetchEvidences } from '../reducers/evidences'
 import * as evidencesSelector from '../selectors/evidences'
 
 import MainStreamItem from './main-stream-item'
 
 class MainStream extends React.PureComponent {
   @bind
-  @debounce(config.evidences)
+  @debounce(config.evidences.debounceDelay)
   validateItems () {
     const { location } = this.props.user
     this.props.validateItems(location)
   }
 
   @bind
-  @debounce(config.evidences)
+  @debounce(config.evidences.debounceDelay)
   loadBefore () {
     const { location } = this.props.user
     const { startDateISO } = this.props.list
@@ -71,6 +71,6 @@ export default connect(
 
   (dispatch, props) => ({
     validateItems: ({ lat, long }) => dispatch(fetchEvidences({ lat, long })),
-    loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(fetchEvidencesAfterDate({ lat, long, startDateISO }))
+    loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(fetchEvidences({ lat, long, startDateISO }))
   })
 )(MainStream)
