@@ -3,8 +3,8 @@ import './main-stream-item.scss'
 import React from 'react'
 
 const MainStreamItemImage = ({ img, title }) => {
-  if (img && img.src) {
-    return <img className='card-img-top' src={img.src} alt={title} />
+  if (img && img.medium) {
+    return <img className='card-img-top' src={img.medium} alt={title} />
   } else {
     // placeholder in case we don't have image
     // TODO: letter when we don't have image
