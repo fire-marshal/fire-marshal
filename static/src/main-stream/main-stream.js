@@ -23,8 +23,8 @@ class MainStream extends React.PureComponent {
   @debounce(config.evidences)
   loadBefore () {
     const { location } = this.props.user
-    const { lastDate } = this.props.list
-    this.props.loadItemsAfter({ ...location, startDate: lastDate })
+    const { startDateISO } = this.props.list
+    this.props.loadItemsAfter({ ...location, startDateISO })
   }
 
   render () {
@@ -64,15 +64,13 @@ export default connect(
       invalid: evidencesSelector.getEvidenceItemsInvalid(state, props),
       error: evidencesSelector.getEvidenceError(state, props),
       items: evidencesSelector.getEvidenceItems(state, props),
-      lastData: evidencesSelector.getLastDate(state, props),
       hasMore: evidencesSelector.hasMore(state, props),
-      // FIXME: should get from the last item
-      lastDate: new Date()
+      startDateISO: evidencesSelector.getStartDateISO(state, props)
     }
   }),
 
   (dispatch, props) => ({
     validateItems: ({ lat, long }) => dispatch(fetchEvidences({ lat, long })),
-    loadItemsAfter: ({ lat, long, startDate }) => dispatch(fetchEvidencesAfterDate({ lat, long, startDate }))
+    loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(fetchEvidencesAfterDate({ lat, long, startDateISO }))
   })
 )(MainStream)

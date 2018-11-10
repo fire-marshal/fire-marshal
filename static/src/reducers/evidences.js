@@ -37,8 +37,8 @@ export const fetchEvidences = fetchActionSimplified({
 })
 
 export const fetchEvidencesAfterDate = fetchActionSimplified({
-  getUrl: ({ lat, long, startDate }) => prepareUrl(config.evidences.api_url_with_start_date, {
-    lat, long, ops: { start_date: startDate.toISOString() }
+  getUrl: ({ lat, long, startDateISO }) => prepareUrl(config.evidences.api_url_with_start_date, {
+    lat, long, ops: { start_date: startDateISO }
   }),
 
   actions: [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR]
@@ -65,7 +65,7 @@ export default createReducer(
         ids: Immutable.Set(getIds(res.items)),
         items: res.items,
         total: res.total,
-        lastDate: getLastDate(res.items)
+        startDate: getStartDate(res.items)
       })
     ),
 
@@ -81,7 +81,7 @@ export default createReducer(
           ids: previousIds.union(newIds),
           items: previousData.get('items').push(...newItems),
           total: res.total,
-          lastDate: getLastDate(res.items)
+          startDate: getStartDate(res.items),
         })
       }
     )
@@ -89,20 +89,24 @@ export default createReducer(
 )
 
 /**
+ *
  * TODO: should find a single place for item's structure functionality
  *
- * Get item's date
+ */
+
+/**
+ * Get start data
  *
  * @private
  * @param items
- * @returns {null}
+ * @returns {Date}
  */
-function getLastDate (items) {
+function getStartDate (items) {
   const item = _.last(items)
   if (!item) {
     return null
   }
-  return item.when.estimation
+  return new Date(item.when.estimation)
 }
 
 /**
