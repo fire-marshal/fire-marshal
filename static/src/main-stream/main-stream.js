@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../config'
-import { fetchEvidences, fetchEvidencesAfterDate } from '../reducers/evidences'
+import { fetchEvidences } from '../reducers/evidences'
 import * as evidencesSelector from '../selectors/evidences'
 
 import MainStreamItem from './main-stream-item'
@@ -71,6 +71,6 @@ export default connect(
 
   (dispatch, props) => ({
     validateItems: ({ lat, long }) => dispatch(fetchEvidences({ lat, long })),
-    loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(fetchEvidencesAfterDate({ lat, long, startDateISO }))
+    loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(fetchEvidences({ lat, long, startDateISO }))
   })
 )(MainStream)

@@ -14,12 +14,7 @@ import { prepareUrl } from '../utils/api-url-processor'
 // actions
 //
 
-// add new list of items
-export const NEW_EVIDENCES_REQUEST = 'EVIDENCES.NEW:REQUEST'
-export const NEW_EVIDENCES_RECEIVE = 'EVIDENCES.NEW:RECEIVE'
-export const NEW_EVIDENCES_ERROR = 'EVIDENCES.NEW:ERROR'
-
-// append items to already existing list
+// append new items to already existing list
 export const APPEND_EVIDENCES_REQUEST = 'EVIDENCES.APPEND:REQUEST'
 export const APPEND_EVIDENCES_RECEIVE = 'EVIDENCES.APPEND:RECEIVE'
 export const APPEND_EVIDENCES_ERROR = 'EVIDENCES.APPEND:ERROR'
@@ -29,17 +24,16 @@ export const APPEND_EVIDENCES_ERROR = 'EVIDENCES.APPEND:ERROR'
 //
 
 export const fetchEvidences = fetchActionSimplified({
-  getUrl: ({ lat, long }) => prepareUrl(config.evidences.api_url, {
-    lat, long
-  }),
+  getUrl: ({ lat, long, startDateISO }) => {
+    let ops = null;
+    if (startDateISO) {
+      ops = { start_date: startDateISO };
+    }
 
-  actions: [NEW_EVIDENCES_REQUEST, NEW_EVIDENCES_RECEIVE, NEW_EVIDENCES_ERROR]
-})
-
-export const fetchEvidencesAfterDate = fetchActionSimplified({
-  getUrl: ({ lat, long, startDateISO }) => prepareUrl(config.evidences.api_url_with_start_date, {
-    lat, long, ops: { start_date: startDateISO }
-  }),
+    return prepareUrl(config.evidences.api_url_with_start_date, {
+      lat, long, ops,
+    })
+  },
 
   actions: [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR]
 })
@@ -55,20 +49,15 @@ export default createReducer(
   Immutable.fromJS({
     invalid: true,
     error: null,
-    data: null,
+    data: {
+      ids: Immutable.Set(),
+      items: [],
+      total: 0,
+      startDate: null,
+    },
     updateAt: null
   }),
   {
-    ...asyncReducer(
-      [NEW_EVIDENCES_REQUEST, NEW_EVIDENCES_RECEIVE, NEW_EVIDENCES_ERROR],
-      (res) => Immutable.fromJS({
-        ids: Immutable.Set(getIds(res.items)),
-        items: res.items,
-        total: res.total,
-        startDate: getStartDate(res.items)
-      })
-    ),
-
     ...asyncReducer(
       [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR],
       (res, previousData) => {
