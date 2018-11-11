@@ -17,14 +17,7 @@ services:
       - /code/node_modules
       - api-docs:/code/api/swagger
     depends_on:
-#      - postgis
       - mongo
-    ports:
-      # expose websocket connection for real-time support of REST API
-      - "8082:8082"
-
-#  postgis:
-#    image: postgis
 
   mongo:
     image: mongo
@@ -78,3 +71,21 @@ services:
       - api
       - static
       - swagger-ui
+
+  # websocket server for real-time support of RESTful API
+  wss:
+    build: ./wss
+    command: npm run watch
+    # DEV MODE:
+    # npm run watch"
+    #
+    # PROD MODE:
+    # npm start"
+    #
+    volumes:
+    - ./server:/code
+    - /code/node_modules
+    depends_on:
+    - mongo
+    ports:
+    - "8082:8082"
