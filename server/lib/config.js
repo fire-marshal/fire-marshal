@@ -7,5 +7,9 @@ module.exports = {
 
   server: {
     port: 8080
+  },
+
+  wss: {
+    port: 8082
   }
 }

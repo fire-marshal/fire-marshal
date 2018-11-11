@@ -19,6 +19,9 @@ services:
     depends_on:
 #      - postgis
       - mongo
+    ports:
+      # expose websocket connection for real-time support of REST API
+      - "8082:8082"
 
 #  postgis:
 #    image: postgis
