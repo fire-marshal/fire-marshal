@@ -83,7 +83,7 @@ services:
     # npm start"
     #
     volumes:
-    - ./server:/code
+    - ./wss:/code
     - /code/node_modules
     depends_on:
     - mongo
