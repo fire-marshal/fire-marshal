@@ -1,0 +1,43 @@
+{
+  "name": "@fire-marshal/wsss",
+  "version": "0.3.0",
+  "description": "websocker server for fire-marshal project",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "lint": "standard",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fire-marshal/fire-marshal.git"
+  },
+  "keywords": [
+    "fire",
+    "wildfire",
+    "nasa",
+    "space app challange",
+    "hackathon"
+  ],
+  "author": {
+    "name": "Eugene Krenevenets",
+    "email": "ievgenii.krevenets@gmail.com",
+    "url": "http://hyzhak.github.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fire-marshal/fire-marshal/issues"
+  },
+  "homepage": "https://github.com/fire-marshal/fire-marshal#readme",
+  "dependencies": {
+    "ws": "^6.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6",
+    "standard": "^12.0.1"
+  }
+}
