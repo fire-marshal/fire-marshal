@@ -33,7 +33,7 @@ export default class ConnectionManager {
       this._connection.send(JSON.stringify({
         type,
         payload,
-        meta: { ...meta, sendAt: currentDate() }
+        meta: { ...meta, sentAt: Date.now() }
       }))
     }, 5 * 1000)
   }
