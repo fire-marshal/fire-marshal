@@ -4,6 +4,10 @@ _I'm still looking for better name for the project_
 
 :palm_tree: :deciduous_tree: :fire: :deciduous_tree: :house_with_garden: :fire: :deciduous_tree: :deciduous_tree: :deciduous_tree: :running: :house: :deciduous_tree: :school: :blue_car: :deciduous_tree:  :fire_engine: :deciduous_tree: :deciduous_tree:  :palm_tree:
 
+## What's new
+
+:scroll: [changelog](/../../blob/master/CHANGELOG.md)
+
 ## About The project
 
 The main project of NASA Space App Challenge [Spot That Fire!](https://2018.spaceappschallenge.org/challenges/volcanoes-icebergs-and-asteroids-oh-my/real-time-fire-app/details) 
@@ -82,6 +86,16 @@ _sorted by priority_
 - [react](https://reactjs.org/)
 - [redux](http://redux.js.org)
 - [standard.js](https://standardjs.com)
+
+## Usage
+
+### Bump project version
+
+```bash
+
+$ ./bin/bump-version.sh
+
+```
 
 ## Contribution / How to help
 
