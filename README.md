@@ -83,6 +83,16 @@ _sorted by priority_
 - [redux](http://redux.js.org)
 - [standard.js](https://standardjs.com)
 
+## Usage
+
+### Bump project version
+
+```bash
+
+$ ./bin/bump-version.sh
+
+```
+
 ## Contribution / How to help
 
 If you would like to start somewhere there good [start point issues](https://github.com/fire-marshal/fire-marshal/labels/good%20first%20issue)
