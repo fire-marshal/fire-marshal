@@ -47,6 +47,7 @@ export const subscribeEvidences = (payload) => ({
   type: SUBSCRIBE_EVIDENCES,
   payload,
   meta: {
+    createdAt: Date.now(),
     socket: true,
   }
 })
@@ -54,6 +55,7 @@ export const subscribeEvidences = (payload) => ({
 export const unsubscribeEvidences = () => ({
   type: UNSUBSCRIBE_EVIDENCES,
   meta: {
+    createdAt: Date.now(),
     socket: true,
   }
 })
