@@ -55,6 +55,26 @@ class WSConnection {
   onMessage (msg) {
     console.log('onMessage', msg)
     this._ws.send('I have got it!')
+    try {
+      msg = JSON.parse(msg)
+    } catch (err) {
+      console.log('it is not object')
+      return
+    }
+
+    console.log('topic:', msg.topic)
+    console.log('path:', msg.path)
+    switch (msg.topic) {
+      case 'subscribe':
+        // TODO: subscribe on path
+        break
+      case 'unsubscribe':
+        // TODO: unsubscribe on path
+        break
+      case 'post':
+        console.log('body:', msg.body)
+        break
+    }
   }
 
   onPong (...args) {

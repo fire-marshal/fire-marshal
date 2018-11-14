@@ -8,6 +8,7 @@ import { combineReducers } from 'redux-immutable'
 import thunkMiddleware from 'redux-thunk'
 
 import reducers from '../reducers'
+import { wsMiddleware } from '../ws'
 
 import AppRouter from './router'
 
@@ -34,7 +35,10 @@ export function bootstrap (targetElm) {
     composeEnhancers(
       applyMiddleware(
         routerMiddleware(history),
-        thunkMiddleware
+        thunkMiddleware,
+        wsMiddleware({
+          url: 'ws://localhost:8082/something'
+        })
       )
     )
   )

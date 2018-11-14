@@ -8,10 +8,19 @@ import { connect } from 'react-redux'
 import config from '../config'
 import { fetchEvidences } from '../reducers/evidences'
 import * as evidencesSelector from '../selectors/evidences'
+import evidencesSubPub from '../subpubs/evidences'
 
 import MainStreamItem from './main-stream-item'
 
 class MainStream extends React.PureComponent {
+  componentDidMount () {
+    evidencesSubPub.start()
+  }
+
+  componentWillUnmount () {
+    evidencesSubPub.stop()
+  }
+
   @bind
   @debounce(config.evidences.debounceDelay)
   validateItems () {
@@ -40,7 +49,7 @@ class MainStream extends React.PureComponent {
         loader={<div className='loader' key={0}>Loading ...</div>}>
         <div className='container main-st ream-container'>
           {
-            list.items ? list.items.map(item => <MainStreamItem key={item._id} item={item} />) : (
+            list.items ? list.items.map(item => <MainStreamItem key={item._id} item={item}/>) : (
               list.inProgress ? <div>TODO: spinner</div> : (
                 list.error && <div>TODO: show error</div>
               )

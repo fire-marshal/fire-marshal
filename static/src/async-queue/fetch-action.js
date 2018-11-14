@@ -63,6 +63,8 @@ export function fetchActionSimplified ({ getUrl, actions }) {
 
     requestAction: (data) => ({
       type: actions[0],
+      // TODO: should write to payload field
+      // because we can have meta field with emit to/from socket information
       inProgress: true,
       updatedAt: Date.now(),
       ...data
