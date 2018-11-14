@@ -13,9 +13,12 @@ import MainStreamItem from './main-stream-item'
 
 class MainStream extends React.PureComponent {
   componentDidMount () {
-    const { location } = this.props.user
-    const { startDateISO } = this.props.list
-    this.props.subscribeDataStream({ location, startDateISO })
+    // FIXME: just temporal solution to send update each 5 seconds and check load
+    setInterval(() => {
+      const { location } = this.props.user
+      const { startDateISO } = this.props.list
+      this.props.subscribeDataStream({ location, startDateISO })
+    }, 5 * 1000)
   }
 
   componentWillUnmount () {

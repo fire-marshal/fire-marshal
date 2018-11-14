@@ -54,6 +54,9 @@ class WSConnection {
 
   onMessage (msg) {
     console.log('onMessage', msg)
+    // TODO: should send redux action replay
+    // with UID of redux action (without payload)
+    // so we could have queue of actions with delivery confirmation
     this._ws.send('I have got it!')
     try {
       msg = JSON.parse(msg)
