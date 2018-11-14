@@ -14,13 +14,18 @@ set -e
 checkit='\xE2\x9C\x85'
 failed='\xE2\x9D\x8C'
 
+# list of the App nodejs modules
+npm_modules=( server static wss )
+
 required='git-generate-changelog'
 
+echo
 echo "*******************************"
 echo "*                               *"
-echo "* BUMP VERSION                   *"
+echo "* BUMP APP VERSION               *"
 echo "*                               *"
 echo "********************************"
+echo
 
 echo -e "$checkit  check if $required installed"
 command -v git-generate-changelog >/dev/null 2>&1 || { echo -e >&2 "$failed  \033[1m$required\033[0m is required https://github.com/github-changelog-generator/github-changelog-generator#installation."; exit 1; }
@@ -30,16 +35,19 @@ if [[ -z "${CHANGELOG_GITHUB_TOKEN}" ]]; then
   exit 1
 fi
 
-echo -e "$checkit  bump new version of repository"
-
 echo -e "$checkit  pull master"
 git checkout master
 git pull
 
-echo -e "$checkit  bump version"
-(cd functions; npm version ${1:-patch})
+echo -e "$checkit  bump new version of repository"
 
-PACKAGE_VERSION=$(cd functions; cat package.json \
+for i in "${npm_modules[@]}"
+do
+    printf "$checkit  bump ${i} version to: "
+	(cd ${i}; npm version ${1:-patch})
+done
+
+PACKAGE_VERSION=$(cd ${npm_modules[0]}; cat package.json \
   | grep version \
   | head -1 \
   | awk -F: '{ print $2 }' \
@@ -51,7 +59,7 @@ echo -e "$checkit  commit new version"
 git commit -am ":rocket: bump to $PACKAGE_VERSION"
 
 echo -e "$checkit  update tag"
-git tag $PACKAGE_VERSION
+git tag ${PACKAGE_VERSION}
 
 echo -e "$checkit  push commit"
 git push
