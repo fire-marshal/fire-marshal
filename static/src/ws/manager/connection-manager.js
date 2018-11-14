@@ -27,10 +27,14 @@ export default class ConnectionManager {
     // but when she goes away we would close it, without sending any data)
     // - user consistently update her status (for example location)
     // (and we need only the last actual location and doesn't care about all history)
-    this._connection.send(JSON.stringify({
-      type,
-      payload,
-      meta: { ...meta, sendAt: currentDate() }
-    }));
+
+    setTimeout(() => {
+      // just temporal solution - freeze on 5 seconds before send message
+      this._connection.send(JSON.stringify({
+        type,
+        payload,
+        meta: { ...meta, sendAt: currentDate() }
+      }))
+    }, 5 * 1000)
   }
 }

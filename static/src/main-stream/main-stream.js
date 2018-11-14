@@ -6,25 +6,29 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../config'
-import { fetchEvidences } from '../reducers/evidences'
+import * as evidencesActions from '../reducers/evidences'
 import * as evidencesSelector from '../selectors/evidences'
 
 import MainStreamItem from './main-stream-item'
 
 class MainStream extends React.PureComponent {
   componentDidMount () {
-    // evidencesSubPub.start()
+    const { location } = this.props.user
+    const { startDateISO } = this.props.list
+    this.props.subscribeDataStream({ location, startDateISO })
   }
 
   componentWillUnmount () {
-    // evidencesSubPub.stop()
+    this.props.unsubscribeDataStream()
   }
 
   @bind
   @debounce(config.evidences.debounceDelay)
   validateItems () {
     const { location } = this.props.user
+    const { startDateISO } = this.props.list
     this.props.validateItems(location)
+    this.props.subscribeDataStream({ location, startDateISO })
   }
 
   @bind
@@ -33,6 +37,7 @@ class MainStream extends React.PureComponent {
     const { location } = this.props.user
     const { startDateISO } = this.props.list
     this.props.loadItemsAfter({ ...location, startDateISO })
+    this.props.subscribeDataStream({ location, startDateISO })
   }
 
   render () {
@@ -78,7 +83,13 @@ export default connect(
   }),
 
   (dispatch, props) => ({
-    validateItems: ({ lat, long }) => dispatch(fetchEvidences({ lat, long })),
-    loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(fetchEvidences({ lat, long, startDateISO }))
+    validateItems: ({ lat, long }) => dispatch(evidencesActions.fetchEvidences({ lat, long })),
+    subscribeDataStream: (payload) => dispatch(evidencesActions.subscribeEvidences(payload)),
+    unsubscribeDataStream: () => dispatch(evidencesActions.unsubscribeEvidences()),
+    loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(evidencesActions.fetchEvidences({
+      lat,
+      long,
+      startDateISO
+    }))
   })
 )(MainStream)
