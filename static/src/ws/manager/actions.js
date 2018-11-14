@@ -1,4 +1,4 @@
-export const namespace = "@gaf/ws";
+export const namespace = "@@gaf/ws";
 
 // TODO:
 export const actionTypes = {

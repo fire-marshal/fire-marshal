@@ -10,14 +10,16 @@ import asyncReducer from '../async-queue/reducer-builder'
 
 import { prepareUrl } from '../utils/api-url-processor'
 
+const namespace = require('../utils/get-namespace')()
+
 //
 // actions
 //
 
 // append new items to already existing list
-export const APPEND_EVIDENCES_REQUEST = 'EVIDENCES.APPEND:REQUEST'
-export const APPEND_EVIDENCES_RECEIVE = 'EVIDENCES.APPEND:RECEIVE'
-export const APPEND_EVIDENCES_ERROR = 'EVIDENCES.APPEND:ERROR'
+export const APPEND_EVIDENCES_REQUEST = `${namespace}/EVIDENCES.APPEND:REQUEST`
+export const APPEND_EVIDENCES_RECEIVE = `${namespace}/EVIDENCES.APPEND:RECEIVE`
+export const APPEND_EVIDENCES_ERROR = `${namespace}/EVIDENCES.APPEND:ERROR`
 
 //
 // action creators
