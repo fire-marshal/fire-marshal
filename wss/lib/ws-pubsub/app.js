@@ -58,23 +58,16 @@ class WSConnection {
     try {
       msg = JSON.parse(msg)
     } catch (err) {
-      console.log('it is not object')
+      console.log('it is not object', msg)
       return
     }
 
-    console.log('topic:', msg.topic)
-    console.log('path:', msg.path)
-    switch (msg.topic) {
-      case 'subscribe':
-        // TODO: subscribe on path
-        break
-      case 'unsubscribe':
-        // TODO: unsubscribe on path
-        break
-      case 'post':
-        console.log('body:', msg.body)
-        break
-    }
+    const meta = { ...msg.meta, receivedAt: Date.now() }
+
+    console.log('type:', msg.type)
+    console.log('payload:', msg.payload)
+    console.log('meta:', meta)
+    console.log('delta (msec)', meta.receivedAt - meta.sentAt)
   }
 
   onPong (...args) {

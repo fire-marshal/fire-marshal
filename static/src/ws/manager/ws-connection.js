@@ -17,9 +17,6 @@ export default class WSConnection {
       console.info('ws: onmessage')
       console.info(args)
       // c.close()
-      setTimeout(() => {
-        this._ws.send(`here is my random : ${Math.random()}`)
-      }, 3 * 1000)
     }
 
     this._ws.onclose = (...args) => {

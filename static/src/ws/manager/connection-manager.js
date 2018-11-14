@@ -1,4 +1,3 @@
-import currentDate from './exact-time'
 import WSConnection from './ws-connection'
 
 /**
