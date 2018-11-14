@@ -8,17 +8,16 @@ import { connect } from 'react-redux'
 import config from '../config'
 import { fetchEvidences } from '../reducers/evidences'
 import * as evidencesSelector from '../selectors/evidences'
-import evidencesSubPub from '../subpubs/evidences'
 
 import MainStreamItem from './main-stream-item'
 
 class MainStream extends React.PureComponent {
   componentDidMount () {
-    evidencesSubPub.start()
+    // evidencesSubPub.start()
   }
 
   componentWillUnmount () {
-    evidencesSubPub.stop()
+    // evidencesSubPub.stop()
   }
 
   @bind
