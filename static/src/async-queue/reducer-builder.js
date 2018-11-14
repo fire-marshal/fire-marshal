@@ -13,21 +13,21 @@ import Immutable from 'immutable'
  */
 module.exports = function asyncReducer ([request, receive, error = null], processResult = Immutable.fromJS) {
   const res = {
-    [request]: (state, action) => state
-      .set('updateAt', action.updatedAt)
+    [request]: (state, { meta }) => state
+      .set('updateAt', meta.createdAt)
       .set('inProgress', true),
 
-    [receive]: (state, action) => state
-      .set('updateAt', action.updatedAt)
-      .set('data', processResult(action.res, state.get('data')))
+    [receive]: (state, { meta, payload }) => state
+      .set('updateAt', meta.createdAt)
+      .set('data', processResult(payload.res, state.get('data')))
       .set('inProgress', false)
       .set('invalid', false)
   }
 
   if (error) {
-    res[error] = (state, action) => state
-      .set('updateAt', action.updatedAt)
-      .set('error', Immutable.fromJS(action.error))
+    res[error] = (state, { meta, payload }) => state
+      .set('updateAt', meta.createdAt)
+      .set('error', Immutable.fromJS(payload.error))
       .set('inProgress', false)
       .set('invalid', false)
   }

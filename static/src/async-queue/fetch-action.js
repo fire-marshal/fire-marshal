@@ -61,29 +61,39 @@ export function fetchActionSimplified ({ getUrl, actions }) {
   const init = {
     getUrl,
 
-    requestAction: (data) => ({
+    requestAction: (payload) => ({
       type: actions[0],
-      // TODO: should write to payload field
-      // because we can have meta field with emit to/from socket information
-      inProgress: true,
-      updatedAt: Date.now(),
-      ...data
+      payload: {
+        inProgress: true,
+        ...payload
+      },
+      meta: {
+        createdAt: Date.now()
+      }
     }),
 
-    resultAction: (data) => ({
+    resultAction: (payload) => ({
       type: actions[1],
-      inProgress: false,
-      updatedAt: Date.now(),
-      ...data
+      payload: {
+        inProgress: false,
+        ...payload
+      },
+      meta: {
+        createdAt: Date.now()
+      }
     })
   }
 
   if (actions.length > 2) {
-    init.errorAction = data => ({
+    init.errorAction = payload => ({
       type: actions[2],
-      inProgress: false,
-      updatedAt: Date.now(),
-      ...data
+      payload: {
+        inProgress: false,
+        ...payload
+      },
+      meta: {
+        createdAt: Date.now()
+      }
     })
   }
 
