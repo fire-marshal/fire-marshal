@@ -57,7 +57,7 @@ _sorted by priority_
   - report on message
 - **Verify and screen fire reports**
   - validate crowd data
-- **Gamefication**
+- **Gamification**
   - scores for successful actions  [#14](/../../issues/14)
   - badges for reported fires, for saved people and etc
   - could become local "fire marshal" if one is good lifeguard

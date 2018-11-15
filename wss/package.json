@@ -1,5 +1,5 @@
 {
-  "name": "@fire-marshal/wsss",
+  "name": "@fire-marshal/wss",
   "version": "0.4.4",
   "description": "websocker server for fire-marshal project",
   "main": "index.js",
