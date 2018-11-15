@@ -32,6 +32,7 @@ export class WSConnection {
   }
 
   onClose (...args) {
+    console.warn(args)
     this._store.dispatch(actions.disconnect(args))
     if (this._retry) {
       setTimeout(this.reconnect, this._retryTimeout)
@@ -39,6 +40,7 @@ export class WSConnection {
   }
 
   onError (...args) {
+    console.warn(args)
     this._store.dispatch(actions.error(args))
   }
 
