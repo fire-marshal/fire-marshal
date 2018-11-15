@@ -19,7 +19,7 @@ module.exports = function asyncReducer ([request, receive, error = null], proces
 
     [receive]: (state, { meta, payload }) => state
       .set('updateAt', meta.createdAt)
-      .set('data', processResult(payload.res, state.get('data')))
+      .set('data', processResult(payload, state.get('data')))
       .set('inProgress', false)
       .set('invalid', false)
   }

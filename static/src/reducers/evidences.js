@@ -82,7 +82,7 @@ export default createReducer(
   {
     ...asyncReducer(
       [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR],
-      (res, previousData) => {
+      ({ res }, previousData) => {
         // we should left only new items
         const previousIds = previousData.get('ids')
         const newItems = filterByIds(res.items, previousIds)
