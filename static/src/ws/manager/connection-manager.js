@@ -38,6 +38,7 @@ export default class ConnectionManager {
 
     data = { ...data, meta: { ...data.meta, receivedAt: Date.now() } }
     this._store.dispatch(data)
+    console.log('round trip time (ms)', Date.now() - data.payload.meta.createdAt)
   }
 
   [queueActions.actionTypes.ADD] = () => {
