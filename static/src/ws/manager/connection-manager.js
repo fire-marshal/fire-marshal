@@ -1,5 +1,7 @@
 import WSConnection from './ws-connection'
 
+import Queue from './queue'
+
 /**
  *
  * TODO: create web socket manager which:
@@ -11,6 +13,7 @@ import WSConnection from './ws-connection'
 export default class ConnectionManager {
   constructor (store, options) {
     this._connection = new WSConnection(options)
+    this.queue = new Queue()
   }
 
   send ({ type, payload, meta }) {
@@ -27,13 +30,19 @@ export default class ConnectionManager {
     // - user consistently update her status (for example location)
     // (and we need only the last actual location and doesn't care about all history)
 
-    setTimeout(() => {
-      // just temporal solution - freeze on 5 seconds before send message
-      this._connection.send(JSON.stringify({
-        type,
-        payload,
-        meta: { ...meta, sentAt: Date.now() }
-      }))
-    }, 5 * 1000)
+    this.queue.add(JSON.stringify({
+      type,
+      payload,
+      meta: { ...meta, sentAt: Date.now() }
+    }))
+
+    // setTimeout(() => {
+    //   // just temporal solution - freeze on 5 seconds before send message
+    //   this._connection.send(JSON.stringify({
+    //     type,
+    //     payload,
+    //     meta: { ...meta, sentAt: Date.now() }
+    //   }))
+    // }, 5 * 1000)
   }
 }
