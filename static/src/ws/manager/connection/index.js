@@ -24,8 +24,14 @@ export class WSConnection {
     this._store.dispatch(actions.error(args))
   }
 
-  onMessage (...args) {
-    this._store.dispatch(actions.message(args))
+  onMessage (evt) {
+    this._store.dispatch(actions.message({
+      data: evt.data,
+      origin: evt.origin,
+      source: evt.source,
+      ports: evt.ports,
+      lastEventId: evt.lastEventId,
+    }))
   }
 
   onOpen () {
