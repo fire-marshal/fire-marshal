@@ -46,11 +46,18 @@ export default class ConnectionManager {
     // - user consistently update her status (for example location)
     // (and we need only the last actual location and doesn't care about all history)
 
-    this._queue.add(JSON.stringify({
+    const message = JSON.stringify({
       type,
       payload,
       meta: { ...meta, sentAt: Date.now() }
-    }))
+    })
+
+    if (this._connection.isConnected()) {
+      // don't use queue when we have connection
+      this._connection.send(message)
+    } else {
+      this._queue.add(message)
+    }
   }
 
   /**
