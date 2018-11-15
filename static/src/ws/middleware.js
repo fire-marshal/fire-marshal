@@ -17,6 +17,8 @@ export default function createWSMiddleware (options = {
         manager.send(action)
       }
 
+      manager.handle(action)
+
       return next(action)
     }
   }

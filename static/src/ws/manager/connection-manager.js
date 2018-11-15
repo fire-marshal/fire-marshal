@@ -1,6 +1,5 @@
-import WSConnection from './connection'
-
-import { Queue } from './queue'
+import { connectionActions, WSConnection } from './connection'
+import { queueActions, Queue } from './queue'
 
 /**
  *
@@ -14,6 +13,23 @@ export default class ConnectionManager {
   constructor (store, options) {
     this._connection = new WSConnection(store, options)
     this._queue = new Queue(store)
+  }
+
+  // redux action handlers
+  [connectionActions.actionTypes.CONNECT] = () => {
+    this._sendMessages()
+  }
+
+  [queueActions.actionTypes.ADD] = () => {
+    this._sendMessages()
+  }
+
+  handle (action) {
+    const handler = this[action.type]
+    if (!handler) {
+      return
+    }
+    handler(action)
   }
 
   send ({ type, payload, meta }) {
@@ -35,15 +51,6 @@ export default class ConnectionManager {
       payload,
       meta: { ...meta, sentAt: Date.now() }
     }))
-
-    // setTimeout(() => {
-    //   // just temporal solution - freeze on 5 seconds before send message
-    //   this._connection.send(JSON.stringify({
-    //     type,
-    //     payload,
-    //     meta: { ...meta, sentAt: Date.now() }
-    //   }))
-    // }, 5 * 1000)
   }
 
   /**

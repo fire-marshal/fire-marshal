@@ -1,9 +1,9 @@
 // TODO: should add this package of ws middleware once I will move it to dedicated @@gaf/ws module
 import EventEmitter from 'eventemitter3'
 
-import * as _queueActions from './actions'
+import * as actions from './actions'
 
-export const queueActions = _queueActions
+export const queueActions = actions
 
 class QueueItem {
   constructor (data) {
@@ -40,7 +40,7 @@ export class Queue extends EventEmitter {
     }
     const first = this.first
     this.first = this.first.next
-    this._store.dispatch(queueActions.remove(data))
+    this._store.dispatch(queueActions.remove(first.data))
     return first.data
   }
 }

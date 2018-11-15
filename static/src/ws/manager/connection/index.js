@@ -1,6 +1,9 @@
 import * as actions from './actions'
 
-export default class WSConnection {
+
+export const connectionActions = actions
+
+export class WSConnection {
   constructor (store, { url }) {
     console.log('bootstrapWS')
 
