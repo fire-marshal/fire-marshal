@@ -1,6 +1,7 @@
 const WebSocket = require('ws')
 
 const namespace = require('../../package').name
+const serverVersion = require('../../package').version
 
 const actionTypes = {
   RESPONSE: `${namespace}/RESPONSE`
@@ -85,7 +86,8 @@ class WSConnection {
         meta: msg.meta
       },
       meta: {
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        serverVersion
       }
     }))
   }

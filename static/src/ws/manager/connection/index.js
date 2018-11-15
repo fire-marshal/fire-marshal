@@ -4,20 +4,38 @@ import * as actions from './actions'
 export const connectionActions = actions
 
 export class WSConnection {
-  constructor (store, { url }) {
+  constructor (store, { url, retry = true, retryTimeout = 5 * 1000 }) {
     console.log('bootstrapWS')
 
     this._store = store
 
-    this._ws = new WebSocket(url)
-    this._ws.onerror = this.onError.bind(this)
-    this._ws.onopen = this.onOpen.bind(this)
-    this._ws.onclose = this.onClose.bind(this)
-    this._ws.onmessage = this.onMessage.bind(this)
+    this._url = url
+    this._retry = retry
+    this._retryTimeout = retryTimeout
+
+    // bind all methods, so we could use them as callbacks
+    this.reconnect = this.reconnect.bind(this)
+    this.onError = this.onError.bind(this)
+    this.onOpen = this.onOpen.bind(this)
+    this.onClose = this.onClose.bind(this)
+    this.onMessage = this.onMessage.bind(this)
+
+    this.reconnect()
+  }
+
+  reconnect () {
+    this._ws = new WebSocket(this._url)
+    this._ws.onerror = this.onError
+    this._ws.onopen = this.onOpen
+    this._ws.onclose = this.onClose
+    this._ws.onmessage = this.onMessage
   }
 
   onClose (...args) {
     this._store.dispatch(actions.disconnect(args))
+    if (this._retry) {
+      setTimeout(this.reconnect, this._retryTimeout)
+    }
   }
 
   onError (...args) {

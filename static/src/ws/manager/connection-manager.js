@@ -22,7 +22,7 @@ export default class ConnectionManager {
   }
 
   /**
-   * dispatch incoming messages to the front end redux event bus
+   * dispatch incoming messages to the local redux event bus
    *
    * @param action
    */
