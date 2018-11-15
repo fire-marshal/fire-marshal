@@ -1,5 +1,11 @@
 const WebSocket = require('ws')
 
+const namespace = require('../../package').name
+
+const actionTypes = {
+  RESPONSE: `${namespace}/RESPONSE`
+}
+
 class PubSubApp {
   use (middleware) {
     // TODO: implement
@@ -57,7 +63,6 @@ class WSConnection {
     // TODO: should send redux action replay
     // with UID of redux action (without payload)
     // so we could have queue of actions with delivery confirmation
-    this._ws.send('I have got it!')
     try {
       msg = JSON.parse(msg)
     } catch (err) {
@@ -71,6 +76,18 @@ class WSConnection {
     console.log('payload:', msg.payload)
     console.log('meta:', meta)
     console.log('delta (msec)', meta.receivedAt - meta.sentAt)
+
+    this._ws.send(JSON.stringify({
+      type: actionTypes.RESPONSE,
+      payload: {
+        type: msg.type,
+        payload: msg.payload,
+        meta: msg.meta
+      },
+      meta: {
+        createdAt: Date.now()
+      }
+    }))
   }
 
   onPong (...args) {

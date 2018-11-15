@@ -13,11 +13,31 @@ export default class ConnectionManager {
   constructor (store, options) {
     this._connection = new WSConnection(store, options)
     this._queue = new Queue(store)
+    this._store = store
   }
 
   // redux action handlers
   [connectionActions.actionTypes.CONNECT] = () => {
     this._sendMessages()
+  }
+
+  /**
+   * dispatch incoming messages to the front end redux event bus
+   *
+   * @param action
+   */
+  [connectionActions.actionTypes.MESSAGE] = (action) => {
+    let data;
+    try {
+      data = JSON.parse(action.payload.data)
+    } catch (e) {
+      console.log('we got message which we can not unpack')
+      console.log(action)
+      return
+    }
+
+    data = { ...data, meta: { ...data.meta, receivedAt: Date.now() } }
+    this._store.dispatch(data)
   }
 
   [queueActions.actionTypes.ADD] = () => {
