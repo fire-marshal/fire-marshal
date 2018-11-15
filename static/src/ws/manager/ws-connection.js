@@ -25,6 +25,10 @@ export default class WSConnection {
     }
   }
 
+  isConnected () {
+    return this._ws.readyState === this._ws.OPEN
+  }
+
   send (data) {
     this._ws.send(data)
   }

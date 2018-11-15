@@ -13,7 +13,7 @@ import Queue from './queue'
 export default class ConnectionManager {
   constructor (store, options) {
     this._connection = new WSConnection(options)
-    this.queue = new Queue()
+    this._queue = new Queue()
   }
 
   send ({ type, payload, meta }) {
@@ -30,7 +30,7 @@ export default class ConnectionManager {
     // - user consistently update her status (for example location)
     // (and we need only the last actual location and doesn't care about all history)
 
-    this.queue.add(JSON.stringify({
+    this._queue.add(JSON.stringify({
       type,
       payload,
       meta: { ...meta, sentAt: Date.now() }
@@ -44,5 +44,17 @@ export default class ConnectionManager {
     //     meta: { ...meta, sentAt: Date.now() }
     //   }))
     // }, 5 * 1000)
+  }
+
+  /**
+   * Until we have connection and data in queue
+   * we send data through web socket connection
+   *
+   * @private
+   */
+  _sendMessages () {
+    while (!this._queue.isEmpty() && this._connection.isConnected()) {
+      this._connection.send(this._queue.pop())
+    }
   }
 }
