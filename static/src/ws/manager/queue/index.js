@@ -1,3 +1,10 @@
+// TODO: should add this package of ws middleware once I will move it to dedicated @@gaf/ws module
+import EventEmitter from 'eventemitter3'
+
+import * as _queueActions from './actions'
+
+export const queueActions = _queueActions
+
 class QueueItem {
   constructor (data) {
     this.data = data
@@ -5,8 +12,13 @@ class QueueItem {
   }
 }
 
-export default class Queue {
+export class Queue extends EventEmitter {
   first = null
+
+  constructor (store) {
+    super()
+    this._store = store
+  }
 
   add (data) {
     const item = new QueueItem(data)
@@ -15,6 +27,7 @@ export default class Queue {
     } else {
       this.first.next = item
     }
+    this._store.dispatch(queueActions.add(data))
   }
 
   isEmpty () {
@@ -27,6 +40,7 @@ export default class Queue {
     }
     const first = this.first
     this.first = this.first.next
+    this._store.dispatch(queueActions.remove(data))
     return first.data
   }
 }

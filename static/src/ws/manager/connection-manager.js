@@ -1,6 +1,6 @@
-import WSConnection from './ws-connection'
+import WSConnection from './connection'
 
-import Queue from './queue'
+import { Queue } from './queue'
 
 /**
  *
@@ -12,8 +12,8 @@ import Queue from './queue'
  */
 export default class ConnectionManager {
   constructor (store, options) {
-    this._connection = new WSConnection(options)
-    this._queue = new Queue()
+    this._connection = new WSConnection(store, options)
+    this._queue = new Queue(store)
   }
 
   send ({ type, payload, meta }) {
