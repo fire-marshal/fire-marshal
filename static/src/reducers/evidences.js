@@ -14,7 +14,6 @@ import { prepareUrl } from '../utils/api-url-processor'
 
 const namespace = require('../utils/get-namespace')()
 
-
 //
 // actions
 //
@@ -102,7 +101,6 @@ export default createReducer(
     ),
 
     [wssActions.actionTypes.ADD]: (state, action) => {
-      // TODO: append new item
       const newItem = processItem(action.payload)
       if (isOldItem(state, newItem)) {
         console.log(`we already have ${newItem.id}`)
@@ -163,16 +161,6 @@ function filterByIds (items, ids) {
 }
 
 /**
- * process each new item
- *
- * @param item
- * @returns {{id: *}}
- */
-function processItem (item) {
-  return { ...item, id: item._id };
-}
-
-/**
  * Is it new item?
  *
  * @param state
@@ -182,4 +170,14 @@ function processItem (item) {
 function isOldItem (state, item) {
   const ids = getIdsRaw(state)
   return ids && ids.has(item.id)
+}
+
+/**
+ * process each new item
+ *
+ * @param item
+ * @returns {{id: *}}
+ */
+function processItem (item) {
+  return { ...item, id: item._id };
 }
