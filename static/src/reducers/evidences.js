@@ -9,10 +9,11 @@ import config from '../config'
 
 import { fetchActionSimplified } from '../async-queue/fetch-action'
 import asyncReducer from '../async-queue/reducer-builder'
-
+import { getIdsRaw } from '../selectors/evidences'
 import { prepareUrl } from '../utils/api-url-processor'
 
 const namespace = require('../utils/get-namespace')()
+
 
 //
 // actions
@@ -87,7 +88,8 @@ export default createReducer(
       ({ res }, previousData) => {
         // we should left only new items
         const previousIds = previousData.get('ids')
-        const newItems = filterByIds(res.items, previousIds)
+        let newItems = filterByIds(res.items, previousIds)
+        newItems = newItems.map(processItem)
         const newIds = getIds(newItems)
 
         return Immutable.Map({
@@ -101,14 +103,19 @@ export default createReducer(
 
     [wssActions.actionTypes.ADD]: (state, action) => {
       // TODO: append new item
-
-      // return state.setAt(['data', ]) = Immutable.Map({
-      //     ids: previousIds.union(newIds),
-      //     items: previousData.get('items').push(...newItems),
-      //     total: res.total,
-      //     startDate: getStartDate(res.items),
-      //   })
-      return state;
+      const newItem = processItem(action.payload)
+      if (isOldItem(state, newItem)) {
+        console.log(`we already have ${newItem.id}`)
+        return state;
+      } else {
+        console.log(`it is new item ${newItem.id}`)
+        return state
+          .update('data', data => data
+            .update('ids', ids => ids.add(newItem.id))
+            .update('items', items => items.unshift(Immutable.fromJS(newItem)))
+            .update('total', total => total + 1)
+          )
+      }
     }
   }
 )
@@ -153,4 +160,26 @@ function getIds (items) {
  */
 function filterByIds (items, ids) {
   return items.filter(i => !ids.has(i._id))
+}
+
+/**
+ * process each new item
+ *
+ * @param item
+ * @returns {{id: *}}
+ */
+function processItem (item) {
+  return { ...item, id: item._id };
+}
+
+/**
+ * Is it new item?
+ *
+ * @param state
+ * @param item
+ * @returns {*}
+ */
+function isOldItem (state, item) {
+  const ids = getIdsRaw(state)
+  return ids && ids.has(item.id)
 }

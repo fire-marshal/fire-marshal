@@ -51,3 +51,8 @@ export const getStartDateISO = createSelector(
   [getStartDate],
   (date) => date && date.toISOString()
 )
+
+export const getIdsRaw = createSelector(
+  [getEvidenceDataRaw],
+  (data) => data && data.get('ids')
+)

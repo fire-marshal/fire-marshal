@@ -6,6 +6,7 @@ function generateFakeItem (faker) {
   const createAt = randomDateBetween(new Date(2000, 0, 0), new Date())
   const uploadAt = randomDateBetween(createAt, new Date())
   return {
+    _id: faker.random.uuid(),
     author: faker.name.findName(),
     uploadAt,
     details: faker.lorem.paragraph(),
