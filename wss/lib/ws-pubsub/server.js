@@ -10,6 +10,22 @@ const serverEvents = {
 }
 
 /**
+ * Get IP of client
+ *
+ * @param req
+ * @returns {*}
+ * @private
+ */
+function _getIP (req) {
+  const forwaredFor = req.headers['x-forwarded-for']
+  if (forwaredFor) {
+    return forwaredFor.split(/\s*,\s*/)[0]
+  } else {
+    return req.connection.remoteAddress
+  }
+}
+
+/**
  * we use callbacks instead of EventEmitter here
  * because we need to create context for connection (onConnect)
  * but handler of event can't return new ctx object.
@@ -38,8 +54,10 @@ class WSServer extends EventEmitter {
     this._connections = []
   }
 
-  onOpenConnection (ws) {
+  onOpenConnection (ws, req) {
     console.log('onOpenConnection')
+    const ip = _getIP(req)
+    console.log('ip:', ip)
 
     const c = new WSConnection(ws)
     c.on(connectionEvents.MESSAGE, this.onMessage)
