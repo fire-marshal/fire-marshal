@@ -1,6 +1,8 @@
 import Immutable from 'immutable'
 import _ from 'lodash'
 
+const wssActions = require('../../../wss/lib/agents/evidences/actions');
+
 import { createReducer } from './_helper'
 
 import config from '../config'
@@ -95,7 +97,19 @@ export default createReducer(
           startDate: getStartDate(res.items),
         })
       }
-    )
+    ),
+
+    [wssActions.actionTypes.ADD]: (state, action) => {
+      // TODO: append new item
+
+      // return state.setAt(['data', ]) = Immutable.Map({
+      //     ids: previousIds.union(newIds),
+      //     items: previousData.get('items').push(...newItems),
+      //     total: res.total,
+      //     startDate: getStartDate(res.items),
+      //   })
+      return state;
+    }
   }
 )
 

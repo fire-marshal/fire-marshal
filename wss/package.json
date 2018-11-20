@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/fire-marshal/fire-marshal#readme",
   "dependencies": {
+    "faker": "^4.1.0",
     "ws": "^6.1.0"
   },
   "devDependencies": {

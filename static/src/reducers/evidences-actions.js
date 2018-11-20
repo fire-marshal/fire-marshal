@@ -1,0 +1,9 @@
+const namespace = require('../../package').name
+
+module.exports = {
+  APPEND_EVIDENCES_REQUEST: `${namespace}/EVIDENCES.APPEND:REQUEST`,
+  APPEND_EVIDENCES_RECEIVE: `${namespace}/EVIDENCES.APPEND:RECEIVE`,
+  APPEND_EVIDENCES_ERROR: `${namespace}/EVIDENCES.APPEND:ERROR`,
+  SUBSCRIBE_EVIDENCES: `${namespace}/EVIDENCES.SUBSCRIBE`,
+  UNSUBSCRIBE_EVIDENCES: `${namespace}/EVIDENCES.UNSUBSCRIBE`
+}
