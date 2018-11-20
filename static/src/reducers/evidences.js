@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import _ from 'lodash'
 
-const wssActions = require('../../../wss/lib/agents/evidences/actions');
+const wssActions = require('../../../wss/lib/agents/evidences/actions')
 
 import { createReducer } from './_helper'
 
@@ -12,7 +12,7 @@ import asyncReducer from '../async-queue/reducer-builder'
 import { getIdsRaw } from '../selectors/evidences'
 import { prepareUrl } from '../utils/api-url-processor'
 
-const namespace = require('../utils/get-namespace')()
+const namespace = require('../../package').name
 
 //
 // actions
@@ -22,9 +22,6 @@ const namespace = require('../utils/get-namespace')()
 export const APPEND_EVIDENCES_REQUEST = `${namespace}/EVIDENCES.APPEND:REQUEST`
 export const APPEND_EVIDENCES_RECEIVE = `${namespace}/EVIDENCES.APPEND:RECEIVE`
 export const APPEND_EVIDENCES_ERROR = `${namespace}/EVIDENCES.APPEND:ERROR`
-
-export const SUBSCRIBE_EVIDENCES = `${namespace}/EVIDENCES.SUBSCRIBE`
-export const UNSUBSCRIBE_EVIDENCES = `${namespace}/EVIDENCES.UNSUBSCRIBE`
 
 //
 // action creators
@@ -43,23 +40,6 @@ export const fetchEvidences = fetchActionSimplified({
   },
 
   actions: [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR]
-})
-
-export const subscribeEvidences = (payload) => ({
-  type: SUBSCRIBE_EVIDENCES,
-  payload,
-  meta: {
-    createdAt: Date.now(),
-    socket: true,
-  }
-})
-
-export const unsubscribeEvidences = () => ({
-  type: UNSUBSCRIBE_EVIDENCES,
-  meta: {
-    createdAt: Date.now(),
-    socket: true,
-  }
 })
 
 //
@@ -83,7 +63,11 @@ export default createReducer(
   }),
   {
     ...asyncReducer(
-      [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR],
+      [
+        APPEND_EVIDENCES_REQUEST,
+        APPEND_EVIDENCES_RECEIVE,
+        APPEND_EVIDENCES_ERROR
+      ],
       ({ res }, previousData) => {
         // we should left only new items
         const previousIds = previousData.get('ids')

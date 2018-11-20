@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 
 import config from '../config'
 import * as evidencesActions from '../reducers/evidences'
+import * as evidencesSubscriber from '../reducers/evidences-subscriber'
 import * as evidencesSelector from '../selectors/evidences'
 
 import MainStreamItem from './main-stream-item'
@@ -87,8 +88,8 @@ export default connect(
 
   (dispatch, props) => ({
     validateItems: ({ lat, long }) => dispatch(evidencesActions.fetchEvidences({ lat, long })),
-    subscribeDataStream: (payload) => dispatch(evidencesActions.subscribeEvidences(payload)),
-    unsubscribeDataStream: () => dispatch(evidencesActions.unsubscribeEvidences()),
+    subscribeDataStream: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
+    unsubscribeDataStream: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
     loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(evidencesActions.fetchEvidences({
       lat,
       long,

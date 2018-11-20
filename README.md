@@ -85,6 +85,7 @@ _sorted by priority_
 - [parcel](https://parceljs.org)
 - [react](https://reactjs.org/)
 - [redux](http://redux.js.org)
+- [reselect](https://github.com/reduxjs/reselect) support of [reselect-tool](https://github.com/skortchmark9/reselect-tools)
 - [standard.js](https://standardjs.com)
 
 ## Usage
