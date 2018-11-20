@@ -14,7 +14,6 @@ module.exports = {
     },
 
     onMessage: (ctx) => {
-      console.log('ctx', ctx)
       const { action } = ctx
       switch (action.type) {
         case clientActions.SUBSCRIBE_EVIDENCES:
