@@ -27,7 +27,6 @@ function bootstrap (config) {
   app.use(reduxMiddleware())
 
   app.onMessage((ctx) => {
-    console.log('ctx', ctx)
     if (ctx.action.meta && ctx.action.meta.socket) {
       ctx.action.meta.receivedAt = Date.now()
     }
