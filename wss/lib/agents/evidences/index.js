@@ -9,6 +9,7 @@ module.exports = {
     },
 
     onDisconnect: ctx => {
+      console.log('onDisconnect!')
       ctx.evidencesAgent.stop()
       ctx.evidencesAgent = null
     },

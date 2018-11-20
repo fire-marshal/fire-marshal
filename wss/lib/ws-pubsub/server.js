@@ -50,6 +50,8 @@ class WSServer extends EventEmitter {
   }
 
   onCloseConnection (c) {
+    console.log('onCloseConnection')
+
     c.off(connectionEvents.MESSAGE, this.onMessage)
     this.removeConnection(c)
 
@@ -63,6 +65,7 @@ class WSServer extends EventEmitter {
 
   addConnection (c) {
     this._connections.push(c)
+    console.log('num of connections', this._connections.length)
   }
 
   removeConnection (c) {

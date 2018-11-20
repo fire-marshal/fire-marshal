@@ -33,6 +33,7 @@ class EvidencesAgent {
   }
 
   stop () {
+    console.log('stop agent and clear interval', this.id);
     // TODO: stop generate wildfire evidences
     clearInterval(this.id)
   }
