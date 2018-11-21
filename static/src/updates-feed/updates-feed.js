@@ -15,7 +15,7 @@ import UpdatesFeedItem from './updates-feed-item'
 class UpdatesFeed extends React.PureComponent {
   componentDidMount () {
     // FIXME: just temporal solution to send update each 5 seconds and check load
-    setInterval(() => {
+    this.interval = setInterval(() => {
       const { location } = this.props.user
       const { startDateISO } = this.props.list
       this.props.subscribeUpdatesFeed({ location, startDateISO })
