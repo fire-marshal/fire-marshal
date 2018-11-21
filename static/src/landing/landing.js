@@ -19,7 +19,7 @@ const Landing = () => (
     </p>
     <div className='btn-group'>
       <Link className='btn btn-primary btn-lg btn-danger' to='/add-new-item' role='button'>Report Fire</Link>
-      <Link className='btn btn-primary btn-lg btn-info' to='/stream'>Stream</Link>
+      <Link className='btn btn-primary btn-lg btn-info' to='/feed'>Feed</Link>
       <a className='btn btn-primary btn-lg' href='https://github.com/fire-marshal/fire-marshal/' role='button'>Learn
         more</a>
     </div>

@@ -1,8 +1,8 @@
-import './main-stream-item.scss'
+import './updates-feed-item.scss'
 
 import React from 'react'
 
-const MainStreamItemImage = ({ img, title }) => {
+const UpdatesFeedItemImage = ({ img, title }) => {
   if (img && img.medium) {
     return <img className='card-img-top' src={img.medium} alt={title} />
   } else {
@@ -13,9 +13,9 @@ const MainStreamItemImage = ({ img, title }) => {
   }
 }
 
-const MainStreamItem = ({ item }) => (
+const UpdatesFeedItem = ({ item }) => (
   <div className='card alert-card'>
-    <MainStreamItemImage img={item.img} />
+    <UpdatesFeedItemImage img={item.img} />
     <div className='card-body'>
       <h5 className='card-title'>{item.title}</h5>
       <div className='card-text'>
@@ -28,6 +28,6 @@ const MainStreamItem = ({ item }) => (
   </div>
 )
 
-MainStreamItem.displayName = 'MainStreamItem'
+UpdatesFeedItem.displayName = 'UpdatesFeedItem'
 
-export default MainStreamItem
+export default UpdatesFeedItem

@@ -20,7 +20,7 @@ const Navbar = () => (
           <Link to='/add-new-item' className='nav-item nav-link'>Fire!</Link>
         </li>
         <li className='nav-item'>
-          <Link to='/stream' className='nav-item nav-link'>Watch</Link>
+          <Link to='/feed' className='nav-item nav-link'>Watch</Link>
         </li>
       </ul>
     </div>
