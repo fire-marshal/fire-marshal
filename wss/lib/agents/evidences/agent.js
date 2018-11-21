@@ -28,13 +28,12 @@ class EvidencesAgent {
   }
 
   start (payload) {
-    // TODO: start generate wildfire evidences
+    this.stop()
     this.id = setInterval(this._gotNewItem, 5000)
   }
 
   stop () {
     console.log('stop agent and clear interval', this.id)
-    // TODO: stop generate wildfire evidences
     clearInterval(this.id)
   }
 }
