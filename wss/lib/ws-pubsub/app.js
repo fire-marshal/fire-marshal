@@ -77,7 +77,7 @@ class WSApp {
 
   async _processPipeline (pipeline, ctx) {
     const next = async function () {
-      const middleware = pipeline.shift()
+      const middleware = pipeline.pop()
       if (middleware) {
         await middleware(ctx, next)
       }

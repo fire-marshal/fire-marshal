@@ -19,9 +19,11 @@ const namespace = require('../../package').name
 //
 
 // append new items to already existing list
-export const APPEND_EVIDENCES_REQUEST = `${namespace}/EVIDENCES.APPEND:REQUEST`
-export const APPEND_EVIDENCES_RECEIVE = `${namespace}/EVIDENCES.APPEND:RECEIVE`
-export const APPEND_EVIDENCES_ERROR = `${namespace}/EVIDENCES.APPEND:ERROR`
+export const actionTypes = {
+  APPEND_EVIDENCES_REQUEST: `${namespace}/EVIDENCES.APPEND:REQUEST`,
+  APPEND_EVIDENCES_RECEIVE: `${namespace}/EVIDENCES.APPEND:RECEIVE`,
+  APPEND_EVIDENCES_ERROR: `${namespace}/EVIDENCES.APPEND:ERROR`
+}
 
 //
 // action creators
@@ -39,7 +41,7 @@ export const fetchEvidences = fetchActionSimplified({
     })
   },
 
-  actions: [APPEND_EVIDENCES_REQUEST, APPEND_EVIDENCES_RECEIVE, APPEND_EVIDENCES_ERROR]
+  actions: [actionTypes.APPEND_EVIDENCES_REQUEST, actionTypes.APPEND_EVIDENCES_RECEIVE, actionTypes.APPEND_EVIDENCES_ERROR]
 })
 
 //
@@ -58,15 +60,14 @@ export default createReducer(
       items: [],
       total: 0,
       startDate: null,
-    },
-    updateAt: null
+    }
   }),
   {
     ...asyncReducer(
       [
-        APPEND_EVIDENCES_REQUEST,
-        APPEND_EVIDENCES_RECEIVE,
-        APPEND_EVIDENCES_ERROR
+        actionTypes.APPEND_EVIDENCES_REQUEST,
+        actionTypes.APPEND_EVIDENCES_RECEIVE,
+        actionTypes.APPEND_EVIDENCES_ERROR
       ],
       ({ res }, previousData) => {
         // we should left only new items

@@ -23,6 +23,7 @@ class UpdatesFeed extends React.PureComponent {
   }
 
   componentWillUnmount () {
+    clearInterval(this.interval)
     this.props.unsubscribeUpdatesFeed()
   }
 

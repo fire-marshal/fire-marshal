@@ -11,7 +11,7 @@ module.exports = {
       }
     },
 
-    onMessage: async (ctx, next) => {
+    onMessage: (ctx) => {
       console.log('redux middleware process')
       let action
       try {
@@ -21,10 +21,9 @@ module.exports = {
         return
       }
 
-      console.log('store action to ctx')
+      console.log('store action to ctx', action)
 
       ctx.action = action
-      await next()
     }
   })
 }
