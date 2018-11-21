@@ -1,5 +1,14 @@
 # "Fire Marshal"
 
+```
+______ _           ___  ___               _           _
+|  ___(_)          |  \/  |              | |         | |
+| |_   _ _ __ ___  | .  . | __ _ _ __ ___| |__   __ _| |
+|  _| | | '__/ _ \ | |\/| |/ _` | '__/ __| '_ \ / _` | |
+| |   | | | |  __/ | |  | | (_| | |  \__ \ | | | (_| | |
+\_|   |_|_|  \___| \_|  |_/\__,_|_|  |___/_| |_|\__,_|_|
+```
+
 _I'm still looking for better name for the project_
 
 :palm_tree: :deciduous_tree: :fire: :deciduous_tree: :house_with_garden: :fire: :deciduous_tree: :deciduous_tree: :deciduous_tree: :running: :house: :deciduous_tree: :school: :blue_car: :deciduous_tree:  :fire_engine: :deciduous_tree: :deciduous_tree:  :palm_tree:
