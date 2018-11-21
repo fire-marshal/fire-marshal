@@ -6,8 +6,10 @@ import ReactDOM from 'react-dom'
 import { applyMiddleware, compose, createStore } from 'redux'
 import { combineReducers } from 'redux-immutable'
 import thunkMiddleware from 'redux-thunk'
+import * as ReselectTools from 'reselect-tools'
 
 import reducers from '../reducers'
+import * as selectors from '../selectors'
 import { wsMiddleware } from '../ws'
 
 import AppRouter from './router'
@@ -42,6 +44,10 @@ export function bootstrap (targetElm) {
       )
     )
   )
+
+  // TODO: should disable in production
+  ReselectTools.getStateWith(() => store.getState())
+  Object.values(selectors).forEach(selector => ReselectTools.registerSelectors(selector))
 
   ReactDOM.render(
     <AppRouter ConnectedRouter={ConnectedRouter} history={history} store={store} />,

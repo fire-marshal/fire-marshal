@@ -6,7 +6,5 @@
  */
 
 module.exports = {
-  mount: require('./mount'),
-  WSPubSub: require('./app'),
-  Router: require('./router')
+  WSApp: require('./app')
 }

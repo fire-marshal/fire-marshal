@@ -1,25 +1,38 @@
 const _ = require('lodash')
 
-const routers = require('./routes')
-const { mount, WSPubSub } = require('./ws-pubsub')
+const { WSApp } = require('./ws-pubsub')
+const { reduxMiddleware } = require('./redux-middleware')
+const { evidencesAgent } = require('./agents/evidences')
 
 function bootstrap (config) {
   // TODO: get DB interface
   const db = {}
-  const app = new WSPubSub()
-  // FIXME: should be:
-  // TODO: logger on each connect/disconnect (similar things for sending message)
-  // app.use(async (ctx, next) => {
-  // // connect
-  //   await next()
-  // // disconnect
-  //   const rt = ctx.response.get('X-Response-Time')
-  //   console.log(`${ctx.method} ${ctx.url} - ${rt}`)
-  // })
+  const app = new WSApp()
 
-  // TODO: should we pass each message through app.use?
+  app.use({
+    onConnect (ctx) {
+      ctx.sessionStart = Date.now()
+    },
+    onDisconnect (ctx) {
+      console.log('connection time', Date.now() - ctx.sessionStart)
+    }
+  })
 
-  app.use(mount('/api', routers(config, { db })))
+  app.onMessage(async (ctx, next) => {
+    ctx.messageStart = Date.now()
+    await next()
+    console.log('message processing time', Date.now() - ctx.messageStart)
+  })
+
+  app.use(reduxMiddleware())
+
+  app.onMessage((ctx) => {
+    if (ctx.action.meta && ctx.action.meta.socket) {
+      ctx.action.meta.receivedAt = Date.now()
+    }
+  })
+
+  app.use(evidencesAgent({ db }))
 
   app.listen(_.get(config, 'server.port', 8000))
   return app

@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router'
 
 import { AddNewItemForm } from '../add-new-item'
 import { Landing } from '../landing'
-import { MainStream } from '../main-stream'
+import { UpdatesFeed } from '../updates-feed'
 
 import AppContainer from './container'
 
@@ -18,7 +18,7 @@ const AppRouter = ({ ConnectedRouter, history, store }) => (
         <Switch>
           <Route exact path='/' render={() => <Landing />} />
           <Route path='/add-new-item' render={() => <AddNewItemForm />} />
-          <Route path='/stream' render={() => <MainStream />} />
+          <Route path='/feed' render={() => <UpdatesFeed />} />
           <Route render={() => (<div>Miss</div>)} />
         </Switch>
       </AppContainer>

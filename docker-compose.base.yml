@@ -13,6 +13,7 @@ services:
 # PROD MODE:
 #      && npm start"
     volumes:
+      - ./common:/common
       - ./server:/code
       - /code/node_modules
       - api-docs:/code/api/swagger
@@ -41,6 +42,7 @@ services:
     command: npm run build
     volumes:
       - ./static:/code
+      - ./wss:/wss
       - /code/node_modules
       - static-sync:/code/build
 
@@ -83,6 +85,8 @@ services:
     # npm start"
     #
     volumes:
+    - ./common:/common
+    - ./static:/static
     - ./wss:/code
     - /code/node_modules
     depends_on:

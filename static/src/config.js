@@ -4,7 +4,7 @@ module.exports = {
     api_url_with_start_date: '/api/v1/fires?{{ops}}',
     // how many msec we wait until make request
     // repeated requests just ignored
-    debounceDelay: 500
+    debounceDelay: 1000
   },
 
   asyncQueue: {

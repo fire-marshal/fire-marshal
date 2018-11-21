@@ -1,4 +1,4 @@
-import './main-stream.scss'
+import './updates-feed.scss'
 
 import { bind, debounce } from 'decko'
 import React from 'react'
@@ -7,22 +7,24 @@ import { connect } from 'react-redux'
 
 import config from '../config'
 import * as evidencesActions from '../reducers/evidences'
+import * as evidencesSubscriber from '../reducers/evidences-subscriber'
 import * as evidencesSelector from '../selectors/evidences'
 
-import MainStreamItem from './main-stream-item'
+import UpdatesFeedItem from './updates-feed-item'
 
-class MainStream extends React.PureComponent {
+class UpdatesFeed extends React.PureComponent {
   componentDidMount () {
     // FIXME: just temporal solution to send update each 5 seconds and check load
-    setInterval(() => {
+    this.interval = setInterval(() => {
       const { location } = this.props.user
       const { startDateISO } = this.props.list
-      this.props.subscribeDataStream({ location, startDateISO })
+      this.props.subscribeUpdatesFeed({ location, startDateISO })
     }, 5 * 1000)
   }
 
   componentWillUnmount () {
-    this.props.unsubscribeDataStream()
+    clearInterval(this.interval)
+    this.props.unsubscribeUpdatesFeed()
   }
 
   @bind
@@ -31,7 +33,7 @@ class MainStream extends React.PureComponent {
     const { location } = this.props.user
     const { startDateISO } = this.props.list
     this.props.validateItems(location)
-    this.props.subscribeDataStream({ location, startDateISO })
+    this.props.subscribeUpdatesFeed({ location, startDateISO })
   }
 
   @bind
@@ -40,7 +42,7 @@ class MainStream extends React.PureComponent {
     const { location } = this.props.user
     const { startDateISO } = this.props.list
     this.props.loadItemsAfter({ ...location, startDateISO })
-    this.props.subscribeDataStream({ location, startDateISO })
+    this.props.subscribeUpdatesFeed({ location, startDateISO })
   }
 
   render () {
@@ -56,7 +58,7 @@ class MainStream extends React.PureComponent {
         loader={<div className='loader' key={0}>Loading ...</div>}>
         <div className='container main-st ream-container'>
           {
-            list.items ? list.items.map(item => <MainStreamItem key={item._id} item={item}/>) : (
+            list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
               list.inProgress ? <div>TODO: spinner</div> : (
                 list.error && <div>TODO: show error</div>
               )
@@ -87,12 +89,12 @@ export default connect(
 
   (dispatch, props) => ({
     validateItems: ({ lat, long }) => dispatch(evidencesActions.fetchEvidences({ lat, long })),
-    subscribeDataStream: (payload) => dispatch(evidencesActions.subscribeEvidences(payload)),
-    unsubscribeDataStream: () => dispatch(evidencesActions.unsubscribeEvidences()),
+    subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
+    unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
     loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(evidencesActions.fetchEvidences({
       lat,
       long,
       startDateISO
     }))
   })
-)(MainStream)
+)(UpdatesFeed)
