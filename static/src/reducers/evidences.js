@@ -57,6 +57,7 @@ export const fetchEvidences = fetchActionSimplified({
     const previousIds = getIdsRaw(state)
     let newItems = res.items
     newItems = filterByIds(newItems, previousIds)
+    newItems = newItems.map(processItem)
     return {
       newItems,
       total: res.total
@@ -144,7 +145,7 @@ function getStartDate (items) {
  * @returns {Array}
  */
 export function getIds (items) {
-  return items.map(i => i._id)
+  return items.map(i => i.id)
 }
 
 /**
