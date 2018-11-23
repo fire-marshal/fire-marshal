@@ -143,7 +143,7 @@ function getStartDate (items) {
  * @param items {Array}
  * @returns {Array}
  */
-function getIds (items) {
+export function getIds (items) {
   return items.map(i => i._id)
 }
 

@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import { createReducer } from './_helper'
-import { actionTypes } from './evidences'
+import { actionTypes, getIds } from './evidences'
 
 export default createReducer(
   Immutable.fromJS({
@@ -11,15 +11,15 @@ export default createReducer(
   }),
   {
     [actionTypes.APPEND_EVIDENCES_RECEIVE]: (state, { payload }) => {
+      const { newItems } = payload
+      const ids = getIds(newItems)
       // TODO:
       // 0) preprocess input data payload.res.items
       // -- drop duplications
       // -- map _id to id
       // 1) create playlist (array of ids)
       // 2) sort
-
-
-      return state
+      return state.update('data', data => Immutable.List(ids))
     }
   }
 )
