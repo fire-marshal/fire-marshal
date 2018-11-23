@@ -41,7 +41,27 @@ export const fetchEvidences = fetchActionSimplified({
     })
   },
 
-  actions: [actionTypes.APPEND_EVIDENCES_REQUEST, actionTypes.APPEND_EVIDENCES_RECEIVE, actionTypes.APPEND_EVIDENCES_ERROR]
+  actions: [actionTypes.APPEND_EVIDENCES_REQUEST, actionTypes.APPEND_EVIDENCES_RECEIVE, actionTypes.APPEND_EVIDENCES_ERROR],
+
+  /**
+   * Filter out duplications
+   *
+   * @param payload
+   * @param getState
+   * @param res
+   *
+   * @returns {{newIds: Array, newItems: Array}}
+   */
+  process: ({ payload, getState, res }) => {
+    const state = getState()
+    const previousIds = getIdsRaw(state)
+    let newItems = res.items
+    newItems = filterByIds(newItems, previousIds)
+    return {
+      newItems,
+      total: res.total
+    }
+  }
 })
 
 //
@@ -69,19 +89,12 @@ export default createReducer(
         actionTypes.APPEND_EVIDENCES_RECEIVE,
         actionTypes.APPEND_EVIDENCES_ERROR
       ],
-      ({ res }, previousData) => {
-        // we should left only new items
-        const previousIds = previousData.get('ids')
-        let newItems = filterByIds(res.items, previousIds)
-        newItems = newItems.map(processItem)
-        const newIds = getIds(newItems)
-
-        return Immutable.Map({
-          ids: previousIds.union(newIds),
-          items: previousData.get('items').push(...newItems),
-          total: res.total,
-          startDate: getStartDate(res.items),
-        })
+      ({ newItems, total }, originalData) => {
+        return originalData
+          .update('ids', ids => ids.union(getIds(newItems)))
+          .update('items', items => items.push(...newItems))
+          .update('startDate', originalStartDate => getMinDate(originalStartDate, getStartDate(newItems)))
+          .set('total', total)
       }
     ),
 
@@ -132,6 +145,16 @@ function getStartDate (items) {
  */
 function getIds (items) {
   return items.map(i => i._id)
+}
+
+/**
+ * get minimal date
+ *
+ * @param args
+ * @returns {Date}
+ */
+function getMinDate (...args) {
+  return new Date(Math.min(...args.filter(d => !!d)))
 }
 
 /**

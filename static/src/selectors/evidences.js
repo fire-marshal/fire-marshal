@@ -7,7 +7,7 @@ const getEvidenceDataRaw = createSelector(
   (evidences) => evidences && evidences.get('data')
 )
 
-const getEvidenceItemsRaw = createSelector(
+export const getEvidenceItemsRaw = createSelector(
   [getEvidenceDataRaw],
   (data) => data && data.get('items')
 )

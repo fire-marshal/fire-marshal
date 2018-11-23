@@ -15,7 +15,7 @@ import { addToQueue } from './task-queue'
  * @returns {function(...[*]=): function(*=)}
  */
 export function fetchAction ({ getUrl, requestAction, resultAction, errorAction = null }) {
-  return (payload) => dispatch => {
+  return (payload) => (dispatch, getState) => {
     dispatch(requestAction(payload))
 
     return addToQueue(() => {
@@ -52,12 +52,23 @@ export function fetchAction ({ getUrl, requestAction, resultAction, errorAction 
           }))
           return Promise.reject(error)
         })
-        .then(res => dispatch(resultAction({ ...payload, res })))
+        .then(res => dispatch(resultAction({ getState, payload, res })))
     })
   }
 }
 
-export function fetchActionSimplified ({ getUrl, actions }) {
+/**
+ * Simplified fetch action
+ *
+ * @param getUrl
+ * @param actions
+ * @param process - thunk function with receive { getState, payload, res } and should return process res
+ * @returns {function(...[*]=): function(*=)}
+ */
+export function fetchActionSimplified ({
+                                         getUrl, actions,
+                                         process = ({ payload, res }) => ({ ...payload, ...res })
+                                       }) {
   const init = {
     getUrl,
 
@@ -72,11 +83,11 @@ export function fetchActionSimplified ({ getUrl, actions }) {
       }
     }),
 
-    resultAction: (payload) => ({
+    resultAction: (args) => ({
       type: actions[1],
       payload: {
         inProgress: false,
-        ...payload
+        ...process(args),
       },
       meta: {
         createdAt: Date.now()
@@ -85,7 +96,7 @@ export function fetchActionSimplified ({ getUrl, actions }) {
   }
 
   if (actions.length > 2) {
-    init.errorAction = payload => ({
+    init.errorAction = (payload) => ({
       type: actions[2],
       payload: {
         inProgress: false,
