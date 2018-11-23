@@ -11,8 +11,10 @@ import Immutable from 'immutable'
  * @param updateData callback to update data with new portion
  * @returns {{}}
  */
-module.exports = function asyncReducer ([request, receive, error = null],
-                                        updateData = (payload) => Immutable.fromJS(payload)) {
+module.exports = function asyncReducer (
+  [request, receive, error = null],
+  updateData = (payload) => Immutable.fromJS(payload)
+) {
   const res = {
     [request]: (state, { meta }) => state
       .set('updateAt', meta.createdAt)

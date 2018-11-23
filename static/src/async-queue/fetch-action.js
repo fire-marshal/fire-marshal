@@ -66,9 +66,9 @@ export function fetchAction ({ getUrl, requestAction, resultAction, errorAction 
  * @returns {function(...[*]=): function(*=)}
  */
 export function fetchActionSimplified ({
-                                         getUrl, actions,
-                                         process = ({ payload, res }) => ({ ...payload, ...res })
-                                       }) {
+  getUrl, actions,
+  process = ({ payload, res }) => ({ ...payload, ...res })
+}) {
   const init = {
     getUrl,
 
@@ -87,7 +87,7 @@ export function fetchActionSimplified ({
       type: actions[1],
       payload: {
         inProgress: false,
-        ...process(args),
+        ...process(args)
       },
       meta: {
         createdAt: Date.now()

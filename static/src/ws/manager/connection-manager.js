@@ -27,7 +27,7 @@ export default class ConnectionManager {
    * @param action
    */
   [connectionActions.actionTypes.MESSAGE] = (action) => {
-    let data;
+    let data
     try {
       data = JSON.parse(action.payload.data)
     } catch (e) {

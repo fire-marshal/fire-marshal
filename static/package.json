@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production cd public && parcel --out-dir ../build build index.html",
-    "lint": "standard --env mocha 'src/util/**/*.js'",
+    "lint": "npm run lint:src && npm run lint:tests",
+    "lint:src": "standard 'src/**/*.js'",
+    "lint:tests": "standard --env mocha 'tests**/*.js'",
     "start": "NODE_ENV=development cd public && parcel --hmr-hostname 0.0.0.0 --hmr-port 7001 --out-dir ../build --cache-dir ../.cache watch index.html",
     "test": "mocha --opts ./tests/mocha.opts"
   },
@@ -73,6 +75,10 @@
     "sass": "^1.14.3"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "node": true
+    }
   }
 }

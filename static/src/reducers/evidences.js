@@ -1,8 +1,6 @@
 import Immutable from 'immutable'
 import _ from 'lodash'
 
-const wssActions = require('../../../wss/lib/agents/evidences/actions')
-
 import { createReducer } from './_helper'
 
 import config from '../config'
@@ -11,6 +9,8 @@ import { fetchActionSimplified } from '../async-queue/fetch-action'
 import asyncReducer from '../async-queue/reducer-builder'
 import { getIdsRaw } from '../selectors/evidences'
 import { prepareUrl } from '../utils/api-url-processor'
+
+const wssActions = require('../../../wss/lib/agents/evidences/actions')
 
 const namespace = require('../../package').name
 
@@ -31,13 +31,13 @@ export const actionTypes = {
 
 export const fetchEvidences = fetchActionSimplified({
   getUrl: ({ lat, long, startDateISO }) => {
-    let ops = null;
+    let ops = null
     if (startDateISO) {
-      ops = { start_date: startDateISO };
+      ops = { start_date: startDateISO }
     }
 
     return prepareUrl(config.evidences.api_url_with_start_date, {
-      lat, long, ops,
+      lat, long, ops
     })
   },
 
@@ -79,7 +79,7 @@ export default createReducer(
       ids: Immutable.Set(),
       items: [],
       total: 0,
-      startDate: null,
+      startDate: null
     }
   }),
   {
@@ -102,7 +102,7 @@ export default createReducer(
       const newItem = processItem(action.payload)
       if (isOldItem(state, newItem)) {
         console.log(`we already have ${newItem.id}`)
-        return state;
+        return state
       } else {
         console.log(`it is new item ${newItem.id}`)
         return state
@@ -187,5 +187,5 @@ function isOldItem (state, item) {
  * @returns {{id: *}}
  */
 function processItem (item) {
-  return { ...item, id: item._id };
+  return { ...item, id: item._id }
 }
