@@ -25,12 +25,24 @@ export function bootstrap (targetElm) {
   const rootReducers = combineReducers(reducers)
   const initialState = Immutable.Map()
 
-  /* eslint-disable no-underscore-dangle */
-  const composeEnhancers = (typeof window !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
+  /* eslint-disable ndo-underscore-dangle */
+  let composeEnhancers
+  if (
+    typeof window !== 'undefined' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+    // could give performance problem so we disable it production
+    process.env.NODE_ENV !== 'production'
+  ) {
+    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  } else {
+    composeEnhancers = compose
+  }
   /* eslint-enable */
 
+  const reducerAndRouter = connectRouter(history)(rootReducers)
+
   const store = createStore(
-    connectRouter(history)(rootReducers),
+    reducerAndRouter,
 
     initialState,
 
@@ -46,8 +58,15 @@ export function bootstrap (targetElm) {
   )
 
   // TODO: should disable in production
-  ReselectTools.getStateWith(() => store.getState())
-  Object.values(selectors).forEach(selector => ReselectTools.registerSelectors(selector))
+  if (process.env.NODE_ENV !== 'production') {
+    ReselectTools.getStateWith(() => store.getState())
+    Object.values(selectors).forEach(selector => ReselectTools.registerSelectors(selector))
+  }
+
+  // hot reloading
+  if (process.env.NODE_ENV !== 'production' && module.hot) {
+    module.hot.accept('./reducers', () => store.replaceReducer(reducerAndRouter))
+  }
 
   ReactDOM.render(
     <AppRouter ConnectedRouter={ConnectedRouter} history={history} store={store} />,

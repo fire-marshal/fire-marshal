@@ -7,6 +7,11 @@ const getEvidenceDataRaw = createSelector(
   (evidences) => evidences && evidences.get('data')
 )
 
+export const getEvidencesRaw = createSelector(
+  [getEvidenceDataRaw],
+  (data) => data && data.get('itemsMap')
+)
+
 export const getEvidenceItemsRaw = createSelector(
   [getEvidenceDataRaw],
   (data) => data && data.get('items')
