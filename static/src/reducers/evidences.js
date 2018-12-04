@@ -82,11 +82,25 @@ export default createReducer(
       byId: Immutable.Map(),
       // sorted list of ids
       sortedIds: Immutable.List(),
+
+      // TODO: this state depends on the entity state
+      // (because visibleIds should be sorted)
+      // so question is should we extend entity state with its visibility state
+      // or create ui state which would know about entity state?
+      visibility: {
+        realtime: false,
+        delayedIds: Immutable.List(),
+        visibleIds: Immutable.List()
+      },
+
+      // @deprecated
       // sorted list of items
       ids: Immutable.Set(),
+      // @deprecated
       items: [],
       // total (globally, not only on this client) number of items
       total: 0,
+      // @deprecated
       // TODO: it seems we can derive this value from sorted ids and byId
       startDate: null
     }
@@ -119,6 +133,10 @@ export default createReducer(
     ),
 
     [wssActions.actionTypes.ADD]: (state, action) => {
+      // TODO: we should have 2 options:
+      // - real-time update when we insert new items to `sortedIds` right a way
+      // - on-demand update when we store new items to `delayedIds`
+      // and would merged them to the `sortedIds` on demand
       const newItem = processItem(action.payload)
       if (isOldItem(state, newItem)) {
         console.log(`we already have ${newItem.id}`)
@@ -126,7 +144,7 @@ export default createReducer(
       } else {
         console.log(`it is new item ${newItem.id}`)
         return state
-          .update('data', data => data
+          .update('data', data => appendItem(data, newItem)
             .update('ids', ids => ids.add(newItem.id))
             .update('items', items => items.unshift(Immutable.fromJS(newItem)))
             .update('total', total => total + 1)
@@ -152,8 +170,8 @@ function appendItem (originalData, item, sortBy = ['when', 'estimation']) {
   const sortedIds = originalData.get('sortedIds')
 
   function inplaceValue (idx) {
-    const itemId = sortedIds.get(idx)
-    return originalData.getIn(['byId', itemId].concat(sortBy))
+    const inplaceId = sortedIds.get(idx)
+    return originalData.getIn(['byId', inplaceId].concat(sortBy))
   }
 
   const itemFieldValue = _.get(item, sortBy)
