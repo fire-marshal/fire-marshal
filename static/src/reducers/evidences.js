@@ -77,9 +77,14 @@ export default createReducer(
     invalid: true,
     error: null,
     data: {
+      // items by its id
+      byId: Immutable.Map(),
+      // sorted list of items
       ids: Immutable.Set(),
       items: [],
+      // total (globally, not only on this client) number of items
       total: 0,
+      // TODO: it seems we can derive this value from sorted ids and byId
       startDate: null
     }
   }),
@@ -91,7 +96,23 @@ export default createReducer(
         actionTypes.APPEND_EVIDENCES_ERROR
       ],
       ({ newItems, total }, originalData) => {
+        // FIXME: proposition
+        // const byId = originalData.get('byId')
+        // const newData = newItems
+        //   .filter(item => !byId.has(item.id))
+        //   .reduce((acc, item) => {
+        //     // TODO find ids pos
+        //     return acc.setIn(['byId', item.id], Immutable.fromJS(item))
+        //   }, originalData)
+        //
+        // return newData
+        //   .set('total', total)
+
+        // TODO:
+        // 1. set byId
+        // 2. list of sorted ids
         return originalData
+          .update('byId', byId => byId)
           .update('ids', ids => ids.union(getIds(newItems)))
           .update('items', items => items.push(...newItems))
           .update('startDate', originalStartDate => getMinDate(originalStartDate, getStartDate(newItems)))
