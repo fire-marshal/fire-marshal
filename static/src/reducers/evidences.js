@@ -9,6 +9,7 @@ import { fetchActionSimplified } from '../async-queue/fetch-action'
 import asyncReducer from '../async-queue/reducer-builder'
 import { getIdsRaw } from '../selectors/evidences'
 import { prepareUrl } from '../utils/api-url-processor'
+import { binarySearchOfCallback } from '../utils/binary-search'
 
 const wssActions = require('../../../wss/lib/agents/evidences/actions')
 
@@ -79,6 +80,8 @@ export default createReducer(
     data: {
       // items by its id
       byId: Immutable.Map(),
+      // sorted list of ids
+      sortedIds: Immutable.List(),
       // sorted list of items
       ids: Immutable.Set(),
       items: [],
@@ -97,21 +100,16 @@ export default createReducer(
       ],
       ({ newItems, total }, originalData) => {
         // FIXME: proposition
-        // const byId = originalData.get('byId')
-        // const newData = newItems
-        //   .filter(item => !byId.has(item.id))
-        //   .reduce((acc, item) => {
-        //     // TODO find ids pos
-        //     return acc.setIn(['byId', item.id], Immutable.fromJS(item))
-        //   }, originalData)
-        //
-        // return newData
-        //   .set('total', total)
-
-        // TODO:
         // 1. set byId
         // 2. list of sorted ids
-        return originalData
+        let newData = newItems.reduce((acc, item) => appendItem(acc, item), originalData)
+
+        newData = newData
+          .set('total', total)
+
+        // @deprecated
+        // left for compatibility
+        return newData
           .update('byId', byId => byId)
           .update('ids', ids => ids.union(getIds(newItems)))
           .update('items', items => items.push(...newItems))
@@ -137,6 +135,47 @@ export default createReducer(
     }
   }
 )
+
+/**
+ * Append new item
+ * - in byId map
+ * - ids - sorted list of Ids
+ *
+ * @param originalData
+ * @param item
+ * @param sortBy
+ * @returns {Immutable.List<T> | Immutable.Map<K, V> | __Cursor.Cursor | *}
+ * @private
+ */
+function appendItem (originalData, item, sortBy = ['when', 'estimation']) {
+  // append item item in sorted list
+  const sortedIds = originalData.get('sortedIds')
+
+  function inplaceValue (idx) {
+    const itemId = sortedIds.get(idx)
+    return originalData.getIn(['byId', itemId].concat(sortBy))
+  }
+
+  const itemFieldValue = _.get(item, sortBy)
+  const inplaceLength = sortedIds.count()
+  const insertIndex = binarySearchOfCallback(inplaceValue, inplaceLength, itemFieldValue)
+
+  // we could have 3 result here:
+  if (insertIndex === inplaceLength) {
+    // 1) last element - use push
+    originalData = originalData.update('sortedIds', ids => ids.push(item.id))
+  } else {
+    const inplaceId = sortedIds.getIn([insertIndex, 'id'])
+    if (inplaceId !== item.id) {
+      // 2) new element - insert
+      originalData = originalData.update('sortedIds', ids => ids.insert(insertIndex, item.id))
+    }
+    // 3) the same element - do nothing
+  }
+
+  // append/update item data
+  return originalData.setIn(['byId', item.id], Immutable.fromJS(item))
+}
 
 /**
  *
