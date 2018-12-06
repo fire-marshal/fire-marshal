@@ -144,7 +144,9 @@ export default createReducer(
       } else {
         console.log(`it is new item ${newItem.id}`)
         return state
-          .update('data', data => appendItem(data, newItem)
+        // TODO: use once binarySearchOfCallback will be fixed
+          // .update('data', data => appendItem(data, newItem)
+          .update('data', data => data
             .update('ids', ids => ids.add(newItem.id))
             .update('items', items => items.unshift(Immutable.fromJS(newItem)))
             .update('total', total => total + 1)
