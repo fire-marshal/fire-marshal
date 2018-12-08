@@ -7,12 +7,11 @@ import Immutable from 'immutable'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { applyMiddleware, compose, createStore } from 'redux'
-import { combineReducers } from 'redux-immutable'
 import createSagaMiddleware from 'redux-saga'
 import thunkMiddleware from 'redux-thunk'
 import * as ReselectTools from 'reselect-tools'
 
-import reducers from '../reducers'
+import rootReducers from '../reducers'
 import rootSaga from '../sagas'
 import * as selectors from '../selectors'
 import { wsMiddleware } from '../ws'
@@ -27,7 +26,6 @@ import AppRouter from './router'
 export function bootstrap (targetElm) {
   const history = createHistory()
 
-  const rootReducers = combineReducers(reducers)
   const initialState = Immutable.Map()
 
   /* eslint-disable ndo-underscore-dangle */

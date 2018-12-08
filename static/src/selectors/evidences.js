@@ -1,7 +1,5 @@
 import { createSelector } from 'reselect'
 
-export const getEvidencesByIdRaw2 = '12345'
-
 export const getEvidences = state => state.get('evidences')
 
 const getEvidenceDataRaw = createSelector(
