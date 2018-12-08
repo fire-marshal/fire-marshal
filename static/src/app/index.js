@@ -13,7 +13,7 @@ import thunkMiddleware from 'redux-thunk'
 import * as ReselectTools from 'reselect-tools'
 
 import reducers from '../reducers'
-import sagas from '../sagas'
+import rootSaga from '../sagas'
 import * as selectors from '../selectors'
 import { wsMiddleware } from '../ws'
 
@@ -64,7 +64,7 @@ export function bootstrap (targetElm) {
     )
   )
 
-  sagaMiddleware.run(sagas)
+  sagaMiddleware.run(rootSaga)
 
   // TODO: should disable in production
   if (process.env.NODE_ENV !== 'production') {
