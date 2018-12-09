@@ -15,9 +15,9 @@ checkit='\xE2\x9C\x85'
 failed='\xE2\x9D\x8C'
 
 # list of the App nodejs modules
-npm_modules=( server static wss )
-
-required='git-generate-changelog'
+NPM_MODULES=( server static wss )
+REQUIRED='git-generate-changelog'
+ROOT=$(git rev-parse --show-toplevel)
 
 echo
 echo -e "______ _           ___  ___               _           _ "
@@ -33,8 +33,8 @@ echo
 
 echo "bump app version"
 
-echo -e "$checkit  check if $required installed"
-command -v git-generate-changelog >/dev/null 2>&1 || { echo -e >&2 "$failed  \033[1m$required\033[0m is required https://github.com/github-changelog-generator/github-changelog-generator#installation."; exit 1; }
+echo -e "$checkit  check if $REQUIRED installed"
+command -v git-generate-changelog >/dev/null 2>&1 || { echo -e >&2 "$failed  \033[1m$REQUIRED\033[0m is required https://github.com/github-changelog-generator/github-changelog-generator#installation."; exit 1; }
 
 if [[ -z "${CHANGELOG_GITHUB_TOKEN}" ]]; then
   echo -e "$failed  \033[1mCHANGELOG_GITHUB_TOKEN\033[0m is required env variable"
@@ -47,13 +47,13 @@ git pull
 
 echo -e "$checkit  bump new version of repository"
 
-for i in "${npm_modules[@]}"
+for i in "${NPM_MODULES[@]}"
 do
     printf "$checkit  bump ${i} version to: "
-	(cd ${i}; npm version ${1:-patch})
+	(cd ${ROOT}/${i}; npm version ${1:-patch})
 done
 
-PACKAGE_VERSION=$(cd ${npm_modules[0]}; cat package.json \
+PACKAGE_VERSION=$(cd ${ROOT}/${NPM_MODULES[0]}; cat package.json \
   | grep version \
   | head -1 \
   | awk -F: '{ print $2 }' \
@@ -74,7 +74,7 @@ echo -e "$checkit  push tag"
 git push --tags
 
 echo -e "$checkit  regenerate changelog"
-git-generate-changelog --issue-line-labels alexa assistant dialog experiment optimization
+(cd ${ROOT}; git-generate-changelog --issue-line-labels alexa assistant dialog experiment optimization)
 
 echo -e "$checkit  commit changelog"
 git add CHANGELOG.md
