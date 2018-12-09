@@ -14,7 +14,7 @@ set -e
 checkit='\xE2\x9C\x85'
 failed='\xE2\x9D\x8C'
 
-# list of the App nodejs modules
+# list of the nodejs app modules
 NPM_MODULES=( server static wss )
 REQUIRED='git-generate-changelog'
 ROOT=$(git rev-parse --show-toplevel)
