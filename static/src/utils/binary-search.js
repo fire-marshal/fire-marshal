@@ -41,7 +41,7 @@ export function binarySearchOfCallback (valuesCallback, valuesLength, newValue) 
     } else if (inplaceValue < newValue) {
       minIdx = idx + 1
     } else {
-      return Math.max(0, idx)
+      return idx
     }
   }
 
