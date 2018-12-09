@@ -4,5 +4,6 @@
 --reporter spec
 --require ./tests/_setup.js
 --ui bdd
+ --webpack-config ./config/webpack.config-test.js
 
 ./tests/**/*.spec.js
