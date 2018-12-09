@@ -37,11 +37,11 @@ export function binarySearchOfCallback (valuesCallback, valuesLength, newValue) 
     let idx = (maxIdx + minIdx) >> 1
     let inplaceValue = valuesCallback(idx)
     if (inplaceValue > newValue) {
-      maxIdx = idx
+      maxIdx = Math.max(0, idx - 1)
     } else if (inplaceValue < newValue) {
-      minIdx = idx
+      minIdx = idx + 1
     } else {
-      return idx
+      return Math.max(0, idx)
     }
   }
 
