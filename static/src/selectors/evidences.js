@@ -24,7 +24,7 @@ export const getEvidenceItems = createSelector(
 
 export const getEvidencesByIdRaw = createSelector(
   [getEvidenceDataRaw],
-  (data) => data// && data.get('byId')
+  (data) => data && data.get('byId')
 )
 
 export const getEvidencesById = createSelector(

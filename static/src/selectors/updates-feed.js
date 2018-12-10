@@ -4,7 +4,7 @@ import { getEvidencesRaw } from './evidences'
 
 const getUpdatesFeed = state => state.get('updatesFeed')
 
-const getSortedIdsRaw = createSelector(
+export const getSortedIdsRaw = createSelector(
   [getUpdatesFeed],
   (feed) => feed && feed.get('data')
 )

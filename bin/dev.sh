@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+ROOT=$(git rev-parse --show-toplevel)
+
 echo
 echo -e "______ _           ___  ___               _           _ "
 echo -e "|  ___(_)          |  \/  |              | |         | |"
@@ -14,6 +16,6 @@ echo
 echo "run dev environment"
 echo
 
-docker-compose -f docker-compose.base.yml -f docker-compose.dev.yml down -v
-docker-compose -f docker-compose.base.yml -f docker-compose.dev.yml build
-docker-compose -f docker-compose.base.yml -f docker-compose.dev.yml up
+(cd ${ROOT}; docker-compose -f docker-compose.base.yml -f docker-compose.dev.yml down -v)
+(cd ${ROOT}; docker-compose -f docker-compose.base.yml -f docker-compose.dev.yml build)
+(cd ${ROOT}; docker-compose -f docker-compose.base.yml -f docker-compose.dev.yml up)
