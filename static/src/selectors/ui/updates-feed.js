@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect'
 
-import { getEvidencesRaw } from './evidences'
+import { getEvidencesRaw } from '../evidences'
 
-const getUpdatesFeed = state => state.get('updatesFeed')
+const getUpdatesFeed = state => state.getIn(['ui', 'updatesFeed'])
 
 export const getSortedIdsRaw = createSelector(
   [getUpdatesFeed],

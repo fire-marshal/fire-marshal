@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
 
-import { createReducer } from './_helper'
+import { createReducer } from '../_helper'
 
-const namespace = require('../../package').name
+const namespace = require('../../../package').name
 
 const actionTypes = {
   INSERT_ITEM: `${namespace}/UPDATES_FEED.INSERT_ITEM`

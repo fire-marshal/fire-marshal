@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux-immutable'
 
-import evidences from './evidences'
-import ui from './ui'
+import updatesFeed from './updates-feed'
 
 export default combineReducers({
-  evidences,
-  ui
+  updatesFeed
 })

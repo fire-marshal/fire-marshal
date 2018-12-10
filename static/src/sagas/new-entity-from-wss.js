@@ -1,8 +1,8 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 
-import { insertItem } from '../reducers/updates-feed'
+import { insertItem } from '../reducers/ui/updates-feed'
 import * as evidencesSelector from '../selectors/evidences'
-import * as updatesFeedSelector from '../selectors/updates-feed'
+import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 import { binarySearchOfCallback } from '../utils/binary-search'
 
 const wssActions = require('../../../wss/lib/agents/evidences/actions')
