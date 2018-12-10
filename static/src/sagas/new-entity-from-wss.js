@@ -1,6 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 
-import { insertItem } from '../reducers/ui/updates-feed'
+import { insertItem } from '../reducers/entities/evidences'
 import * as evidencesSelector from '../selectors/entities/evidences'
 import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 import { binarySearchOfCallback } from '../utils/binary-search'
@@ -23,7 +23,7 @@ function * newEntityFromWSS (action) {
   // in case of real-time:
   // find the place for new item in a list of ids
   const index = yield call(findPlaceToInsertItemInSortedList, item)
-  yield put(insertItem({ index, id: item._id }))
+  yield put(insertItem({ index, item }))
 
   // in case of on-demand:
   // TODO: add to the waiting list

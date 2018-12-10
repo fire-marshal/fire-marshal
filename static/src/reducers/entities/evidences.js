@@ -11,9 +11,7 @@ import { getIdsRaw } from '../../selectors/entities/evidences'
 import { prepareUrl } from '../../utils/api-url-processor'
 import { binarySearchOfCallback } from '../../utils/binary-search'
 
-const wssActions = require('../../../../wss/lib/agents/evidences/actions')
-
-const namespace = require('../../../package').name
+const namespace = `${require('../../../package').name}/EVIDENCES`
 
 //
 // actions
@@ -21,9 +19,11 @@ const namespace = require('../../../package').name
 
 // append new items to already existing list
 export const actionTypes = {
-  APPEND_EVIDENCES_REQUEST: `${namespace}/EVIDENCES.APPEND:REQUEST`,
-  APPEND_EVIDENCES_RECEIVE: `${namespace}/EVIDENCES.APPEND:RECEIVE`,
-  APPEND_EVIDENCES_ERROR: `${namespace}/EVIDENCES.APPEND:ERROR`
+  APPEND_EVIDENCES_REQUEST: `${namespace}.APPEND:REQUEST`,
+  APPEND_EVIDENCES_RECEIVE: `${namespace}.APPEND:RECEIVE`,
+  APPEND_EVIDENCES_ERROR: `${namespace}.APPEND:ERROR`,
+
+  INSERT_ITEM: `${namespace}.INSERT_ITEM`
 }
 
 //
@@ -64,6 +64,17 @@ export const fetchEvidences = fetchActionSimplified({
       total: res.total
     }
   }
+})
+
+/**
+ * Insert new evidence entity
+ *
+ * @param payload
+ * @returns {{type: string, payload: *}}
+ */
+export const insertItem = (payload) => ({
+  type: actionTypes.INSERT_ITEM,
+  payload
 })
 
 //
@@ -132,25 +143,16 @@ export default createReducer(
       }
     ),
 
-    [wssActions.actionTypes.ADD]: (state, action) => {
-      // TODO: we should have 2 options:
-      // - real-time update when we insert new items to `sortedIds` right a way
-      // - on-demand update when we store new items to `delayedIds`
-      // and would merged them to the `sortedIds` on demand
-      const newItem = processItem(action.payload)
+    [actionTypes.INSERT_ITEM]: (state, { payload }) => {
+      const newItem = processItem(payload.item)
       if (isOldItem(state, newItem)) {
         console.log(`we already have ${newItem.id}`)
         return state
       } else {
         console.log(`it is new item ${newItem.id}`)
-        return state
-        // TODO: use once binarySearchOfCallback will be fixed
-          // .update('data', data => appendItem(data, newItem)
-          .update('data', data => data
-            .update('ids', ids => ids.add(newItem.id))
-            .update('items', items => items.unshift(Immutable.fromJS(newItem)))
-            .update('total', total => total + 1)
-          )
+        return state.update('data', data => data
+          .update('total', total => total + 1)
+          .update('byId', byId => byId.set(newItem.id, newItem)))
       }
     }
   }
