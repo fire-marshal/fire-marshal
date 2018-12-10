@@ -1,7 +1,7 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 
 import { insertItem } from '../reducers/ui/updates-feed'
-import * as evidencesSelector from '../selectors/evidences'
+import * as evidencesSelector from '../selectors/entities/evidences'
 import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 import { binarySearchOfCallback } from '../utils/binary-search'
 

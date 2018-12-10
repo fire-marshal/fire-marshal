@@ -6,9 +6,9 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../config'
-import * as evidencesActions from '../reducers/evidences'
+import * as evidencesActions from '../reducers/entities/evidences'
 import * as evidencesSubscriber from '../reducers/evidences-subscriber'
-import * as evidencesSelector from '../selectors/evidences'
+import * as evidencesSelector from '../selectors/entities/evidences'
 
 import UpdatesFeedItem from './updates-feed-item'
 

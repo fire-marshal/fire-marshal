@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-import { getEvidencesRaw } from '../evidences'
+import { getEvidencesRaw } from '../entities/evidences'
 
 const getUpdatesFeed = state => state.getIn(['ui', 'updatesFeed'])
 

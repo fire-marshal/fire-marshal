@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux-immutable'
 
-import entities from './entities'
-import ui from './ui'
+import evidences from './evidences'
 
 export default combineReducers({
-  entities,
-  ui
+  evidences
 })

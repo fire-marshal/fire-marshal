@@ -1,19 +1,19 @@
 import Immutable from 'immutable'
 import _ from 'lodash'
 
-import { createReducer } from './_helper'
+import { createReducer } from '../_helper'
 
-import config from '../config'
+import config from '../../config'
 
-import { fetchActionSimplified } from '../async-queue/fetch-action'
-import asyncReducer from '../async-queue/reducer-builder'
-import { getIdsRaw } from '../selectors/evidences'
-import { prepareUrl } from '../utils/api-url-processor'
-import { binarySearchOfCallback } from '../utils/binary-search'
+import { fetchActionSimplified } from '../../async-queue/fetch-action'
+import asyncReducer from '../../async-queue/reducer-builder'
+import { getIdsRaw } from '../../selectors/entities/evidences'
+import { prepareUrl } from '../../utils/api-url-processor'
+import { binarySearchOfCallback } from '../../utils/binary-search'
 
-const wssActions = require('../../../wss/lib/agents/evidences/actions')
+const wssActions = require('../../../../wss/lib/agents/evidences/actions')
 
-const namespace = require('../../package').name
+const namespace = require('../../../package').name
 
 //
 // actions
