@@ -1,6 +1,7 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 
 import { insertItem } from '../reducers/entities/evidences'
+import { processItem } from '../reducers/entities/model'
 import * as evidencesSelector from '../selectors/entities/evidences'
 import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 import { binarySearchOfCallback } from '../utils/binary-search'
@@ -16,7 +17,7 @@ const wssActions = require('../../../wss/lib/agents/evidences/actions')
 function * newEntityFromWSS (action) {
   console.log('take new entity from wss', action)
 
-  const item = action.payload
+  const item = processItem(action.payload)
 
   // we have 2 options here: real-time and on-demand update
 

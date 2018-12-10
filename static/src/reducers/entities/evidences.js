@@ -11,6 +11,8 @@ import { getIdsRaw } from '../../selectors/entities/evidences'
 import { prepareUrl } from '../../utils/api-url-processor'
 import { binarySearchOfCallback } from '../../utils/binary-search'
 
+import { processItem } from './model'
+
 const namespace = `${require('../../../package').name}/EVIDENCES`
 
 //
@@ -144,7 +146,7 @@ export default createReducer(
     ),
 
     [actionTypes.INSERT_ITEM]: (state, { payload }) => {
-      const newItem = processItem(payload.item)
+      const newItem = payload.item
       if (isOldItem(state, newItem)) {
         console.log(`we already have ${newItem.id}`)
         return state
@@ -261,14 +263,4 @@ function filterByIds (items, ids) {
 function isOldItem (state, item) {
   const ids = getIdsRaw(state)
   return ids && ids.has(item.id)
-}
-
-/**
- * process each new item
- *
- * @param item
- * @returns {{id: *}}
- */
-function processItem (item) {
-  return { ...item, id: item._id }
 }

@@ -13,7 +13,7 @@ export default createReducer(
 
   {
     [actionTypes.INSERT_ITEM]: (state, { payload }) => state.update(
-      'data', data => data.insert(payload.index, payload.item._id)
+      'data', data => data.insert(payload.index, payload.item.id)
     )
   }
 )
