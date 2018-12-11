@@ -37,12 +37,11 @@ function * findPlaceToInsertItemsInSortedList (items, sortBy) {
 
   return items.map(
     item => {
-      const itemValue = new Date(_.get(item, sortBy))
+      const itemValue = _.get(item, sortBy)
 
       function compareInplaceValue (idx) {
         const inplaceId = sortedIds.get(idx)
-        const v = new Date(byIds.getIn([inplaceId].concat(sortBy)))
-        return itemValue - v
+        return itemValue - byIds.getIn([inplaceId].concat(sortBy))
       }
 
       return binarySearchOfCallback(

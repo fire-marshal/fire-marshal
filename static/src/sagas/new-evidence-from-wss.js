@@ -47,11 +47,11 @@ function * newEvidenceFromWss (action) {
 function * findPlaceToInsertItemInSortedList (item, sortBy = ['when', 'estimation']) {
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
   const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
-  const newValue = new Date(_.get(item, sortBy))
+  const newValue = _.get(item, sortBy)
 
   function getInplaceValue (idx) {
     const inplaceId = sortedIds.get(idx)
-    return newValue - new Date(byIds.getIn([inplaceId].concat(sortBy)))
+    return newValue - byIds.getIn([inplaceId].concat(sortBy))
   }
 
   return binarySearchOfCallback(
