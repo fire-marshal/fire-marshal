@@ -30,6 +30,7 @@ export default createReducer(
       if (realTime) {
         return state.update(
           'data', data => _.zip(indexes, items)
+            .filter(([idx, item]) => idx !== undefined)
             .reduce(
               (acc, [idx, item]) => acc.insert(idx, item.id),
               data

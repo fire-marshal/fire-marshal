@@ -7,6 +7,12 @@ import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 import * as evidencesSelector from '../selectors/entities/evidences'
 import { binarySearchOfCallback } from '../utils/binary-search'
 
+/**
+ * get new entities from server
+ *
+ * @param action
+ * @returns {IterableIterator<*>}
+ */
 function * receiveEvidences (action) {
   console.log('receive evidences', action)
 
@@ -44,6 +50,11 @@ function * findPlaceToInsertItemsInSortedList (items, sortBy) {
 
   return items.map(
     item => {
+      if (byIds.has(item.id)) {
+        // don't nest duplication entities
+        return undefined
+      }
+
       const itemValue = _.get(item, sortBy)
 
       function compareInplaceValue (idx) {
