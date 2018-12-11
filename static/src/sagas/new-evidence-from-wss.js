@@ -50,6 +50,11 @@ function * findPlaceToInsertItemInSortedList (item, sortBy) {
   const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
   const newValue = _.get(item, sortBy)
 
+  if (byIds.has(item.id)) {
+    // don't nest duplication entity
+    return undefined
+  }
+
   function getInplaceValue (idx) {
     const inplaceId = sortedIds.get(idx)
     return newValue - byIds.getIn([inplaceId].concat(sortBy))

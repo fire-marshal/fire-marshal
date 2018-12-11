@@ -16,9 +16,13 @@ export default createReducer(
   {
     [actionTypes.INSERT_ITEM]: (state, { payload: { index, item, realTime } }) => {
       if (realTime) {
-        return state.update(
-          'data', data => data.insert(index, item.id)
-        )
+        if (index !== undefined) {
+          return state.update(
+            'data', data => data.insert(index, item.id)
+          )
+        } else {
+          return state
+        }
       } else {
         return state.update(
           'onDemand', onDemand => onDemand.add(item.id)
