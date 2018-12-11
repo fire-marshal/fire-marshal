@@ -22,15 +22,16 @@ function * newEvidenceFromWss (action) {
 
   // we have 2 options here: real-time and on-demand update
 
-  // in case of real-time:
+  // - in case of real-time:
   // find the place for new item in a list of ids
-  // in case of on-demand:
-  // TODO: add to the waiting list
+  // - in case of on-demand:
+  // add to the waiting list
   const realTime = false
+  const sortBy = ['when', 'estimation']
 
   let index
   if (realTime) {
-    index = yield call(findPlaceToInsertItemInSortedList, item)
+    index = yield call(findPlaceToInsertItemInSortedList, item, sortBy)
   }
 
   yield put(insertItem({ index, item, realTime }))
@@ -44,7 +45,7 @@ function * newEvidenceFromWss (action) {
  *
  * @returns {IterableIterator<*>}
  */
-function * findPlaceToInsertItemInSortedList (item, sortBy = ['when', 'estimation']) {
+function * findPlaceToInsertItemInSortedList (item, sortBy) {
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
   const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
   const newValue = _.get(item, sortBy)

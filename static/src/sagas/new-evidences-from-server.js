@@ -29,6 +29,13 @@ function * receiveEvidences (action) {
   }))
 }
 
+/**
+ * Find indexes to insert new items in sorted list
+ *
+ * @param items
+ * @param sortBy
+ * @returns {IterableIterator<*>}
+ */
 function * findPlaceToInsertItemsInSortedList (items, sortBy) {
   console.log('findPLaceTOInsertItemsInSortedList', items)
 
