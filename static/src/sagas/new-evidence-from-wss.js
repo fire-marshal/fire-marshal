@@ -14,7 +14,7 @@ const wssActions = require('../../../wss/lib/agents/evidences/actions')
  * @param action
  * @returns {IterableIterator<*>}
  */
-function * newEntityFromWSS (action) {
+function * newEvidenceFromWss (action) {
   console.log('take new entity from wss', action)
 
   const item = processItem(action.payload)
@@ -51,5 +51,5 @@ function * findPlaceToInsertItemInSortedList (item, sortBy = ['when', 'estimatio
 }
 
 export function * sagas () {
-  yield takeEvery(wssActions.actionTypes.ADD, newEntityFromWSS)
+  yield takeEvery(wssActions.actionTypes.ADD, newEvidenceFromWss)
 }

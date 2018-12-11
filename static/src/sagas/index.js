@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects'
 
-import { sagas } from './new-entity-from-wss'
+import { sagas as newEvidenceFromWSSSagas } from './new-evidence-from-wss'
+import { sagas as newEvidencesFromServer } from './new-evidences-from-server'
 
 /**
  * all sagas are here
@@ -10,7 +11,8 @@ import { sagas } from './new-entity-from-wss'
 function * rootSaga () {
   console.log('run all sagas')
   yield all([
-    sagas()
+    newEvidenceFromWSSSagas(),
+    newEvidencesFromServer()
   ])
 }
 
