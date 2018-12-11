@@ -25,20 +25,20 @@ export function binarySearch (values, newValue) {
 /**
  * Find position in sorted structure, we would get values by callback
  *
- * @param valuesCallback {function} - gives value by idx
+ * @param comparator {function} - return diff between index value and new value
  * @param valuesLength
- * @param newValue
  * @returns {number}
  */
-export function binarySearchOfCallback (valuesCallback, valuesLength, newValue) {
+export function binarySearchOfCallback (comparator, valuesLength) {
   let minIdx = 0
   let maxIdx = valuesLength
+
   while (minIdx !== maxIdx) {
     let idx = (maxIdx + minIdx) >> 1
-    let inplaceValue = valuesCallback(idx)
-    if (inplaceValue > newValue) {
+    let diff = comparator(idx)
+    if (diff > 0) {
       maxIdx = Math.max(0, idx - 1)
-    } else if (inplaceValue < newValue) {
+    } else if (diff < 0) {
       minIdx = idx + 1
     } else {
       return idx

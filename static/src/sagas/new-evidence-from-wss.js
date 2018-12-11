@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 
 import { insertItem } from '../reducers/entities/evidences'
@@ -23,11 +24,16 @@ function * newEvidenceFromWss (action) {
 
   // in case of real-time:
   // find the place for new item in a list of ids
-  const index = yield call(findPlaceToInsertItemInSortedList, item)
-  yield put(insertItem({ index, item }))
-
   // in case of on-demand:
   // TODO: add to the waiting list
+  const realTime = false
+
+  let index
+  if (realTime) {
+    index = yield call(findPlaceToInsertItemInSortedList, item)
+  }
+
+  yield put(insertItem({ index, item, realTime }))
 }
 
 /**
@@ -41,13 +47,16 @@ function * newEvidenceFromWss (action) {
 function * findPlaceToInsertItemInSortedList (item, sortBy = ['when', 'estimation']) {
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
   const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
+  const newValue = new Date(_.get(item, sortBy))
 
   function getInplaceValue (idx) {
     const inplaceId = sortedIds.get(idx)
-    return byIds.getIn([inplaceId].concat(sortBy))
+    return newValue - new Date(byIds.getIn([inplaceId].concat(sortBy)))
   }
 
-  return binarySearchOfCallback(getInplaceValue, sortedIds.size, item)
+  return binarySearchOfCallback(
+    getInplaceValue, sortedIds.size
+  )
 }
 
 export function * sagas () {

@@ -137,7 +137,7 @@ export default createReducer(
       // so we could check whether it really new
       return state.update('data', data => data
         .update('byId', byId =>
-          items.reduce((acc, item) => acc.set(item.id, item), byId))
+          items.reduce((acc, item) => acc.set(item.id, Immutable.fromJS(item)), byId))
         .set('total', total)
       )
     },
@@ -151,7 +151,7 @@ export default createReducer(
         console.log(`it is new item ${newItem.id}`)
         return state.update('data', data => data
           .update('total', total => total + 1)
-          .update('byId', byId => byId.set(newItem.id, newItem)))
+          .update('byId', byId => byId.set(newItem.id, Immutable.fromJS(newItem))))
       }
     }
   }
