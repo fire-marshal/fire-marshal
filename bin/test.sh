@@ -27,9 +27,10 @@ do
     (cd ${ROOT}/${i} && npm run lint -- --fix)
 done
 
-echo -e "$CHECK_IT  testing 'static'"
-
-(cd ${ROOT}/server && npm test)
-(cd ${ROOT}/static && npm test)
+for i in "${NPM_MODULES[@]}"
+do
+    echo -e "$CHECK_IT  testing '${i}'"
+    (cd ${ROOT}/${i} && npm test)
+done
 
 echo -e "$CHECK_IT  done"
