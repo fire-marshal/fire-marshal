@@ -4,8 +4,8 @@ env:
   node: true
 
 extends:
-  - "plugin:react/recommended"
-  - "plugin:mocha/recommended"
+  - 'plugin:react/recommended'
+  - 'plugin:mocha/recommended'
   - 'standard'
 
 parser: 'babel-eslint'
@@ -39,7 +39,7 @@ rules:
   camelcase:
     - error
     - allow:
-      - "^UNSAFE_"
+      - '^UNSAFE_'
 
 settings:
   react:
