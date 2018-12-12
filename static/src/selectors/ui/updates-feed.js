@@ -20,8 +20,8 @@ export const getSortedItems = createSelector(
 )
 
 export const getStartDate = createSelector(
-  [getSortedItemsRaw, getEvidencesByIdRaw],
-  (sortedIds, entityById) => sortedIds && entityById.getIn([sortedIds.last(), 'when', 'estimation'])
+  [getSortedIdsRaw, getEvidencesByIdRaw],
+  (sortedIds, entityById) => sortedIds && entityById && entityById.getIn([sortedIds.last(), 'when', 'estimation'])
 )
 
 export const getStartDateISO = createSelector(
