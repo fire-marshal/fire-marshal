@@ -8,23 +8,20 @@ import Immutable from 'immutable'
  * @param request
  * @param receive
  * @param (error)
- * @param updateData callback to update data with new portion
  * @returns {{}}
  */
 module.exports = function asyncReducer (
-  [request, receive, error = null],
-  updateData = (payload) => Immutable.fromJS(payload)
+  [request, receive, error = null]
 ) {
   const res = {
     [request]: (state, { meta }) => state
       .set('updateAt', meta.createdAt)
       .set('inProgress', true),
 
-    [receive]: (state, { meta, payload }) => state
+    [receive]: (state, { meta }) => state
       .set('updateAt', meta.createdAt)
       .set('inProgress', false)
       .set('invalid', false)
-      .update('data', data => updateData(payload, data, state))
   }
 
   if (error) {

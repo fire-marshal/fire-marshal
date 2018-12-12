@@ -87,46 +87,23 @@ export const insertItems = (payload) => ({
 //
 export default createReducer(
   Immutable.fromJS({
+    inProgress: false,
     invalid: true,
     error: null,
+    updateAt: null,
     data: {
       // items by its id
       byId: Immutable.Map(),
-      // sorted list of ids
-      sortedIds: Immutable.List(),
-
-      // TODO: this state depends on the entity state
-      // (because visibleIds should be sorted)
-      // so question is should we extend entity state with its visibility state
-      // or create ui state which would know about entity state?
-      visibility: {
-        realtime: false,
-        delayedIds: Immutable.List(),
-        visibleIds: Immutable.List()
-      },
-
-      // @deprecated
-      // sorted list of items
-      ids: Immutable.Set(),
-      // @deprecated
-      items: [],
       // total (globally, not only on this client) number of items
-      total: 0,
-      // @deprecated
-      // TODO: it seems we can derive this value from sorted ids and byId
-      startDate: null
+      total: 0
     }
   }),
   {
-    ...asyncReducer(
-      [
-        actionTypes.APPEND_EVIDENCES_REQUEST,
-        actionTypes.APPEND_EVIDENCES_RECEIVE,
-        actionTypes.APPEND_EVIDENCES_ERROR
-      ],
-
-      ({ newItems, total }, originalData) => originalData
-    ),
+    ...asyncReducer([
+      actionTypes.APPEND_EVIDENCES_REQUEST,
+      actionTypes.APPEND_EVIDENCES_RECEIVE,
+      actionTypes.APPEND_EVIDENCES_ERROR
+    ]),
 
     [actionTypes.INSERT_ITEMS]: (state, { payload: { items, total } }) => {
       // TODO: there we could optimize a little

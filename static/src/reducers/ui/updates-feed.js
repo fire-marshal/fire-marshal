@@ -6,9 +6,6 @@ import { actionTypes } from '../entities/evidences'
 
 export default createReducer(
   Immutable.Map({
-    invalid: true,
-    sortByOrder: 'asc',
-    sortByField: 'when.estimation',
     data: Immutable.List(),
     onDemand: Immutable.Set()
   }),
