@@ -1,5 +1,6 @@
 import './updates-feed-item.scss'
 
+import PropTypes from 'prop-types'
 import React from 'react'
 
 const UpdatesFeedItemImage = ({ img, title }) => {
@@ -11,6 +12,11 @@ const UpdatesFeedItemImage = ({ img, title }) => {
     // it would be cool just show small piece of map here
     return null
   }
+}
+
+UpdatesFeedItemImage.propTypes = {
+  img: PropTypes.string,
+  title: PropTypes.string
 }
 
 const UpdatesFeedItem = ({ item }) => (
@@ -29,5 +35,8 @@ const UpdatesFeedItem = ({ item }) => (
 )
 
 UpdatesFeedItem.displayName = 'UpdatesFeedItem'
+UpdatesFeedItem.propTypes = {
+  item: PropTypes.object.isRequired
+}
 
 export default UpdatesFeedItem

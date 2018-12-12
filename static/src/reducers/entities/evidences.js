@@ -32,10 +32,10 @@ export const fetchEvidences = fetchActionSimplified({
   getUrl: ({ lat, long, startDateISO }) => {
     let ops = null
     if (startDateISO) {
-      ops = { start_date: startDateISO }
+      ops = { start_date: startDateISO } // eslint-disable-line camelcase
     }
 
-    return prepareUrl(config.evidences.api_url_with_start_date, {
+    return prepareUrl(config.evidences.apiURLWithStartDate, {
       lat, long, ops
     })
   },

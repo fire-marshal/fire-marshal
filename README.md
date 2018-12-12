@@ -107,6 +107,14 @@ $ ./bin/bump-version.sh
 
 ```
 
+### Run lint and tests for all apps 
+
+```bash
+
+$ ./bin/tests.sh
+
+```
+
 ## Contribution / How to help
 
 If you would like to start somewhere there good [start point issues](https://github.com/fire-marshal/fire-marshal/labels/good%20first%20issue)

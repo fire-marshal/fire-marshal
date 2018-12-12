@@ -1,0 +1,27 @@
+env:
+  es6: true
+  node: true
+
+extends:
+  - 'plugin:mocha/recommended'
+  - 'standard'
+
+parserOptions:
+  ecmaVersion: 2019
+  sourceType: module
+
+plugins:
+  - mocha
+
+rules:
+#  FIXME: allow to use until I add logging lib
+#  https://github.com/fire-marshal/fire-marshal/issues/35
+#  no-console:
+#    - error
+#    - allow:
+#      - warn
+#      - error
+
+  linebreak-style:
+    - error
+    - unix

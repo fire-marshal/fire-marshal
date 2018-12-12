@@ -10,7 +10,7 @@ import logoUrl from './hell-mandala-512x512.png'
 const Landing = () => (
   <div className='landing jumbotron'>
     <h1 className='display-4'>Fire Marshal! <small className='text-muted'>v{packageJSON.version}</small></h1>
-    <p className='lead'>Where there's smoke there's fire</p>
+    <p className='lead'>Where there&#39;s smoke there&#39;s fire</p>
     <img src={logoUrl} width={256} height={256} alt='' />
     <hr className='my-4' />
     <p>

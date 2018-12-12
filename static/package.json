@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production cd public && parcel --out-dir ../build build index.html",
-    "lint": "npm run lint:src && npm run lint:tests",
-    "lint:src": "standard 'src/**/*.js'",
-    "lint:tests": "standard --env mocha 'tests**/*.js'",
+    "lint": "eslint src tests",
     "start": "NODE_ENV=development cd public && parcel --hmr-hostname 0.0.0.0 --hmr-port 7001 --out-dir ../build --cache-dir ../.cache watch index.html",
     "test": "mocha-webpack --opts ./tests/mocha.opts"
   },
@@ -42,13 +40,20 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "chai": "^4.2.0",
+    "eslint": "^5.10.0",
+    "eslint-config-standard": "^12.0.0",
     "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-mocha": "^5.2.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^4.0.0",
     "mocha": "^5.2.0",
     "mocha-webpack": "2.0.0-beta.0",
     "null-loader": "^0.1.1",
     "sinon": "^7.1.1",
     "sinon-chai": "^3.2.0",
-    "standard": "^12.0.1",
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
@@ -78,12 +83,5 @@
     "reselect-tools": "^0.0.7",
     "sass": "^1.14.3",
     "webpack": "^4.27.1"
-  },
-  "standard": {
-    "parser": "babel-eslint",
-    "env": {
-      "browser": true,
-      "node": true
-    }
   }
 }

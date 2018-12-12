@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "lint": "standard",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint api bin lib tests index.js",
+    "test": "mocha --opts ./tests/mocha.opts",
     "build:fake-db": "node ./bin/fake-db-entities.js",
     "build:api-docs": "swagger-jsdoc -d ./api/swagger-def.js -o ./api/swagger/swagger.json ./lib/*/*.js"
   },
@@ -45,7 +45,21 @@
     "ws": "^6.1.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.10.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-chai": "^0.0.1",
+    "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-mocha": "^5.2.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.5",
+    "sinon": "^7.2.2",
+    "sinon-chai": "^3.3.0",
     "standard": "^12.0.1"
   }
 }
