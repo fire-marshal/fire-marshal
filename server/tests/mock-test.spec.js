@@ -1,6 +1,6 @@
 const { expect } = require('chai')
 
-describe('hello world', () => {
+describe('mock test', () => {
   it('should pass', () => {
     expect(true).to.be.true
   })

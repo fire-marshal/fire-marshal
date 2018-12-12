@@ -29,6 +29,7 @@ done
 
 echo -e "$CHECK_IT  testing 'static'"
 
+(cd ${ROOT}/server && npm test)
 (cd ${ROOT}/static && npm test)
 
 echo -e "$CHECK_IT  done"

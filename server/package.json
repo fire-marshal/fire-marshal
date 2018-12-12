@@ -7,7 +7,7 @@
     "start": "node index.js",
     "watch": "nodemon index.js",
     "lint": "eslint api bin lib tests index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --opts ./tests/mocha.opts",
     "build:fake-db": "node ./bin/fake-db-entities.js",
     "build:api-docs": "swagger-jsdoc -d ./api/swagger-def.js -o ./api/swagger/swagger.json ./lib/*/*.js"
   },
