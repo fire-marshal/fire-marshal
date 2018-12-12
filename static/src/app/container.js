@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import { NavBar } from '../navbar'
@@ -10,5 +11,8 @@ const Container = ({ children }) => (
 )
 
 Container.displayName = 'Container'
+Container.propTypes = {
+  children: PropTypes.node
+}
 
 export default Container

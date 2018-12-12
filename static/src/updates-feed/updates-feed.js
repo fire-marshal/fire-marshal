@@ -1,6 +1,7 @@
 import './updates-feed.scss'
 
 import { bind, debounce } from 'decko'
+import PropTypes from 'prop-types'
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
@@ -14,6 +15,16 @@ import * as updatesFeed from '../selectors/ui/updates-feed'
 import UpdatesFeedItem from './updates-feed-item'
 
 class UpdatesFeed extends React.PureComponent {
+  static propTypes = {
+    user: PropTypes.object.isRequired,
+    list: PropTypes.object.isRequired,
+
+    validateItems: PropTypes.func,
+    subscribeUpdatesFeed: PropTypes.func,
+    unsubscribeUpdatesFeed: PropTypes.func,
+    loadItemsAfter: PropTypes.func
+  }
+
   componentDidMount () {
     // FIXME: just temporal solution to send update each 5 seconds and check load
     this.interval = setInterval(() => {
@@ -59,7 +70,7 @@ class UpdatesFeed extends React.PureComponent {
         loader={<div className='loader' key={0}>Loading ...</div>}>
         <div className='container main-st ream-container'>
           {
-            list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item} />) : (
+            list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
               list.inProgress ? <div>TODO: spinner</div> : (
                 list.error && <div>TODO: show error</div>
               )
