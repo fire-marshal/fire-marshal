@@ -1,0 +1,7 @@
+--colors
+--recursive
+--reporter spec
+--require ./tests/_setup.js
+--ui bdd
+
+./tests/**/*.spec.js
