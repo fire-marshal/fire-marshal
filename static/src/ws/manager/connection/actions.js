@@ -1,4 +1,4 @@
-export const namespace = "@@gaf/ws/CONNECTION";
+export const namespace = '@@gaf/ws/CONNECTION'
 
 export const actionTypes = {
   CONNECT: `${namespace}/CONNECT`,
@@ -14,7 +14,7 @@ export const actionTypes = {
   RECONNECT_ERROR: `${namespace}/RECONNECT_ERROR`,
   RECONNECT_FAILED: `${namespace}/RECONNECT_FAILED`,
   RECONNECT_SUCCESS: `${namespace}/RECONNECT_SUCCESS`
-};
+}
 
 export const connect = () => ({
   type: actionTypes.CONNECT

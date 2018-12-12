@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect'
 
-export const getEvidences = state => state.get('evidences')
+export const getEvidences = state => state.getIn(['entities', 'evidences'])
 
 const getEvidenceDataRaw = createSelector(
   [getEvidences],
   (evidences) => evidences && evidences.get('data')
 )
 
-const getEvidenceItemsRaw = createSelector(
+export const getEvidenceItemsRaw = createSelector(
   [getEvidenceDataRaw],
   (data) => data && data.get('items')
 )
@@ -17,14 +17,19 @@ export const getEvidenceItems = createSelector(
   (raw) => raw && raw.toJS()
 )
 
+export const getEvidencesByIdRaw = createSelector(
+  [getEvidenceDataRaw],
+  (data) => data && data.get('byId')
+)
+
 export const getTotalItems = createSelector(
   [getEvidenceDataRaw],
   (data) => data && data.get('total')
 )
 
 export const hasMore = createSelector(
-  [getEvidenceItems, getTotalItems],
-  (items, total) => (items && total > 0) ? (items.length < total) : false
+  [getEvidencesByIdRaw, getTotalItems],
+  (byId, total) => (byId && total > 0) ? (byId.size < total) : false
 )
 
 export const getEvidenceItemsInProgress = createSelector(
@@ -40,16 +45,6 @@ export const getEvidenceItemsInvalid = createSelector(
 export const getEvidenceError = createSelector(
   [getEvidences],
   (evidences) => evidences && evidences.get('error')
-)
-
-export const getStartDate = createSelector(
-  [getEvidenceDataRaw],
-  (data) => data && data.get('startDate')
-)
-
-export const getStartDateISO = createSelector(
-  [getStartDate],
-  (date) => date && date.toISOString()
 )
 
 export const getIdsRaw = createSelector(

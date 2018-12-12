@@ -1,2 +1,1 @@
-export const namespace = "@@gaf/ws";
-
+export const namespace = '@@gaf/ws'

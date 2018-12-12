@@ -6,9 +6,10 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../config'
-import * as evidencesActions from '../reducers/evidences'
+import * as evidencesActions from '../reducers/entities/evidences'
 import * as evidencesSubscriber from '../reducers/evidences-subscriber'
-import * as evidencesSelector from '../selectors/evidences'
+import * as evidencesSelector from '../selectors/entities/evidences'
+import * as updatesFeed from '../selectors/ui/updates-feed'
 
 import UpdatesFeedItem from './updates-feed-item'
 
@@ -58,7 +59,7 @@ class UpdatesFeed extends React.PureComponent {
         loader={<div className='loader' key={0}>Loading ...</div>}>
         <div className='container main-st ream-container'>
           {
-            list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
+            list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item} />) : (
               list.inProgress ? <div>TODO: spinner</div> : (
                 list.error && <div>TODO: show error</div>
               )
@@ -81,9 +82,9 @@ export default connect(
       inProgress: evidencesSelector.getEvidenceItemsInProgress(state, props),
       invalid: evidencesSelector.getEvidenceItemsInvalid(state, props),
       error: evidencesSelector.getEvidenceError(state, props),
-      items: evidencesSelector.getEvidenceItems(state, props),
+      items: updatesFeed.getSortedItems(state, props),
       hasMore: evidencesSelector.hasMore(state, props),
-      startDateISO: evidencesSelector.getStartDateISO(state, props)
+      startDateISO: updatesFeed.getStartDateISO(state, props)
     }
   }),
 

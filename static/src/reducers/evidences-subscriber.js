@@ -19,7 +19,7 @@ module.exports = {
     payload,
     meta: {
       createdAt: Date.now(),
-      socket: true,
+      socket: true
     }
   }),
 
@@ -32,7 +32,7 @@ module.exports = {
     type: actionTypes.UNSUBSCRIBE_EVIDENCES,
     meta: {
       createdAt: Date.now(),
-      socket: true,
+      socket: true
     }
   })
 }

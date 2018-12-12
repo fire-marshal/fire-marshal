@@ -1,6 +1,5 @@
 import * as actions from './actions'
 
-
 export const connectionActions = actions
 
 export class WSConnection {
@@ -50,7 +49,7 @@ export class WSConnection {
       origin: evt.origin,
       source: evt.source,
       ports: evt.ports,
-      lastEventId: evt.lastEventId,
+      lastEventId: evt.lastEventId
     }))
   }
 
