@@ -6,7 +6,6 @@ import config from '../../config'
 
 import { fetchActionSimplified } from '../../async-queue/fetch-action'
 import asyncReducer from '../../async-queue/reducer-builder'
-import { getIdsRaw } from '../../selectors/entities/evidences'
 import { prepareUrl } from '../../utils/api-url-processor'
 
 const namespace = `${require('../../../package').name}/EVIDENCES`
@@ -119,29 +118,12 @@ export default createReducer(
       )
     },
 
-    [actionTypes.INSERT_ITEM]: (state, { payload }) => {
-      const newItem = payload.item
-      if (isOldItem(state, newItem)) {
-        console.log(`we already have ${newItem.id}`)
-        return state
-      } else {
-        console.log(`it is new item ${newItem.id}`)
-        return state.update('data', data => data
-          .update('total', total => total + 1)
-          .update('byId', byId => byId.set(newItem.id, Immutable.fromJS(newItem))))
-      }
+    [actionTypes.INSERT_ITEM]: (state, { payload: { item } }) => {
+      return state.update('data', data => data
+      // TODO: because we can get the same item but with new data we should differ them
+      // and update total only in case of new item
+        .update('total', total => total + 1)
+        .update('byId', byId => byId.set(item.id, Immutable.fromJS(item))))
     }
   }
 )
-
-/**
- * Is it new item?
- *
- * @param state
- * @param item
- * @returns {*}
- */
-function isOldItem (state, item) {
-  const ids = getIdsRaw(state)
-  return ids && ids.has(item.id)
-}

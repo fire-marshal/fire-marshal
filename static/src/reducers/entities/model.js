@@ -1,16 +1,16 @@
 /**
- * process each new item
+ * process each new evidence item
  *
- * @param item
+ * @param evidence
  * @returns {{id: *}}
  */
-export function processItem (item) {
+export function processItem (evidence) {
   return {
-    ...item,
-    id: item._id,
+    ...evidence,
+    id: evidence._id,
     when: {
-      ...item.when,
-      estimation: new Date(item.when.estimation)
+      ...evidence.when,
+      estimation: new Date(evidence.when.estimation)
     }
   }
 }
