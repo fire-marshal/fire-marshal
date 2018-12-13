@@ -3,11 +3,16 @@ language: node_js
 node_js:
   - "11"
 
+env:
+  - APP=server
+  - APP=static
+  - APP=wss
+
 before_install:
   - node -v
 
 install:
-  - (cd wss; npm install)
+  - (cd $APP; npm install)
 
 script:
-  - (cd wss; npm run lint; npm run cover)
+  - (cd $APP; npm run lint; npm run cover)
