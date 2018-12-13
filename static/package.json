@@ -7,7 +7,8 @@
     "build": "NODE_ENV=production cd public && parcel --out-dir ../build build index.html",
     "lint": "eslint src tests",
     "start": "NODE_ENV=development cd public && parcel --hmr-hostname 0.0.0.0 --hmr-port 7001 --out-dir ../build --cache-dir ../.cache watch index.html",
-    "test": "mocha-webpack --opts ./tests/mocha.opts"
+    "test": "mocha-webpack --opts ./tests/mocha.opts",
+    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
     "eslint": "^5.10.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-chai-friendly": "^0.4.1",
@@ -49,9 +51,11 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-standard": "^4.0.0",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "mocha": "^5.2.0",
     "mocha-webpack": "2.0.0-beta.0",
     "null-loader": "^0.1.1",
+    "nyc": "^13.1.0",
     "sinon": "^7.1.1",
     "sinon-chai": "^3.2.0",
     "webpack-node-externals": "^1.7.2"
