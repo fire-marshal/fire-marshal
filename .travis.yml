@@ -1,0 +1,18 @@
+language: node_js
+
+node_js:
+  - "11"
+
+env:
+  - APP=server
+  - APP=static
+  - APP=wss
+
+before_install:
+  - node -v
+
+install:
+  - (cd $APP; npm install)
+
+script:
+  - (cd $APP; npm run lint; npm run cover-to-file > coverage.lcov; ./node_modules/.bin/codecov --env=APP)

@@ -8,7 +8,8 @@
     "lint": "eslint src tests",
     "start": "NODE_ENV=development cd public && parcel --hmr-hostname 0.0.0.0 --hmr-port 7001 --out-dir ../build --cache-dir ../.cache watch index.html",
     "test": "mocha-webpack --opts ./tests/mocha.opts",
-    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test --  src/**/*.js"
+    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test --  src/**/*.js",
+    "cover-to-file": "cross-env NODE_ENV=coverage nyc --reporter=text-lcov npm test -- src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "chai": "^4.2.0",
+    "codecov": "^3.1.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.10.0",
     "eslint-config-standard": "^12.0.0",
