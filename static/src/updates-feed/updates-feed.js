@@ -68,7 +68,7 @@ class UpdatesFeed extends React.PureComponent {
         loadMore={this.loadBefore}
         hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
         loader={<div className='loader' key={0}>Loading ...</div>}>
-        <div className='container main-st ream-container'>
+        <div className='container main-stream-container'>
           {
             list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
               list.inProgress ? <div>TODO: spinner</div> : (
