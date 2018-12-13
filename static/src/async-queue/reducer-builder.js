@@ -10,7 +10,7 @@ import Immutable from 'immutable'
  * @param (error)
  * @returns {{}}
  */
-module.exports = function asyncReducer (
+export default function asyncReducer (
   [request, receive, error = null]
 ) {
   const res = {
