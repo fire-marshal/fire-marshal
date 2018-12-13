@@ -87,5 +87,12 @@
     "reselect-tools": "^0.0.7",
     "sass": "^1.14.3",
     "webpack": "^4.27.1"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "instrument": false,
+    "sourceMap": false
   }
 }
