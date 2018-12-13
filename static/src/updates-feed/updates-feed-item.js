@@ -15,7 +15,7 @@ const UpdatesFeedItemImage = ({ img, title }) => {
 }
 
 UpdatesFeedItemImage.propTypes = {
-  img: PropTypes.string,
+  img: PropTypes.object,
   title: PropTypes.string
 }
 
