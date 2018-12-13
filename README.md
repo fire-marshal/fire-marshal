@@ -1,4 +1,4 @@
-# "Fire Marshal" [![Build Status](https://travis-ci.org/fire-marshal/fire-marshal.svg?branch=master)](https://travis-ci.org/fire-marshal/fire-marshal)
+# "Fire Marshal" [![Build Status](https://travis-ci.org/fire-marshal/fire-marshal.svg?branch=master)](https://travis-ci.org/fire-marshal/fire-marshal) [![codecov](https://codecov.io/gh/fire-marshal/fire-marshal/branch/master/graph/badge.svg)](https://codecov.io/gh/fire-marshal/fire-marshal)
 
 ```
 ______ _           ___  ___               _           _
