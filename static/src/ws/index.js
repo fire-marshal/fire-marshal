@@ -1,5 +1,3 @@
-const wsMiddleware = require('./middleware')
+import _wsMiddleware from './middleware'
 
-module.exports = {
-  wsMiddleware
-}
+export const wsMiddleware = _wsMiddleware

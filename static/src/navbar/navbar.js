@@ -1,8 +1,10 @@
+import './navbar.scss'
+
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => (
-  <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
+  <nav className='navbar navbar-expand-lg navbar-dark bg-primary top-navbar'>
     <Link className='navbar-brand' to='/'>FM</Link>
     <button
       className='navbar-toggler'
