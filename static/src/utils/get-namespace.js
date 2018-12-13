@@ -3,6 +3,6 @@ import packageJSON from '../../package'
 /**
  * get current app namespace
  */
-module.exports = function getReduxNamespace () {
+export default function getReduxNamespace () {
   return packageJSON.name
 }

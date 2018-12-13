@@ -1,4 +1,4 @@
-import wsMiddleware from './middleware'
+const wsMiddleware = require('./middleware')
 
 module.exports = {
   wsMiddleware

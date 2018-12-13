@@ -1,4 +1,4 @@
-import ConnectionManager from './connection-manager'
+const ConnectionManager = require('./connection-manager')
 
 module.exports = {
   ConnectionManager
