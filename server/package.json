@@ -9,7 +9,8 @@
     "lint": "eslint api bin lib tests index.js",
     "test": "mocha --opts ./tests/mocha.opts",
     "build:fake-db": "node ./bin/fake-db-entities.js",
-    "build:api-docs": "swagger-jsdoc -d ./api/swagger-def.js -o ./api/swagger/swagger.json ./lib/*/*.js"
+    "build:api-docs": "swagger-jsdoc -d ./api/swagger-def.js -o ./api/swagger/swagger.json ./lib/*/*.js",
+    "cover": "nyc npm test -- lib/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -58,6 +59,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.5",
+    "nyc": "^13.1.0",
     "sinon": "^7.2.2",
     "sinon-chai": "^3.3.0",
     "standard": "^12.0.1"
