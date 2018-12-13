@@ -1,7 +1,10 @@
 language: nodejs
 
 node_js:
-  - 10
+  - "11"
+
+before_install:
+  - node -v
 
 install:
   - (cd wss; npm install)
