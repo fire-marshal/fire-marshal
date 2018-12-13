@@ -1,0 +1,10 @@
+language: nodejs
+
+node_js:
+  - 10
+
+install:
+  - (cd wss; npm install)
+
+script:
+  - (cd wss; npm run cover)
