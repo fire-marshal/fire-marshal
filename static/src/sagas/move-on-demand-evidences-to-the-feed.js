@@ -15,12 +15,15 @@ export function * moveOnDemandToTheFeed () {
 
   const sortBy = ['when', 'estimation']
 
-  const onDemandIds = yield select(updatesFeedSelector.getOnDemand)
-  const indexes = yield call(findPlaceToInsertIds, onDemandIds, sortBy)
+  const ids = yield select(updatesFeedSelector.getOnDemand)
+  console.log('ids', ids)
+
+  const indexes = yield call(findPlaceToInsertIds, ids, sortBy)
+  console.log('indexes', indexes)
 
   yield put(insertIdsToTheFeed({
-    indexes: indexes.reverse(),
-    ids: onDemandIds.reverse()
+    ids: ids.reverse(),
+    indexes: indexes.reverse()
   }))
 
   yield put(clearOnDemand())
@@ -37,9 +40,14 @@ export function * findPlaceToInsertIds (ids, sortBy) {
   const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
 
+  // TODO: should sort ids by sorted value
+
   return ids.map(
     id => {
       const itemValue = byIds.getIn([id].concat(sortBy))
+
+      console.log('id', id)
+      console.log('itemValue', itemValue)
 
       function compareInplaceValue (idx) {
         const inplaceId = sortedIds.get(idx)

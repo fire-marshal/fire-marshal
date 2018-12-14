@@ -46,6 +46,15 @@ export default createReducer(
   {
     [actionTypes.CLEAR_ON_DEMAND]: (state) => state.set('onDemand', Immutable.Set()),
 
+    [actionTypes.INSERT_IDS_TO_THE_FEED]: (state, { payload: { ids, indexes } }) =>
+      state.update(
+        'data', data => _.zip(indexes, ids)
+          .reduce(
+            (acc, [idx, id]) => acc.insert(idx, id),
+            data
+          )
+      ),
+
     [entitiesActionTypes.INSERT_ITEM]: (state, { payload: { index, item, realTime } }) => {
       if (realTime) {
         if (index !== undefined) {
