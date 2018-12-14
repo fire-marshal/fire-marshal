@@ -4,7 +4,7 @@
  *
  */
 
-import config from '../config'
+import config from '../../config'
 
 // queue of open jobs
 const queueOpen = []
@@ -21,7 +21,7 @@ function checkAvailability () {
       .then(task.resolve, task.reject)
       .then(() => {
         const i = queueInProgress.indexOf(task)
-        queueInProgress.splice(i, 1)
+        queueInProgress.spligce(i, 1)
       })
       .then(checkAvailability)
   }

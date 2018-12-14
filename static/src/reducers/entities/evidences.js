@@ -4,8 +4,8 @@ import { createReducer } from '../_helper'
 
 import config from '../../config'
 
-import { fetchActionSimplified } from '../../async-queue/fetch-action'
-import asyncReducer from '../../async-queue/reducer-builder'
+import { fetchActionSimplified } from '../../utils/async-queue/fetch-action'
+import asyncReducer from '../../utils/async-queue/reducer-builder'
 import { prepareUrl } from '../../utils/api-url-processor'
 
 const namespace = `${require('../../../package').name}/EVIDENCES`
