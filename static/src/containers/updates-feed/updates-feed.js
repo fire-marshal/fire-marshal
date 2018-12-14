@@ -7,7 +7,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../../config'
-import { FeedOnDemandUpdates } from '../../components/feed-updates'
+import { FeedOnDemandUpdatesNotification } from '../../components/feed-updates'
 
 import * as evidencesActions from '../../reducers/entities/evidences'
 import * as evidencesSubscriber from '../../reducers/evidences-subscriber'
@@ -68,7 +68,7 @@ class UpdatesFeed extends React.PureComponent {
 
     return (
       <Fragment>
-        {onDemandCount > 0 && <FeedOnDemandUpdates count={onDemandCount}/>}
+        {onDemandCount > 0 && <FeedOnDemandUpdatesNotification count={onDemandCount}/>}
         <InfiniteScroll
           loadMore={this.loadBefore}
           hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}

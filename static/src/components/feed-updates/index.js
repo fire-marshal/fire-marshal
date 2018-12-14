@@ -1,3 +1,3 @@
-import FeedOnDemandUpdates from './feed-on-demand-updates'
+import FeedOnDemandUpdatesNotification from './feed-on-demand-updates-notification'
 
-export { FeedOnDemandUpdates }
+export { FeedOnDemandUpdatesNotification }
