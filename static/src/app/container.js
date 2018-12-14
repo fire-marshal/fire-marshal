@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { NavBar } from '../navbar'
+import { NavBar } from '../components/navbar'
 
 const Container = ({ children }) => (
   <div>
