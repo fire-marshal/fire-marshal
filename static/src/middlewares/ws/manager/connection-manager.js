@@ -1,5 +1,5 @@
-import { connectionActions, WSConnection } from './connection'
-import { queueActions, Queue } from './queue'
+import { connectionActions, WSConnection } from './connection/index'
+import { queueActions, Queue } from './queue/index'
 
 /**
  *
