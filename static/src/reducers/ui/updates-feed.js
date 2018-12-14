@@ -4,6 +4,28 @@ import _ from 'lodash'
 import { createReducer } from '../_helper'
 import { actionTypes } from '../entities/evidences'
 
+const namespace = `${require('../../../package').name}/UI/UPDATES_FEED`
+
+//
+// actions
+//
+
+export const actionType = {
+  MOVE_ON_DEMAND_TO_THE_FEED: `${namespace}/MOVE_ON_DEMAND_TO_THE_FEED`
+}
+
+//
+// action creators
+//
+
+export const moveOnDemandToTheFeed = () => ({
+  type: actionType.MOVE_ON_DEMAND_TO_THE_FEED
+})
+
+//
+// reducers
+//
+
 export default createReducer(
   Immutable.Map({
     data: Immutable.List(),

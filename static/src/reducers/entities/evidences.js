@@ -8,7 +8,7 @@ import { fetchActionSimplified } from '../../utils/async-queue/fetch-action'
 import asyncReducer from '../../utils/async-queue/reducer-builder'
 import { prepareUrl } from '../../utils/api-url-processor'
 
-const namespace = `${require('../../../package').name}/EVIDENCES`
+const namespace = `${require('../../../package').name}/ENTITIES/EVIDENCES`
 
 //
 // actions

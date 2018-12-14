@@ -10,9 +10,10 @@ import config from '../../config'
 import { FeedOnDemandUpdatesNotification } from '../../components/feed-updates'
 
 import * as evidencesActions from '../../reducers/entities/evidences'
-import * as evidencesSubscriber from '../../reducers/evidences-subscriber'
 import * as evidencesSelector from '../../selectors/entities/evidences'
-import * as updatesFeed from '../../selectors/ui/updates-feed'
+import * as evidencesSubscriber from '../../reducers/evidences-subscriber'
+import * as updatesFeedActions from '../../reducers/ui/updates-feed'
+import * as updatesFeedSelector from '../../selectors/ui/updates-feed'
 
 import UpdatesFeedItem from './updates-feed-item'
 
@@ -22,10 +23,11 @@ class UpdatesFeed extends React.PureComponent {
     onDemandCount: PropTypes.number.isRequired,
     user: PropTypes.object.isRequired,
 
-    validateItems: PropTypes.func.isRequired,
+    loadItemsAfter: PropTypes.func.isRequired,
+    moveOnDemandToTheVisible: PropTypes.func.isRequired,
     subscribeUpdatesFeed: PropTypes.func.isRequired,
     unsubscribeUpdatesFeed: PropTypes.func.isRequired,
-    loadItemsAfter: PropTypes.func.isRequired
+    validateItems: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -61,14 +63,17 @@ class UpdatesFeed extends React.PureComponent {
   }
 
   render () {
-    const { list, onDemandCount } = this.props
+    const { list, onDemandCount, moveOnDemandToTheVisible } = this.props
     if (list.invalid) {
       this.validateItems()
     }
 
     return (
       <Fragment>
-        {onDemandCount > 0 && <FeedOnDemandUpdatesNotification count={onDemandCount}/>}
+        {onDemandCount > 0 && <FeedOnDemandUpdatesNotification
+          count={onDemandCount}
+          onClick={moveOnDemandToTheVisible}
+        />}
         <InfiniteScroll
           loadMore={this.loadBefore}
           hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
@@ -95,26 +100,27 @@ export default connect(
       location: { lat: 0, long: 0 }
     },
 
-    onDemandCount: updatesFeed.getOnDemandCount(state, props),
+    onDemandCount: updatesFeedSelector.getOnDemandCount(state, props),
 
     list: {
       inProgress: evidencesSelector.getEvidenceItemsInProgress(state, props),
       invalid: evidencesSelector.getEvidenceItemsInvalid(state, props),
       error: evidencesSelector.getEvidenceError(state, props),
-      items: updatesFeed.getSortedItems(state, props),
+      items: updatesFeedSelector.getSortedItems(state, props),
       hasMore: evidencesSelector.hasMore(state, props),
-      startDateISO: updatesFeed.getStartDateISO(state, props)
+      startDateISO: updatesFeedSelector.getStartDateISO(state, props)
     }
   }),
 
   (dispatch, props) => ({
-    validateItems: ({ lat, long }) => dispatch(evidencesActions.fetchEvidences({ lat, long })),
-    subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
-    unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
     loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(evidencesActions.fetchEvidences({
       lat,
       long,
       startDateISO
-    }))
+    })),
+    moveOnDemandToTheVisible: () => dispatch(updatesFeedActions.moveOnDemandToTheFeed()),
+    subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
+    unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
+    validateItems: ({ lat, long }) => dispatch(evidencesActions.fetchEvidences({ lat, long }))
   })
 )(UpdatesFeed)
