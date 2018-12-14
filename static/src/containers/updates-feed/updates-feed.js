@@ -24,7 +24,7 @@ class UpdatesFeed extends React.PureComponent {
     user: PropTypes.object.isRequired,
 
     loadItemsAfter: PropTypes.func.isRequired,
-    moveOnDemandToTheVisible: PropTypes.func.isRequired,
+    moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
     subscribeUpdatesFeed: PropTypes.func.isRequired,
     unsubscribeUpdatesFeed: PropTypes.func.isRequired,
     validateItems: PropTypes.func.isRequired
@@ -63,7 +63,7 @@ class UpdatesFeed extends React.PureComponent {
   }
 
   render () {
-    const { list, onDemandCount, moveOnDemandToTheVisible } = this.props
+    const { list, onDemandCount, moveOnDemandIdsToTheFeed } = this.props
     if (list.invalid) {
       this.validateItems()
     }
@@ -72,7 +72,7 @@ class UpdatesFeed extends React.PureComponent {
       <Fragment>
         {onDemandCount > 0 && <FeedOnDemandUpdatesNotification
           count={onDemandCount}
-          onClick={moveOnDemandToTheVisible}
+          onClick={moveOnDemandIdsToTheFeed}
         />}
         <InfiniteScroll
           loadMore={this.loadBefore}
@@ -118,7 +118,7 @@ export default connect(
       long,
       startDateISO
     })),
-    moveOnDemandToTheVisible: () => dispatch(updatesFeedActions.moveOnDemandToTheFeed()),
+    moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
     unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
     validateItems: ({ lat, long }) => dispatch(evidencesActions.fetchEvidences({ lat, long }))
