@@ -2,11 +2,13 @@ import './updates-feed.scss'
 
 import { bind, debounce } from 'decko'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Fragment } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../../config'
+import { FeedOnDemandUpdates } from '../../components/feed-updates'
+
 import * as evidencesActions from '../../reducers/entities/evidences'
 import * as evidencesSubscriber from '../../reducers/evidences-subscriber'
 import * as evidencesSelector from '../../selectors/entities/evidences'
@@ -16,13 +18,14 @@ import UpdatesFeedItem from './updates-feed-item'
 
 class UpdatesFeed extends React.PureComponent {
   static propTypes = {
-    user: PropTypes.object.isRequired,
     list: PropTypes.object.isRequired,
+    onDemandCount: PropTypes.number.isRequired,
+    user: PropTypes.object.isRequired,
 
-    validateItems: PropTypes.func,
-    subscribeUpdatesFeed: PropTypes.func,
-    unsubscribeUpdatesFeed: PropTypes.func,
-    loadItemsAfter: PropTypes.func
+    validateItems: PropTypes.func.isRequired,
+    subscribeUpdatesFeed: PropTypes.func.isRequired,
+    unsubscribeUpdatesFeed: PropTypes.func.isRequired,
+    loadItemsAfter: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -58,26 +61,29 @@ class UpdatesFeed extends React.PureComponent {
   }
 
   render () {
-    const { list } = this.props
+    const { list, onDemandCount } = this.props
     if (list.invalid) {
       this.validateItems()
     }
 
     return (
-      <InfiniteScroll
-        loadMore={this.loadBefore}
-        hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
-        loader={<div className='loader' key={0}>Loading ...</div>}>
-        <div className='container main-stream-container'>
-          {
-            list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
-              list.inProgress ? <div>TODO: spinner</div> : (
-                list.error && <div>TODO: show error</div>
+      <Fragment>
+        <FeedOnDemandUpdates count={onDemandCount}/>
+        <InfiniteScroll
+          loadMore={this.loadBefore}
+          hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
+          loader={<div className='loader' key={0}>Loading ...</div>}>
+          <div className='container main-stream-container'>
+            {
+              list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
+                list.inProgress ? <div>TODO: spinner</div> : (
+                  list.error && <div>TODO: show error</div>
+                )
               )
-            )
-          }
-        </div>
-      </InfiniteScroll>
+            }
+          </div>
+        </InfiniteScroll>
+      </Fragment>
     )
   }
 }
@@ -88,6 +94,8 @@ export default connect(
       // TODO: we should pass real user's position
       location: { lat: 0, long: 0 }
     },
+
+    onDemandCount: updatesFeed.getOnDemandCount(state, props),
 
     list: {
       inProgress: evidencesSelector.getEvidenceItemsInProgress(state, props),

@@ -21,7 +21,7 @@ function checkAvailability () {
       .then(task.resolve, task.reject)
       .then(() => {
         const i = queueInProgress.indexOf(task)
-        queueInProgress.spligce(i, 1)
+        queueInProgress.splice(i, 1)
       })
       .then(checkAvailability)
   }
