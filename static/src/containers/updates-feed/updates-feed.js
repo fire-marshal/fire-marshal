@@ -68,7 +68,7 @@ class UpdatesFeed extends React.PureComponent {
 
     return (
       <Fragment>
-        <FeedOnDemandUpdates count={onDemandCount}/>
+        {onDemandCount > 0 && <FeedOnDemandUpdates count={onDemandCount}/>}
         <InfiniteScroll
           loadMore={this.loadBefore}
           hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
