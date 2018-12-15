@@ -6,22 +6,24 @@ const FeedRealtimeUpdateNotification = () => {
   const [visible, setVisibility] = useState(true)
 
   useEffect(() => {
-    let prevScrollpos = window.pageYOffset
+    let previousScrollpos = window.pageYOffset
     // TODO: it would be better to use event listeners
     // scrollEl.addEventListener('mousewheel', this.mousewheelListener, this.props.useCapture);
     // scrollEl.addEventListener('scroll', this.scrollListener, this.props.useCapture);
 
-    window.onscroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos) {
+    const previousOnScroll = window.onscroll
+    window.onscroll = (...args) => {
+      const currentScrollPos = window.pageYOffset
+      if (previousScrollpos > currentScrollPos) {
         setVisibility(true)
       } else {
         setVisibility(false)
       }
-      prevScrollpos = currentScrollPos;
+      previousScrollpos = currentScrollPos
+      previousOnScroll(...args)
     }
     return () => {
-      window.onscroll = null;
+      window.onscroll = previousOnScroll
     }
   })
 
