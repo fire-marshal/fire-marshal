@@ -49,7 +49,7 @@ export function binarySearchOfCallback (comparator, valuesLength) {
       return idx
     }
 
-    console.log('new', { minIdx, maxIdx });
+    console.log('new', { minIdx, maxIdx })
 
     if (++cycles > valuesLength) {
       console.log('diff:', _.range(valuesLength).map(idx => ({ idx, diff: comparator(idx) })))

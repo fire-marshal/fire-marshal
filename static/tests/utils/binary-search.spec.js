@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
 import { binarySearchOfCallback } from '../../src/utils/binary-search'
-import Immutable from "immutable";
+import Immutable from 'immutable'
 
 const naturalNumbers = value => idx => {
   if (idx < 0) {
@@ -43,7 +43,7 @@ describe('utils', () => {
       ;[
         { itemValue: 6000, expectedIdx: 1 },
         { itemValue: 4000, expectedIdx: 2 },
-        { itemValue: 2000, expectedIdx: 3 },
+        { itemValue: 2000, expectedIdx: 3 }
       ].forEach(({ itemValue, expectedIdx }) => {
         it(`should ${itemValue} => ${expectedIdx}`, () => {
           const byIds = Immutable.fromJS({
