@@ -25,7 +25,7 @@ const useVisibleOnScrollUp = () => {
     return () => {
       window.onscroll = previousOnScroll
     }
-  })
+  }, [])
 
   return visible
 }
