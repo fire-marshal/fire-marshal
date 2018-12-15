@@ -3,7 +3,7 @@ import './landing.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import packageJSON from '../../package'
+import packageJSON from '../../../package'
 
 import logoUrl from './hell-mandala-512x512.png'
 

@@ -14,7 +14,7 @@ import * as ReselectTools from 'reselect-tools'
 import rootReducers from '../reducers'
 import rootSaga from '../sagas'
 import * as selectors from '../selectors'
-import { wsMiddleware } from '../ws'
+import { wsMiddleware } from '../middlewares/ws'
 
 import AppRouter from './router'
 

@@ -4,7 +4,7 @@
  *
  */
 
-import config from '../config'
+import config from '../../config'
 
 // queue of open jobs
 const queueOpen = []

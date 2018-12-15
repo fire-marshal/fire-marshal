@@ -9,6 +9,21 @@ export const getSortedIdsRaw = createSelector(
   (feed) => feed && feed.get('data')
 )
 
+export const getOnDemandRaw = createSelector(
+  [getUpdatesFeed],
+  (feed) => feed && feed.get('onDemand')
+)
+
+export const getOnDemand = createSelector(
+  [getOnDemandRaw],
+  (raw) => raw && raw.toJS()
+)
+
+export const getOnDemandCount = createSelector(
+  [getOnDemandRaw],
+  (onDemandSet) => onDemandSet && onDemandSet.size
+)
+
 export const getSortedItemsRaw = createSelector(
   [getSortedIdsRaw, getEvidencesByIdRaw],
   (sortedIds, entityById) => sortedIds.map(id => entityById.get(id))

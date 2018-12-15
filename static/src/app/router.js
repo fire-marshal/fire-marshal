@@ -3,9 +3,9 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router'
 
-import { AddNewItemForm } from '../add-new-item'
-import { Landing } from '../landing'
-import { UpdatesFeed } from '../updates-feed'
+import { AddNewItemForm } from '../components/add-new-item'
+import { Landing } from '../components/landing'
+import { UpdatesFeed } from '../containers/updates-feed'
 
 import AppContainer from './container'
 

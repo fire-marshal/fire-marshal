@@ -2,7 +2,7 @@
  * After all it should be mover to https://github.com/good-app-foundation/
  */
 
-import { ConnectionManager } from './manager'
+import { ConnectionManager } from './manager/index'
 
 export default function createWSMiddleware (options = {
   url: 'wss://localhost:8765'
