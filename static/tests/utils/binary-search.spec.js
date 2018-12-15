@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 
 import { binarySearchOfCallback } from '../../src/utils/binary-search'
+import Immutable from "immutable";
 
 const naturalNumbers = value => idx => {
   if (idx < 0) {
@@ -37,6 +38,35 @@ describe('utils', () => {
       it('should set at the zero for item which equal to the 1st item in a values', () => {
         const idx = binarySearchOfCallback(naturalNumbers(0), 5)
         expect(idx).to.be.equal(0)
+      })
+
+      ;[
+        { itemValue: 6000, expectedIdx: 1 },
+        { itemValue: 4000, expectedIdx: 2 },
+        { itemValue: 2000, expectedIdx: 3 },
+      ].forEach(({ itemValue, expectedIdx }) => {
+        it(`should ${itemValue} => ${expectedIdx}`, () => {
+          const byIds = Immutable.fromJS({
+            '1': { value: 7000 }, // 0
+            '2': { value: 6000 },
+            '3': { value: 5000 }, // 1
+            '4': { value: 4000 },
+            '5': { value: 3000 }, // 2
+            '6': { value: 2000 },
+            '7': { value: 1000 } // 3
+          })
+          const sortedIds = Immutable.List([
+            '1', '3', '5', '7'
+          ])
+
+          function comparator (idx) {
+            const inplaceId = sortedIds.get(idx)
+            return itemValue - byIds.getIn([inplaceId].concat('value'))
+          }
+
+          const idx = binarySearchOfCallback(comparator, 3)
+          expect(idx).to.be.equal(expectedIdx)
+        })
       })
     })
   })
