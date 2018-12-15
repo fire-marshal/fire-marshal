@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * Hook makes visible when user scroll up, and hides when scroll down
@@ -7,14 +7,11 @@ import { useEffect, useRef, useState } from 'react'
  * @returns {*[]}
  */
 const useVisibleOnScrollUp = (initialVisibility = true) => {
-  const elRef = useRef()
   const [visible, setVisibility] = useState(initialVisibility)
 
   useEffect(() => {
     let previousScrollTop = window.pageYOffset
     // TODO: it would be better to use event listeners
-
-    console.log('elRef.current', elRef.current)
 
     function handleScroll (event) {
       // IE doesn't support "scrollingElement" but who care ;)
@@ -35,9 +32,9 @@ const useVisibleOnScrollUp = (initialVisibility = true) => {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [elRef])
+  })
 
-  return [visible, elRef]
+  return visible
 }
 
 export default useVisibleOnScrollUp

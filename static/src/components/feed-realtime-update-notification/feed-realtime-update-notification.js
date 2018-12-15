@@ -5,12 +5,11 @@ import React from 'react'
 import { useVisibleOnScrollUp } from '../../hooks'
 
 const FeedRealtimeUpdateNotification = () => {
-  const [visible, elRef] = useVisibleOnScrollUp()
+  const visible = useVisibleOnScrollUp()
 
   return (
     <section
       className='feed-realtime-update-notification alert alert-secondary'
-      ref={elRef}
       role='alert'
       style={{ top: visible ? 56 : 0 }}
     >
