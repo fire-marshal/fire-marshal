@@ -2,7 +2,7 @@ import './feed-realtime-update-notification.scss'
 
 import React, { useEffect, useState } from 'react'
 
-const FeedRealtimeUpdateNotification = () => {
+const useVisibleOnScrollUp = () => {
   const [visible, setVisibility] = useState(true)
 
   useEffect(() => {
@@ -20,12 +20,18 @@ const FeedRealtimeUpdateNotification = () => {
         setVisibility(false)
       }
       previousScrollpos = currentScrollPos
-      previousOnScroll(...args)
+      previousOnScroll && previousOnScroll.apply(window, args)
     }
     return () => {
       window.onscroll = previousOnScroll
     }
   })
+
+  return visible
+}
+
+const FeedRealtimeUpdateNotification = () => {
+  const visible = useVisibleOnScrollUp()
 
   return (
     <section
