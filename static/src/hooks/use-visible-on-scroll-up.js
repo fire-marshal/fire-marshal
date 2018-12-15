@@ -6,7 +6,7 @@ import { useEffect } from 'react'
  * @param initialVisibility {boolean}
  * @returns {*[]}
  */
-const useVisibleOnScrollUp = ({ initialVisibility = true, setVisibility}) => {
+const useVisibleOnScrollUp = ({ initialVisibility = true, setVisibility }) => {
   useEffect(() => {
     let previousScrollTop = window.pageYOffset
     // TODO: it would be better to use event listeners

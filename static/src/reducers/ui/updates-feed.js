@@ -13,7 +13,8 @@ const namespace = `${require('../../../package').name}/UI/UPDATES_FEED`
 export const actionTypes = {
   CLEAR_ON_DEMAND: `${namespace}/CLEAR_ON_DEMAND`,
   INSERT_IDS_TO_THE_FEED: `${namespace}/INSERT_IDS_TO_THE_FEED`,
-  MOVE_ON_DEMAND_IDS_TO_THE_FEED: `${namespace}/MOVE_ON_DEMAND_IDS_TO_THE_FEED`
+  MOVE_ON_DEMAND_IDS_TO_THE_FEED: `${namespace}/MOVE_ON_DEMAND_IDS_TO_THE_FEED`,
+  SET_REAL_TIME: `${namespace}/SET_REAL_TIME`
 }
 
 //
@@ -33,14 +34,25 @@ export const moveOnDemandIdsToTheFeed = () => ({
   type: actionTypes.MOVE_ON_DEMAND_IDS_TO_THE_FEED
 })
 
+export const enableRealtime = (enable) => ({
+  type: actionTypes.SET_REAL_TIME,
+  payload: {
+    enable
+  }
+})
+
 //
 // reducers
 //
 
 export default createReducer(
   Immutable.Map({
+    // feed list
     data: Immutable.List(),
-    onDemand: Immutable.Set()
+    // wait to merge feed list
+    onDemand: Immutable.Set(),
+    // should we update feed list in realtime
+    realtime: false
   }),
 
   {
@@ -89,6 +101,9 @@ export default createReducer(
           )
         )
       }
-    }
+    },
+
+    [actionTypes.SET_REAL_TIME]: (state, { payload: { enable } }) =>
+      state.set('realtime', enable)
   }
 )

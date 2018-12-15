@@ -5,12 +5,12 @@ import React, { useState } from 'react'
 
 import { useVisibleOnScrollUp } from '../../hooks'
 
-const FeedRealtimeUpdateNotification = ({ doFollow }) => {
+const FeedRealtimeUpdateNotification = ({ follow, onFollow }) => {
   const [visible, setVisibility] = useState(true)
   useVisibleOnScrollUp({ setVisibility })
 
   function handleFollowUpdatesClick (evt) {
-    doFollow(evt.target.checked)
+    onFollow(evt.target.checked)
     evt.stopPropagation()
   }
 
@@ -22,8 +22,10 @@ const FeedRealtimeUpdateNotification = ({ doFollow }) => {
       onClick={() => setVisibility(false)}
     >
       <div>
-        <label>Follow Updates <input type='checkbox'
-                                     onClick={handleFollowUpdatesClick}/>
+        <label>Follow Updates <input
+          checked={follow}
+          type='checkbox'
+          onChange={handleFollowUpdatesClick}/>
         </label>
       </div>
     </section>
@@ -32,7 +34,8 @@ const FeedRealtimeUpdateNotification = ({ doFollow }) => {
 
 FeedRealtimeUpdateNotification.displayName = 'FeedRealtimeUpdateNotification'
 FeedRealtimeUpdateNotification.propTypes = {
-  doFollow: PropTypes.func.isRequired
+  follow: PropTypes.bool.isRequired,
+  onFollow: PropTypes.func.isRequired
 }
 
 export default FeedRealtimeUpdateNotification
