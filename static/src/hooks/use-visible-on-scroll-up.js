@@ -4,7 +4,7 @@ import { useEffect } from 'react'
  * Hook makes visible when user scroll up, and hides when scroll down
  *
  * @param initialVisibility {boolean}
- * @returns {*[]}
+ * @param setVisibility {function}
  */
 const useVisibleOnScrollUp = ({ initialVisibility = true, setVisibility }) => {
   useEffect(() => {
@@ -12,7 +12,7 @@ const useVisibleOnScrollUp = ({ initialVisibility = true, setVisibility }) => {
     // TODO: it would be better to use event listeners
 
     function handleScroll (event) {
-      // IE doesn't support "scrollingElement" but who care ;)
+      // IE doesn't support "scrollingElement" but who cares ;)
       // if we would really need it
       // we can use polyfill
       // https://github.com/yangg/scrolling-element

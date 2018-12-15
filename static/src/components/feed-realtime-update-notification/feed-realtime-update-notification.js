@@ -22,10 +22,13 @@ const FeedRealtimeUpdateNotification = ({ follow, onFollow }) => {
       onClick={() => setVisibility(false)}
     >
       <div>
-        <label>Follow Updates <input
-          checked={follow}
-          type='checkbox'
-          onChange={handleFollowUpdatesClick}/>
+        <label>
+          <input
+            checked={follow}
+            type='checkbox'
+            onChange={handleFollowUpdatesClick}
+          />&nbsp;
+          Follow Updates
         </label>
       </div>
     </section>
