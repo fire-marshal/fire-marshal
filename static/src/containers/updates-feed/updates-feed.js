@@ -7,7 +7,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../../config'
-import { FeedOnDemandUpdatesNotification } from '../../components/feed-updates'
+import { FeedOnDemandUpdatesNotification } from '../../components/feed-on-demand-notification'
 
 import * as evidencesActions from '../../reducers/entities/evidences'
 import * as evidencesSelector from '../../selectors/entities/evidences'
