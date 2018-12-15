@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 /**
  * Find position in sorted array
  *
@@ -33,17 +35,26 @@ export function binarySearchOfCallback (comparator, valuesLength) {
   let minIdx = 0
   let maxIdx = valuesLength
 
-  while (minIdx !== maxIdx) {
+  let cycles = 0
+
+  while (minIdx < maxIdx) {
     let idx = (maxIdx + minIdx) >> 1
     let diff = comparator(idx)
     if (diff > 0) {
-      maxIdx = Math.max(0, idx - 1)
+      maxIdx = Math.max(0, idx - 1, minIdx)
     } else if (diff < 0) {
-      minIdx = idx + 1
+      minIdx = Math.min(idx + 1, maxIdx)
     } else {
       return idx
     }
+
+    console.log('cycles', cycles, { idx, minIdx, maxIdx, diff })
+
+    if (++cycles > valuesLength) {
+      console.log('diff:', _.range(valuesLength).map(idx => ({ idx, diff: comparator(idx) })))
+      throw new Error('search too long', { idx, minIdx, maxIdx, diff })
+    }
   }
 
-  return maxIdx
+  return minIdx
 }
