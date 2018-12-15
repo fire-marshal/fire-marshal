@@ -9,11 +9,6 @@ const FeedRealtimeUpdateNotification = ({ follow, onFollow }) => {
   const [visible, setVisibility] = useState(true)
   useVisibleOnScrollUp({ setVisibility })
 
-  function handleFollowUpdatesClick (evt) {
-    onFollow(evt.target.checked)
-    evt.stopPropagation()
-  }
-
   return (
     <section
       className='feed-realtime-update-notification alert alert-secondary'
@@ -22,11 +17,11 @@ const FeedRealtimeUpdateNotification = ({ follow, onFollow }) => {
       onClick={() => setVisibility(false)}
     >
       <div>
-        <label>
+        <label onClick={evt => evt.stopPropagation()}>
           <input
             checked={follow}
             type='checkbox'
-            onChange={handleFollowUpdatesClick}
+            onChange={evt => onFollow(evt.target.checked)}
           />&nbsp;
           Follow Updates
         </label>
