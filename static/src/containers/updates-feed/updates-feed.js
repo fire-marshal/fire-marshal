@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 
 import config from '../../config'
 import { FeedOnDemandUpdatesNotification } from '../../components/feed-on-demand-notification'
+import { FeedRealtimeUpdateNotification } from '../../components/feed-realtime-update-notification'
 
 import * as evidencesActions from '../../reducers/entities/evidences'
 import * as evidencesSelector from '../../selectors/entities/evidences'
@@ -70,6 +71,7 @@ class UpdatesFeed extends React.PureComponent {
 
     return (
       <Fragment>
+        <FeedRealtimeUpdateNotification/>
         {onDemandCount > 0 && <FeedOnDemandUpdatesNotification
           count={onDemandCount}
           onClick={moveOnDemandIdsToTheFeed}
