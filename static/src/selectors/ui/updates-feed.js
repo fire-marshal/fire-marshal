@@ -43,3 +43,8 @@ export const getStartDateISO = createSelector(
   [getStartDate],
   (date) => date && date.toISOString()
 )
+
+export const isRealtime = createSelector(
+  [getUpdatesFeed],
+  (feed) => feed && feed.get('realtime')
+)

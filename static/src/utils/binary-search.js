@@ -40,15 +40,16 @@ export function binarySearchOfCallback (comparator, valuesLength) {
   while (minIdx < maxIdx) {
     let idx = (maxIdx + minIdx) >> 1
     let diff = comparator(idx)
+    console.log('cycles', cycles, { idx, minIdx, maxIdx, diff })
     if (diff > 0) {
-      maxIdx = Math.max(0, idx - 1, minIdx)
+      maxIdx = Math.max(0, idx, minIdx)
     } else if (diff < 0) {
       minIdx = Math.min(idx + 1, maxIdx)
     } else {
       return idx
     }
 
-    console.log('cycles', cycles, { idx, minIdx, maxIdx, diff })
+    console.log('new', { minIdx, maxIdx })
 
     if (++cycles > valuesLength) {
       console.log('diff:', _.range(valuesLength).map(idx => ({ idx, diff: comparator(idx) })))

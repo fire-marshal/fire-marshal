@@ -7,7 +7,8 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 
 import config from '../../config'
-import { FeedOnDemandUpdatesNotification } from '../../components/feed-updates'
+import { FeedOnDemandUpdatesNotification } from '../../components/feed-on-demand-notification'
+import { FeedRealtimeUpdateNotification } from '../../components/feed-realtime-update-notification'
 
 import * as evidencesActions from '../../reducers/entities/evidences'
 import * as evidencesSelector from '../../selectors/entities/evidences'
@@ -20,10 +21,12 @@ import UpdatesFeedItem from './updates-feed-item'
 class UpdatesFeed extends React.PureComponent {
   static propTypes = {
     list: PropTypes.object.isRequired,
+    isRealtime: PropTypes.bool.isRequired,
     onDemandCount: PropTypes.number.isRequired,
     user: PropTypes.object.isRequired,
 
     loadItemsAfter: PropTypes.func.isRequired,
+    enableRealtime: PropTypes.func.isRequired,
     moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
     subscribeUpdatesFeed: PropTypes.func.isRequired,
     unsubscribeUpdatesFeed: PropTypes.func.isRequired,
@@ -63,13 +66,21 @@ class UpdatesFeed extends React.PureComponent {
   }
 
   render () {
-    const { list, onDemandCount, moveOnDemandIdsToTheFeed } = this.props
+    const {
+      list, isRealtime, onDemandCount,
+      enableRealtime, moveOnDemandIdsToTheFeed
+    } = this.props
+
     if (list.invalid) {
       this.validateItems()
     }
 
     return (
       <Fragment>
+        <FeedRealtimeUpdateNotification
+          follow={isRealtime}
+          onFollow={enableRealtime}
+        />
         {onDemandCount > 0 && <FeedOnDemandUpdatesNotification
           count={onDemandCount}
           onClick={moveOnDemandIdsToTheFeed}
@@ -109,7 +120,9 @@ export default connect(
       items: updatesFeedSelector.getSortedItems(state, props),
       hasMore: evidencesSelector.hasMore(state, props),
       startDateISO: updatesFeedSelector.getStartDateISO(state, props)
-    }
+    },
+
+    isRealtime: updatesFeedSelector.isRealtime(state, props)
   }),
 
   (dispatch, props) => ({
@@ -119,6 +132,7 @@ export default connect(
       startDateISO
     })),
     moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
+    enableRealtime: (enable) => dispatch(updatesFeedActions.enableRealtime(enable)),
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
     unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
     validateItems: ({ lat, long }) => dispatch(evidencesActions.fetchEvidences({ lat, long }))

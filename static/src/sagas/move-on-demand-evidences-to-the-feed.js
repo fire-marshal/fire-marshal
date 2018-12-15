@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 
 import { actionTypes, clearOnDemand, insertIdsToTheFeed } from '../reducers/ui/updates-feed'
@@ -15,10 +16,8 @@ export function * moveOnDemandToTheFeed () {
 
   const sortBy = ['when', 'estimation']
 
-  const ids = yield select(updatesFeedSelector.getOnDemand)
+  const { ids, indexes } = yield call(findPlaceToInsertIds, sortBy)
   console.log('ids', ids)
-
-  const indexes = yield call(findPlaceToInsertIds, ids, sortBy)
   console.log('indexes', indexes)
 
   yield put(insertIdsToTheFeed({
@@ -36,30 +35,40 @@ export function * moveOnDemandToTheFeed () {
  * @param sortBy
  * @returns {IterableIterator<*>}
  */
-export function * findPlaceToInsertIds (ids, sortBy) {
-  const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
+export function * findPlaceToInsertIds (sortBy) {
+  const incomingUnsortedIds = yield select(updatesFeedSelector.getOnDemand)
+  const existingSortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
 
-  // TODO: should sort ids by sorted value
+  const values = incomingUnsortedIds.map(id => byIds.getIn([id].concat(sortBy)))
 
-  return ids.map(
-    id => {
-      const itemValue = byIds.getIn([id].concat(sortBy))
+  // we could get unsorted ids so we should make them sorted
+  const sortedIdAndValues = _.zip(incomingUnsortedIds, values).sort(
+    ([id1, value1], [id2, value2]) => value2 - value1
+  )
 
+  // and then map to pair of id and index for insertion
+  const [ ids, indexes ] = _.unzip(sortedIdAndValues.map(
+    ([id, itemValue]) => {
       console.log('id', id)
       console.log('itemValue', itemValue)
 
       function compareInplaceValue (idx) {
-        const inplaceId = sortedIds.get(idx)
+        const inplaceId = existingSortedIds.get(idx)
         return itemValue - byIds.getIn([inplaceId].concat(sortBy))
       }
 
-      return binarySearchOfCallback(
+      return [id, binarySearchOfCallback(
         compareInplaceValue,
-        sortedIds.size
-      )
+        existingSortedIds.size
+      )]
     }
-  )
+  ))
+
+  return {
+    ids,
+    indexes
+  }
 }
 
 export function * sagas () {
