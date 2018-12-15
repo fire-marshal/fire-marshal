@@ -71,7 +71,7 @@ class UpdatesFeed extends React.PureComponent {
 
     return (
       <Fragment>
-        <FeedRealtimeUpdateNotification/>
+        <FeedRealtimeUpdateNotification doFollow={(follow) => console.log('follow feeder', follow)}/>
         {onDemandCount > 0 && <FeedOnDemandUpdatesNotification
           count={onDemandCount}
           onClick={moveOnDemandIdsToTheFeed}

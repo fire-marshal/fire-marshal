@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 /**
  * Hook makes visible when user scroll up, and hides when scroll down
@@ -6,9 +6,7 @@ import { useEffect, useState } from 'react'
  * @param initialVisibility {boolean}
  * @returns {*[]}
  */
-const useVisibleOnScrollUp = (initialVisibility = true) => {
-  const [visible, setVisibility] = useState(initialVisibility)
-
+const useVisibleOnScrollUp = ({ initialVisibility = true, setVisibility}) => {
   useEffect(() => {
     let previousScrollTop = window.pageYOffset
     // TODO: it would be better to use event listeners
@@ -33,8 +31,6 @@ const useVisibleOnScrollUp = (initialVisibility = true) => {
       window.removeEventListener('scroll', handleScroll)
     }
   })
-
-  return visible
 }
 
 export default useVisibleOnScrollUp
