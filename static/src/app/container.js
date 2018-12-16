@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment} from 'react'
+import React, { Fragment } from 'react'
 
 import { NavBar } from '../components/navbar'
 
