@@ -16,9 +16,7 @@ const MapContainer = () => {
   }, [mapRef])
 
   return (
-    <div ref={mapRef} className='map-container'>
-      <h1>Map Container!</h1>
-    </div>
+    <div ref={mapRef} className='map-container' />
   )
 }
 
