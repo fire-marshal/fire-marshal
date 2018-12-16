@@ -49,7 +49,6 @@ export const isMapVisible = createSelector(
   (feed) => feed && feed.get('mapIsVisible')
 )
 
-
 export const isRealtime = createSelector(
   [getUpdatesFeed],
   (feed) => feed && feed.get('realtime')

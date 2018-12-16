@@ -9,7 +9,7 @@ const MapContainer = () => {
   const mapRef = useRef()
   useEffect(() => {
     console.log('create map!')
-    const map = L.map(mapRef.current).setView([51.505, -0.09], 13)
+    const map = L.map(mapRef.current).setView([51.505, -0.09], 4)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map)

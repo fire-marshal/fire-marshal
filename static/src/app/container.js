@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Fragment} from 'react'
 
 import { NavBar } from '../components/navbar'
 
 const Container = ({ children }) => (
-  <div>
+  <Fragment>
     <NavBar />
     {children}
-  </div>
+  </Fragment>
 )
 
 Container.displayName = 'Container'
