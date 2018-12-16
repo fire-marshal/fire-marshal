@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 
 import { useVisibleOnScrollUp } from '../../hooks'
 
-const FeedRealtimeUpdateNotification = ({ follow, onFollow }) => {
+const FeedRealtimeUpdateNotification = ({ follow, map, onFollow, onMap }) => {
   const [visible, setVisibility] = useState(true)
   useVisibleOnScrollUp({ setVisibility })
 
@@ -25,6 +25,14 @@ const FeedRealtimeUpdateNotification = ({ follow, onFollow }) => {
           />&nbsp;
           Follow Updates
         </label>
+        <label onClick={evt => evt.stopPropagation()}>
+          <input
+            checked={map}
+            type='checkbox'
+            onChange={evt => onMap(evt.target.checked)}
+          />&nbsp;
+          Show Map
+        </label>
       </div>
     </section>
   )
@@ -33,7 +41,9 @@ const FeedRealtimeUpdateNotification = ({ follow, onFollow }) => {
 FeedRealtimeUpdateNotification.displayName = 'FeedRealtimeUpdateNotification'
 FeedRealtimeUpdateNotification.propTypes = {
   follow: PropTypes.bool.isRequired,
-  onFollow: PropTypes.func.isRequired
+  map: PropTypes.bool.isRequired,
+  onFollow: PropTypes.func.isRequired,
+  onMap: PropTypes.func.isRequired
 }
 
 export default FeedRealtimeUpdateNotification

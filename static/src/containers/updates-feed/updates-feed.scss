@@ -1,3 +1,15 @@
+.container-for-list-and-map {
+  display: flex;
+  justify-content: stretch;
+  //height: 100vh;
+  >:first-child {
+    max-width: 600px;
+  }
+  >div {
+    width: 100%;
+  }
+}
+
 .updates-feed-container {
   display: flex;
 }

@@ -16,11 +16,14 @@ import * as evidencesSubscriber from '../../reducers/evidences-subscriber'
 import * as updatesFeedActions from '../../reducers/ui/updates-feed'
 import * as updatesFeedSelector from '../../selectors/ui/updates-feed'
 
+import { MapContainer } from '../map'
+
 import UpdatesFeedItem from './updates-feed-item'
 
 class UpdatesFeed extends React.PureComponent {
   static propTypes = {
     list: PropTypes.object.isRequired,
+    isMapVisible: PropTypes.bool.isRequired,
     isRealtime: PropTypes.bool.isRequired,
     onDemandCount: PropTypes.number.isRequired,
     user: PropTypes.object.isRequired,
@@ -28,6 +31,7 @@ class UpdatesFeed extends React.PureComponent {
     loadItemsAfter: PropTypes.func.isRequired,
     enableRealtime: PropTypes.func.isRequired,
     moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
+    setMapVisibility: PropTypes.func.isRequired,
     subscribeUpdatesFeed: PropTypes.func.isRequired,
     unsubscribeUpdatesFeed: PropTypes.func.isRequired,
     validateItems: PropTypes.func.isRequired
@@ -67,8 +71,8 @@ class UpdatesFeed extends React.PureComponent {
 
   render () {
     const {
-      list, isRealtime, onDemandCount,
-      enableRealtime, moveOnDemandIdsToTheFeed
+      list, isMapVisible, isRealtime, onDemandCount,
+      enableRealtime, moveOnDemandIdsToTheFeed, setMapVisibility
     } = this.props
 
     if (list.invalid) {
@@ -80,25 +84,30 @@ class UpdatesFeed extends React.PureComponent {
         <FeedRealtimeUpdateNotification
           follow={isRealtime}
           onFollow={enableRealtime}
+          map={isMapVisible}
+          onMap={setMapVisibility}
         />
         {onDemandCount > 0 && <FeedOnDemandUpdatesNotification
           count={onDemandCount}
           onClick={moveOnDemandIdsToTheFeed}
         />}
-        <InfiniteScroll
-          loadMore={this.loadBefore}
-          hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
-          loader={<div className='loader' key={0}>Loading ...</div>}>
-          <div className='container main-stream-container'>
-            {
-              list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
-                list.inProgress ? <div>TODO: spinner</div> : (
-                  list.error && <div>TODO: show error</div>
+        <div className='container-for-list-and-map'>
+          <InfiniteScroll
+            loadMore={this.loadBefore}
+            hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
+            loader={<div className='loader' key={0}>Loading ...</div>}>
+            <div className='main-stream-container'>
+              {
+                list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
+                  list.inProgress ? <div>TODO: spinner</div> : (
+                    list.error && <div>TODO: show error</div>
+                  )
                 )
-              )
-            }
-          </div>
-        </InfiniteScroll>
+              }
+            </div>
+          </InfiniteScroll>
+          { isMapVisible && <MapContainer/>}
+        </div>
       </Fragment>
     )
   }
@@ -122,6 +131,7 @@ export default connect(
       startDateISO: updatesFeedSelector.getStartDateISO(state, props)
     },
 
+    isMapVisible: updatesFeedSelector.isMapVisible(state, props),
     isRealtime: updatesFeedSelector.isRealtime(state, props)
   }),
 
@@ -131,8 +141,9 @@ export default connect(
       long,
       startDateISO
     })),
-    moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
     enableRealtime: (enable) => dispatch(updatesFeedActions.enableRealtime(enable)),
+    moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
+    setMapVisibility: (visible) => dispatch(updatesFeedActions.setMapVisibility(visible)),
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
     unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
     validateItems: ({ lat, long }) => dispatch(evidencesActions.fetchEvidences({ lat, long }))
