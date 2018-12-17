@@ -21,6 +21,7 @@ parserOptions:
 plugins:
   - mocha
   - react
+  - react-hooks
 
 rules:
 #  FIXME: allow to use until I add logging lib
@@ -41,6 +42,9 @@ rules:
     - error
     - allow:
       - '^UNSAFE_'
+
+  react-hooks/rules-of-hooks:
+    - error
 
 settings:
   react:
