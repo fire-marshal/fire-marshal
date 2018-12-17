@@ -1,5 +1,29 @@
 # Change Log
 
+## [0.6.0](https://github.com/fire-marshal/fire-marshal/tree/0.6.0) (2018-12-17)
+[Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.5.0...0.6.0)
+
+**Implemented enhancements:**
+
+- make mobile friendly [\#71](https://github.com/fire-marshal/fire-marshal/issues/71)
+- realtime update load right away [\#63](https://github.com/fire-marshal/fire-marshal/issues/63)
+- 2 redux states for fetched entities and shown entities [\#62](https://github.com/fire-marshal/fire-marshal/issues/62)
+- conservative news feed update [\#61](https://github.com/fire-marshal/fire-marshal/issues/61)
+- lint tests [\#45](https://github.com/fire-marshal/fire-marshal/issues/45)
+- add code coverage [\#44](https://github.com/fire-marshal/fire-marshal/issues/44)
+- setup travis CI [\#20](https://github.com/fire-marshal/fire-marshal/issues/20)
+
+**Merged pull requests:**
+
+- Feature/5 show map [\#81](https://github.com/fire-marshal/fire-marshal/pull/81) ([hyzhak](https://github.com/hyzhak))
+- Feature/63 realtime update [\#77](https://github.com/fire-marshal/fire-marshal/pull/77) ([hyzhak](https://github.com/hyzhak))
+- Feature/61 conservative feed update [\#75](https://github.com/fire-marshal/fire-marshal/pull/75) ([hyzhak](https://github.com/hyzhak))
+- Feature/20 travis [\#73](https://github.com/fire-marshal/fire-marshal/pull/73) ([hyzhak](https://github.com/hyzhak))
+- Feature/71 mobile friendly [\#72](https://github.com/fire-marshal/fire-marshal/pull/72) ([hyzhak](https://github.com/hyzhak))
+- Feature/44 code coverage [\#70](https://github.com/fire-marshal/fire-marshal/pull/70) ([hyzhak](https://github.com/hyzhak))
+- Feature/45 lint tests [\#69](https://github.com/fire-marshal/fire-marshal/pull/69) ([hyzhak](https://github.com/hyzhak))
+- Feature/62 split state to fetched and displayed [\#68](https://github.com/fire-marshal/fire-marshal/pull/68) ([hyzhak](https://github.com/hyzhak))
+
 ## [0.5.0](https://github.com/fire-marshal/fire-marshal/tree/0.5.0) (2018-11-21)
 [Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.4.0...0.5.0)
 
