@@ -4,6 +4,8 @@ import { bind, debounce } from 'decko'
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
+import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer'
 
 import config from '../../config'
 import { FeedOnDemandUpdatesNotification } from '../../components/feed-on-demand-notification'
@@ -85,20 +87,38 @@ class UpdatesFeed extends React.PureComponent {
           onClick={moveOnDemandIdsToTheFeed}
         />}
         <div className='container-for-list-and-map'>
-          <InfiniteScroll
-            loadMore={this.loadBefore}
-            hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
-            loader={<div className='loader' key={0}>Loading ...</div>}>
-            <div className='main-stream-container'>
-              {
-                list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
-                  list.inProgress ? <div>TODO: spinner</div> : (
-                    list.error && <div>TODO: show error</div>
+          <div className="feed-list-container">
+            <AutoSizer>
+              {({height, width}) => (
+                <List
+                  height={height}
+                  itemCount={1000}
+                  itemSize={35}
+                  width={width}
+                >
+                  {({ index, style }) => (
+                    <div style={style}>Row {index}</div>
+                  )}
+                </List>
+              )}
+            </AutoSizer>
+          </div>
+          { false &&
+            <InfiniteScroll
+              loadMore={this.loadBefore}
+              hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
+              loader={<div className='loader' key={0}>Loading ...</div>}>
+              <div className='main-stream-container'>
+                {
+                  list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
+                    list.inProgress ? <div>TODO: spinner</div> : (
+                      list.error && <div>TODO: show error</div>
+                    )
                   )
-                )
-              }
-            </div>
-          </InfiniteScroll>
+                }
+              </div>
+            </InfiniteScroll>
+          }
           { isMapVisible && <MapContainer/>}
         </div>
       </Fragment>

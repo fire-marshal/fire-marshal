@@ -10,11 +10,17 @@
   }
 }
 
-.updates-feed-container {
-  display: flex;
+.feed-list-container {
+  // Viewport-Percentage (or Viewport-Relative) Lengths
+  // https://www.w3.org/TR/css3-values/#viewport-relative-lengths
+  height: calc(100vh - 56px);
 }
 
 .main-stream-container {
   padding-left: 0;
   padding-right: 0;
+}
+
+.updates-feed-container {
+  display: flex;
 }
