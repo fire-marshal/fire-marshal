@@ -3,8 +3,6 @@ import './updates-feed.scss'
 import { bind, debounce } from 'decko'
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
-import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer'
 
 import config from '../../config'
@@ -13,9 +11,93 @@ import { FeedRealtimeUpdateNotification } from '../../components/feed-realtime-u
 
 import { MapContainer } from '../../containers/map'
 
+import { InfinityList } from '../infinity-list'
+
 import UpdatesFeedItem from './updates-feed-item'
 
+const itemSize = 622
+
+class FeedInfinityList extends React.PureComponent {
+  static dialogName = 'FeedInfinityList';
+
+  static propTypes = {
+    list: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+
+    loadItemsAfter: PropTypes.func.isRequired,
+    subscribeUpdatesFeed: PropTypes.func.isRequired
+  }
+
+  @bind
+  @debounce(config.evidences.debounceDelay)
+  _loadBefore () {
+    const { location } = this.props.user
+    const { startDateISO } = this.props.list
+    this.props.loadItemsAfter({ ...location, startDateISO })
+    this.props.subscribeUpdatesFeed({ location, startDateISO })
+  }
+
+  @bind
+  _itemKey (index) {
+    const { list } = this.props
+    const item = list.items[index]
+    return (item && item.id) ? item.id : index
+  }
+
+  @bind
+  _renderItem ({ index, style }) {
+    const { list } = this.props
+    const item = list.items[index]
+    return (
+      <div style={style}>
+        <UpdatesFeedItem item={item}/>
+      </div>
+    )
+  }
+
+  @bind
+  _renderFallback ({ index, style }) {
+    return (
+      <div key={index} style={style} className='loader'>Loading ...</div>
+    )
+  }
+
+  render () {
+    const {
+      list
+    } = this.props
+
+    if (list.invalid) {
+      this._loadBefore()
+    }
+
+    const itemCount = list.items ? list.items.length : 0
+    const hasMore = list.hasMore && !list.invalid /* FIXME just temporal solution */
+
+    return (
+      <AutoSizer>
+        {({ height, width }) => (
+          <InfinityList
+            height={height}
+            itemCount={itemCount}
+            itemKey={this._itemKey}
+            itemSize={itemSize}
+            loadMore={this._loadBefore}
+            hasMoreItems={hasMore}
+            fallback={this._renderFallback}
+            width={width}
+          >
+            {this._renderItem}
+          </InfinityList>
+        )}
+      </AutoSizer>
+    )
+  }
+}
+
 class UpdatesFeed extends React.PureComponent {
+  static displayName = 'UpdatesFeed';
+
   static propTypes = {
     list: PropTypes.object.isRequired,
     isMapVisible: PropTypes.bool.isRequired,
@@ -28,8 +110,7 @@ class UpdatesFeed extends React.PureComponent {
     moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
     setMapVisibility: PropTypes.func.isRequired,
     subscribeUpdatesFeed: PropTypes.func.isRequired,
-    unsubscribeUpdatesFeed: PropTypes.func.isRequired,
-    validateItems: PropTypes.func.isRequired
+    unsubscribeUpdatesFeed: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -46,33 +127,16 @@ class UpdatesFeed extends React.PureComponent {
     this.props.unsubscribeUpdatesFeed()
   }
 
-  @bind
-  @debounce(config.evidences.debounceDelay)
-  validateItems () {
-    const { location } = this.props.user
-    const { startDateISO } = this.props.list
-    this.props.validateItems(location)
-    this.props.subscribeUpdatesFeed({ location, startDateISO })
-  }
-
-  @bind
-  @debounce(config.evidences.debounceDelay)
-  loadBefore () {
-    const { location } = this.props.user
-    const { startDateISO } = this.props.list
-    this.props.loadItemsAfter({ ...location, startDateISO })
-    this.props.subscribeUpdatesFeed({ location, startDateISO })
-  }
-
   render () {
     const {
       list, isMapVisible, isRealtime, onDemandCount,
-      enableRealtime, moveOnDemandIdsToTheFeed, setMapVisibility
+      enableRealtime, moveOnDemandIdsToTheFeed, setMapVisibility,
+      user,
+
+      loadItemsAfter, subscribeUpdatesFeed
     } = this.props
 
-    if (list.invalid) {
-      this.validateItems()
-    }
+    const hasMore = list.hasMore && !list.invalid /* FIXME just temporal solution */
 
     return (
       <Fragment>
@@ -81,6 +145,7 @@ class UpdatesFeed extends React.PureComponent {
           onFollow={enableRealtime}
           map={isMapVisible}
           onMap={setMapVisibility}
+          hasMore={hasMore}
         />
         {onDemandCount > 0 && <FeedOnDemandUpdatesNotification
           count={onDemandCount}
@@ -88,38 +153,14 @@ class UpdatesFeed extends React.PureComponent {
         />}
         <div className='container-for-list-and-map'>
           <div className="feed-list-container">
-            <AutoSizer>
-              {({height, width}) => (
-                <List
-                  height={height}
-                  itemCount={1000}
-                  itemSize={35}
-                  width={width}
-                >
-                  {({ index, style }) => (
-                    <div style={style}>Row {index}</div>
-                  )}
-                </List>
-              )}
-            </AutoSizer>
+            <FeedInfinityList
+              list={list}
+              user={user}
+              loadItemsAfter={loadItemsAfter}
+              subscribeUpdatesFeed={subscribeUpdatesFeed}
+            />
           </div>
-          { false &&
-            <InfiniteScroll
-              loadMore={this.loadBefore}
-              hasMore={list.hasMore && !list.invalid /* FIXME just temporal solution */}
-              loader={<div className='loader' key={0}>Loading ...</div>}>
-              <div className='main-stream-container'>
-                {
-                  list.items ? list.items.map(item => <UpdatesFeedItem key={item._id} item={item}/>) : (
-                    list.inProgress ? <div>TODO: spinner</div> : (
-                      list.error && <div>TODO: show error</div>
-                    )
-                  )
-                }
-              </div>
-            </InfiniteScroll>
-          }
-          { isMapVisible && <MapContainer/>}
+          {isMapVisible && <MapContainer/>}
         </div>
       </Fragment>
     )
