@@ -1,3 +1,23 @@
 .alert-card {
   width: 100%;
+
+  .card-img-top{
+    /*
+     Issue: we need to scale height proportionally to width.
+     here is temporal solution which works when we scale proportionally to view port
+     but it doesn't work when we show map
+     */
+    @media (max-width: 600px) {
+      height: 100vw * 480 / 640;
+    }
+    @media (min-width: 601px) {
+      height: 480px;
+    }
+  }
+
+  .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

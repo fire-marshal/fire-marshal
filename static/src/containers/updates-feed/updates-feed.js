@@ -40,7 +40,6 @@ export default connect(
     moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
     setMapVisibility: (visible) => dispatch(updatesFeedActions.setMapVisibility(visible)),
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
-    unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
-    validateItems: ({ lat, long }) => dispatch(evidencesActions.fetchEvidences({ lat, long }))
+    unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences())
   })
 )(UpdatesFeed)

@@ -9,9 +9,7 @@ import { InfinityList } from '../infinity-list'
 
 import UpdatesFeedItem from './updates-feed-item'
 
-const ITEM_SIZE = 622
-
-export class InfinityFeedList extends React.PureComponent {
+export class InfinityFeedList extends React.Component {
   static dialogName = 'InfinityFeedList';
 
   static propTypes = {
@@ -20,6 +18,17 @@ export class InfinityFeedList extends React.PureComponent {
 
     loadItemsAfter: PropTypes.func.isRequired,
     subscribeUpdatesFeed: PropTypes.func.isRequired
+  }
+
+  constructor (props) {
+    super(props)
+    this._itemWidth = null
+    this._itemHeight = null
+    this.state = {
+      // height of item of infinity list, it could change when we change width of list
+      // for example by showing map or scale browser
+      itemHeight: 650
+    }
   }
 
   @bind
@@ -39,12 +48,40 @@ export class InfinityFeedList extends React.PureComponent {
   }
 
   @bind
+  _onItemResize (size) {
+    const { height, width } = size
+    if (this._itemWidth !== width) {
+      this._itemWidth = width
+      this._onItemChangeWidth(width)
+    }
+
+    if (this._itemHeight !== height) {
+      this._itemHeight = height
+      this._onItemChangeHeight(height)
+    }
+  }
+
+  @bind
+  @debounce(200)
+  _onItemChangeHeight (itemHeight) {
+    this.setState({ itemHeight })
+  }
+
+  @bind
+  @debounce(200)
+  _onItemChangeWidth (width) {
+  }
+
+  @bind
   _renderItem ({ index, style }) {
     const { list } = this.props
     const item = list.items[index]
     return (
       <div style={style}>
-        <UpdatesFeedItem item={item}/>
+        <UpdatesFeedItem
+          item={item}
+          onResize={this._onItemResize}
+        />
       </div>
     )
   }
@@ -56,13 +93,27 @@ export class InfinityFeedList extends React.PureComponent {
     )
   }
 
+  shouldComponentUpdate (nextProps, nextState) {
+    return nextProps.list !== this.props.list ||
+      nextProps.user !== this.props.user ||
+      nextState.itemHeight !== this.state.itemHeight
+  }
+
   render () {
     const {
       list
     } = this.props
 
+    const {
+      itemHeight
+    } = this.state
+
     if (list.invalid) {
       this._loadBefore()
+    }
+
+    if (Number.isNaN(itemHeight) || itemHeight <= 0) {
+      throw new Error('incorrect infinityFeedListItemHeight value', itemHeight)
     }
 
     const itemCount = list.items ? list.items.length : 0
@@ -76,7 +127,7 @@ export class InfinityFeedList extends React.PureComponent {
             height={height}
             itemCount={itemCount}
             itemKey={this._itemKey}
-            itemSize={ITEM_SIZE}
+            itemSize={itemHeight}
             loadMore={this._loadBefore}
             hasMoreItems={hasMore}
             fallback={this._renderFallback}
