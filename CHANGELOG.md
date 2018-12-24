@@ -1,5 +1,18 @@
 # Change Log
 
+## [0.7.0](https://github.com/fire-marshal/fire-marshal/tree/0.7.0) (2018-12-24)
+[Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.6.0...0.7.0)
+
+**Implemented enhancements:**
+
+- lint react hooks [\#83](https://github.com/fire-marshal/fire-marshal/issues/83)
+- give a try react window [\#74](https://github.com/fire-marshal/fire-marshal/issues/74)
+
+**Merged pull requests:**
+
+- Feature/74 use react window [\#85](https://github.com/fire-marshal/fire-marshal/pull/85) ([hyzhak](https://github.com/hyzhak))
+- Feature/83 lint hooks [\#84](https://github.com/fire-marshal/fire-marshal/pull/84) ([hyzhak](https://github.com/hyzhak))
+
 ## [0.6.0](https://github.com/fire-marshal/fire-marshal/tree/0.6.0) (2018-12-17)
 [Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.5.0...0.6.0)
 
