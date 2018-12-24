@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router'
 
 import { AddNewItemForm } from '../components/add-new-item'
 import { Landing } from '../components/landing'
-import { MapContainer } from '../containers/map'
+import { MapContainer } from '../components/map'
 import { UpdatesFeed } from '../containers/updates-feed'
 
 import AppContainer from './container'

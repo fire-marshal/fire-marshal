@@ -5,7 +5,7 @@ import React, { Fragment } from 'react'
 import { FeedOnDemandUpdatesNotification } from '../../components/feed-on-demand-notification'
 import { FeedRealtimeUpdateNotification } from '../../components/feed-realtime-update-notification'
 
-import { MapContainer } from '../../containers/map'
+import { MapContainer } from '../map'
 
 import { InfinityFeedList } from './infinity-feed-list'
 
