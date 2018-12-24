@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 
-import * as evidencesActions from '../../reducers/entities/evidences'
-import * as evidencesSelector from '../../selectors/entities/evidences'
-import * as evidencesSubscriber from '../../reducers/evidences-subscriber'
-import * as updatesFeedActions from '../../reducers/ui/updates-feed'
-import * as updatesFeedSelector from '../../selectors/ui/updates-feed'
+import * as evidencesActions from '../reducers/entities/evidences'
+import * as evidencesSelector from '../selectors/entities/evidences'
+import * as evidencesSubscriber from '../reducers/evidences-subscriber'
+import * as updatesFeedActions from '../reducers/ui/updates-feed'
+import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 
-import { UpdatesFeed } from '../../components/updates-feed'
+import { UpdatesFeed as UpdatesFeedComponent } from '../components/updates-feed'
 
-export default connect(
+export const UpdatesFeed = connect(
   (state, props) => ({
     user: {
       // TODO: we should pass real user's position
@@ -42,4 +42,4 @@ export default connect(
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
     unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences())
   })
-)(UpdatesFeed)
+)(UpdatesFeedComponent)
