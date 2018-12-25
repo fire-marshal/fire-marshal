@@ -10,7 +10,7 @@ import { MapContainer } from '../map'
 
 import { InfinityFeedList } from './infinity-feed-list'
 
-import UpdatesFeedToolbar from './updates-feed-toolbar';
+import UpdatesFeedToolbar from './updates-feed-toolbar'
 
 class UpdatesFeed extends React.PureComponent {
   static displayName = 'UpdatesFeed';
@@ -58,6 +58,8 @@ class UpdatesFeed extends React.PureComponent {
     const hasMore = list.hasMore && !list.invalid
     /* FIXME just temporal solution */
 
+    const leftColumn = (isList(viewMode) && isMap(viewMode)) ? 'left-column': 'full-width'
+
     return (
       <Fragment>
         <UpdatesFeedToolbar
@@ -77,7 +79,7 @@ class UpdatesFeed extends React.PureComponent {
         />}
         <div className='container-for-list-and-map'>
           {
-            isList(viewMode) && <div className="feed-list-container">
+            isList(viewMode) && <div className={`feed-list-container ${leftColumn}`}>
               <InfinityFeedList
                 list={list}
                 user={user}

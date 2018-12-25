@@ -2,10 +2,11 @@
   display: flex;
   justify-content: stretch;
   //height: 100vh;
-  >:first-child {
+  .left-column {
     max-width: 600px;
   }
-  >div {
+
+  > div {
     width: 100%;
   }
 }
