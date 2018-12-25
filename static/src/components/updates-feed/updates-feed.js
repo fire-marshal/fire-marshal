@@ -1,7 +1,7 @@
 import './updates-feed.scss'
 
 import PropTypes from 'prop-types'
-import React, { Fragment } from 'react'
+import React, { Fragment, memo, useEffect } from 'react'
 import { FeedOnDemandUpdatesNotification } from '../../components/feed-on-demand-notification'
 import { FeedRealtimeUpdateNotification } from '../../components/feed-realtime-update-notification'
 
@@ -12,89 +12,84 @@ import { InfinityFeedList } from './infinity-feed-list'
 
 import UpdatesFeedToolbar from './updates-feed-toolbar'
 
-class UpdatesFeed extends React.PureComponent {
-  static displayName = 'UpdatesFeed';
+const UpdatesFeed = ({
+  list, isMapVisible, isRealtime, onDemandCount,
+  enableRealtime, moveOnDemandIdsToTheFeed, setMapVisibility,
+  user, viewMode,
 
-  static propTypes = {
-    list: PropTypes.object.isRequired,
-    isMapVisible: PropTypes.bool.isRequired,
-    isRealtime: PropTypes.bool.isRequired,
-    onDemandCount: PropTypes.number.isRequired,
-    user: PropTypes.object.isRequired,
-    viewMode: PropTypes.string.isRequired,
-
-    loadItemsAfter: PropTypes.func.isRequired,
-    enableRealtime: PropTypes.func.isRequired,
-    moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
-    setMapVisibility: PropTypes.func.isRequired,
-    setViewMode: PropTypes.func.isRequired,
-    subscribeUpdatesFeed: PropTypes.func.isRequired,
-    unsubscribeUpdatesFeed: PropTypes.func.isRequired
-  }
-
-  componentDidMount () {
+  loadItemsAfter, setViewMode, subscribeUpdatesFeed, unsubscribeUpdatesFeed
+}) => {
+  useEffect(() => {
     // FIXME: just temporal solution to send update each 5 seconds and check load
-    this.interval = setInterval(() => {
-      const { location } = this.props.user
-      const { startDateISO } = this.props.list
-      this.props.subscribeUpdatesFeed({ location, startDateISO })
+    const interval = setInterval(() => {
+      const { location } = user
+      const { startDateISO } = list
+      subscribeUpdatesFeed({ location, startDateISO })
     }, 5 * 1000)
-  }
+    return () => {
+      clearInterval(interval)
+      unsubscribeUpdatesFeed()
+    }
+  }, [])
 
-  componentWillUnmount () {
-    clearInterval(this.interval)
-    this.props.unsubscribeUpdatesFeed()
-  }
+  /* FIXME just temporal solution */
+  const hasMore = list.hasMore && !list.invalid
 
-  render () {
-    const {
-      list, isMapVisible, isRealtime, onDemandCount,
-      enableRealtime, moveOnDemandIdsToTheFeed, setMapVisibility,
-      user, viewMode,
+  const leftColumn = (isList(viewMode) && isMap(viewMode)) ? 'left-column' : 'full-width'
 
-      loadItemsAfter, setViewMode, subscribeUpdatesFeed
-    } = this.props
-
-    const hasMore = list.hasMore && !list.invalid
-    /* FIXME just temporal solution */
-
-    const leftColumn = (isList(viewMode) && isMap(viewMode)) ? 'left-column' : 'full-width'
-
-    return (
-      <Fragment>
-        <UpdatesFeedToolbar
-          viewMode={viewMode}
-          onSelectOption={setViewMode}
-        />
-        {false && <FeedRealtimeUpdateNotification
-          follow={isRealtime}
-          hasMore={hasMore}
-          map={isMapVisible}
-          onFollow={enableRealtime}
-          onMap={setMapVisibility}
-        />}
-        <div className='container-for-list-and-map'>
-          {
-            isList(viewMode) && <div className={`feed-list-container ${leftColumn}`}>
-              <FeedOnDemandUpdatesNotification
-                count={onDemandCount}
-                onClick={moveOnDemandIdsToTheFeed}
-              />
-              <InfinityFeedList
-                list={list}
-                user={user}
-                loadItemsAfter={loadItemsAfter}
-                subscribeUpdatesFeed={subscribeUpdatesFeed}
-              />
-            </div>
-          }
-          {
-            isMap(viewMode) && <MapContainer/>
-          }
-        </div>
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <UpdatesFeedToolbar
+        viewMode={viewMode}
+        onSelectOption={setViewMode}
+      />
+      {false && <FeedRealtimeUpdateNotification
+        follow={isRealtime}
+        hasMore={hasMore}
+        map={isMapVisible}
+        onFollow={enableRealtime}
+        onMap={setMapVisibility}
+      />}
+      <div className='container-for-list-and-map'>
+        {
+          isList(viewMode) && <div className={`feed-list-container ${leftColumn}`}>
+            <FeedOnDemandUpdatesNotification
+              count={onDemandCount}
+              onClick={moveOnDemandIdsToTheFeed}
+            />
+            <InfinityFeedList
+              list={list}
+              user={user}
+              loadItemsAfter={loadItemsAfter}
+              subscribeUpdatesFeed={subscribeUpdatesFeed}
+            />
+          </div>
+        }
+        {
+          isMap(viewMode) && <MapContainer/>
+        }
+      </div>
+    </Fragment>
+  )
 }
 
-export default UpdatesFeed
+UpdatesFeed.displayName = 'UpdatesFeed'
+
+UpdatesFeed.propTypes = {
+  list: PropTypes.object.isRequired,
+  isMapVisible: PropTypes.bool.isRequired,
+  isRealtime: PropTypes.bool.isRequired,
+  onDemandCount: PropTypes.number.isRequired,
+  user: PropTypes.object.isRequired,
+  viewMode: PropTypes.string.isRequired,
+
+  loadItemsAfter: PropTypes.func.isRequired,
+  enableRealtime: PropTypes.func.isRequired,
+  moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
+  setMapVisibility: PropTypes.func.isRequired,
+  setViewMode: PropTypes.func.isRequired,
+  subscribeUpdatesFeed: PropTypes.func.isRequired,
+  unsubscribeUpdatesFeed: PropTypes.func.isRequired
+}
+
+export default memo(UpdatesFeed)
