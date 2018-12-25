@@ -9,6 +9,8 @@ import { MapContainer } from '../map'
 
 import { InfinityFeedList } from './infinity-feed-list'
 
+import UpdatesFeedToolbar from './updates-feed-toolbar';
+
 class UpdatesFeed extends React.PureComponent {
   static displayName = 'UpdatesFeed';
 
@@ -18,11 +20,13 @@ class UpdatesFeed extends React.PureComponent {
     isRealtime: PropTypes.bool.isRequired,
     onDemandCount: PropTypes.number.isRequired,
     user: PropTypes.object.isRequired,
+    viewMode: PropTypes.string.isRequired,
 
     loadItemsAfter: PropTypes.func.isRequired,
     enableRealtime: PropTypes.func.isRequired,
     moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
     setMapVisibility: PropTypes.func.isRequired,
+    setViewMode: PropTypes.func.isRequired,
     subscribeUpdatesFeed: PropTypes.func.isRequired,
     unsubscribeUpdatesFeed: PropTypes.func.isRequired
   }
@@ -45,15 +49,19 @@ class UpdatesFeed extends React.PureComponent {
     const {
       list, isMapVisible, isRealtime, onDemandCount,
       enableRealtime, moveOnDemandIdsToTheFeed, setMapVisibility,
-      user,
+      user, viewMode,
 
-      loadItemsAfter, subscribeUpdatesFeed
+      loadItemsAfter, setViewMode, subscribeUpdatesFeed
     } = this.props
 
     const hasMore = list.hasMore && !list.invalid /* FIXME just temporal solution */
 
     return (
       <Fragment>
+        <UpdatesFeedToolbar
+          viewMode={viewMode}
+          onSelectOption={setViewMode}
+        />
         <FeedRealtimeUpdateNotification
           follow={isRealtime}
           hasMore={hasMore}
