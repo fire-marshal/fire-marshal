@@ -53,3 +53,8 @@ export const isRealtime = createSelector(
   [getUpdatesFeed],
   (feed) => feed && feed.get('realtime')
 )
+
+export const getViewMode = createSelector(
+  [getUpdatesFeed],
+  (feed) => feed && feed.get('viewMode')
+)
