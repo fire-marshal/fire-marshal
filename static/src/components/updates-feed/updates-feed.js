@@ -5,6 +5,7 @@ import React, { Fragment } from 'react'
 import { FeedOnDemandUpdatesNotification } from '../../components/feed-on-demand-notification'
 import { FeedRealtimeUpdateNotification } from '../../components/feed-realtime-update-notification'
 
+import { isList, isMap } from '../../reducers/ui/updates-feed'
 import { MapContainer } from '../map'
 
 import { InfinityFeedList } from './infinity-feed-list'
@@ -54,7 +55,8 @@ class UpdatesFeed extends React.PureComponent {
       loadItemsAfter, setViewMode, subscribeUpdatesFeed
     } = this.props
 
-    const hasMore = list.hasMore && !list.invalid /* FIXME just temporal solution */
+    const hasMore = list.hasMore && !list.invalid
+    /* FIXME just temporal solution */
 
     return (
       <Fragment>
@@ -74,15 +76,19 @@ class UpdatesFeed extends React.PureComponent {
           onClick={moveOnDemandIdsToTheFeed}
         />}
         <div className='container-for-list-and-map'>
-          <div className="feed-list-container">
-            <InfinityFeedList
-              list={list}
-              user={user}
-              loadItemsAfter={loadItemsAfter}
-              subscribeUpdatesFeed={subscribeUpdatesFeed}
-            />
-          </div>
-          {isMapVisible && <MapContainer/>}
+          {
+            isList(viewMode) && <div className="feed-list-container">
+              <InfinityFeedList
+                list={list}
+                user={user}
+                loadItemsAfter={loadItemsAfter}
+                subscribeUpdatesFeed={subscribeUpdatesFeed}
+              />
+            </div>
+          }
+          {
+            isMap(viewMode) && <MapContainer/>
+          }
         </div>
       </Fragment>
     )

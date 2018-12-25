@@ -63,6 +63,9 @@ export const viewModes = {
   LIST_N_MAP: 'LIST_N_MAP'
 }
 
+export const isList = (viewMode) => viewMode === viewModes.LIST || viewMode === viewModes.LIST_N_MAP
+export const isMap = (viewMode) => viewMode === viewModes.MAP || viewMode === viewModes.LIST_N_MAP
+
 export default createReducer(
   Immutable.Map({
     // feed list
