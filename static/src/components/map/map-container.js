@@ -7,6 +7,7 @@ import React, { useEffect, useRef } from 'react'
 
 const MapContainer = () => {
   const mapRef = useRef()
+  // TODO: should call map.invalidateSize() on resize
   useEffect(() => {
     console.log('create map!')
     const map = L.map(mapRef.current).setView([51.505, -0.09], 4)

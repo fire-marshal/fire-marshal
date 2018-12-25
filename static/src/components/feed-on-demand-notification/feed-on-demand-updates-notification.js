@@ -1,17 +1,29 @@
 import './feed-on-demand-updates-notification.scss'
 
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useState } from 'react'
 
-const FeedOnDemandUpdatesNotification = ({ count, onClick }) => (
-  <section
-    className='feed-on-demand-updates-notification alert alert-primary'
-    role='alert'
-    onClick={onClick}
-  >
-    <div>We have {count} new updates</div>
-  </section>
-)
+import { useVisibleOnScrollUp } from '../../hooks'
+
+const FeedOnDemandUpdatesNotification = ({ count, onClick }) => {
+  const [visible, setVisibility] = useState(true)
+  // FIXME: doesn't work yet because we should listen scroll of particular element
+  useVisibleOnScrollUp({ setVisibility })
+
+  if (count === 0 || !visible) {
+    return null
+  }
+
+  return (
+    <section
+      className='feed-on-demand-updates-notification alert alert-primary'
+      role='alert'
+      onClick={onClick}
+    >
+      <div>We have {count} new updates</div>
+    </section>
+  )
+}
 
 FeedOnDemandUpdatesNotification.displayName = 'FeedOnDemandUpdatesNotification'
 FeedOnDemandUpdatesNotification.propTypes = {

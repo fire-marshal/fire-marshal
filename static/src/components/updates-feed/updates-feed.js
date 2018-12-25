@@ -58,7 +58,7 @@ class UpdatesFeed extends React.PureComponent {
     const hasMore = list.hasMore && !list.invalid
     /* FIXME just temporal solution */
 
-    const leftColumn = (isList(viewMode) && isMap(viewMode)) ? 'left-column': 'full-width'
+    const leftColumn = (isList(viewMode) && isMap(viewMode)) ? 'left-column' : 'full-width'
 
     return (
       <Fragment>
@@ -66,20 +66,20 @@ class UpdatesFeed extends React.PureComponent {
           viewMode={viewMode}
           onSelectOption={setViewMode}
         />
-        <FeedRealtimeUpdateNotification
+        {false && <FeedRealtimeUpdateNotification
           follow={isRealtime}
           hasMore={hasMore}
           map={isMapVisible}
           onFollow={enableRealtime}
           onMap={setMapVisibility}
-        />
-        {onDemandCount > 0 && <FeedOnDemandUpdatesNotification
-          count={onDemandCount}
-          onClick={moveOnDemandIdsToTheFeed}
         />}
         <div className='container-for-list-and-map'>
           {
             isList(viewMode) && <div className={`feed-list-container ${leftColumn}`}>
+              <FeedOnDemandUpdatesNotification
+                count={onDemandCount}
+                onClick={moveOnDemandIdsToTheFeed}
+              />
               <InfinityFeedList
                 list={list}
                 user={user}
