@@ -42,7 +42,6 @@ export const enableRealtime = (enable) => ({
   }
 })
 
-
 export const setViewMode = (viewMode) => ({
   type: actionTypes.SET_VIEW_MODE,
   payload: { viewMode }
