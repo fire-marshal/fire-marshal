@@ -2,14 +2,14 @@ import './updates-feed.scss'
 
 import PropTypes from 'prop-types'
 import React, { Fragment, memo, useEffect } from 'react'
+
 import { FeedOnDemandUpdatesNotification } from '../../components/feed-on-demand-notification'
 import { FeedRealtimeUpdateNotification } from '../../components/feed-realtime-update-notification'
-
 import { isList, isMap } from '../../reducers/ui/updates-feed'
+
 import { MapContainer } from '../map'
 
 import { InfinityFeedList } from './infinity-feed-list'
-
 import UpdatesFeedToolbar from './updates-feed-toolbar'
 
 const UpdatesFeed = ({
