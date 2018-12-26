@@ -25,23 +25,28 @@ UpdatesFeedToolbarItem.propTypes = {
 }
 
 const UpdatesFeedToolbar = ({ follow, viewMode, onFollow, onSelectOption }) => (
-  <nav className="navbar navbar-expand navbar-light bg-light">
-    <ul className='navbar-nav nav-pills'>
-      <UpdatesFeedToolbarItem
-        id={viewModes.LIST} title='List' active={viewMode === viewModes.LIST}
-        onSelect={onSelectOption}
-      />
-      <UpdatesFeedToolbarItem
-        id={viewModes.LIST_N_MAP} title='List & Map' active={viewMode === viewModes.LIST_N_MAP}
-        onSelect={onSelectOption}
-      />
-      <UpdatesFeedToolbarItem
-        id={viewModes.MAP} title='Map' active={viewMode === viewModes.MAP}
-        onSelect={onSelectOption}
-      />
-    </ul>
-    <form className='form-inline ml-2'>
-      <label onClick={evt => evt.stopPropagation()}>
+  <nav className='navbar navbar-expand navbar-light bg-light'>
+    <div className='collapse navbar-collapse'>
+      <ul className='navbar-nav nav-pills'>
+        <UpdatesFeedToolbarItem
+          id={viewModes.LIST} title='List' active={viewMode === viewModes.LIST}
+          onSelect={onSelectOption}
+        />
+        <UpdatesFeedToolbarItem
+          id={viewModes.LIST_N_MAP} title='List & Map' active={viewMode === viewModes.LIST_N_MAP}
+          onSelect={onSelectOption}
+        />
+        <UpdatesFeedToolbarItem
+          id={viewModes.MAP} title='Map' active={viewMode === viewModes.MAP}
+          onSelect={onSelectOption}
+        />
+      </ul>
+    </div>
+    <form className='form-inline ml-2 my-2'>
+      <label
+        className='form-check-label'
+        onClick={evt => evt.stopPropagation()}
+      >
         <input
           checked={follow}
           type='checkbox'
