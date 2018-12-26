@@ -25,9 +25,11 @@ function getElSize (el) {
  *
  * @param ref
  * @param onResize
+ * @param conditions {array} list
  */
-export default (ref, onResize) => {
+export default (ref, onResize, conditions = []) => {
   useEffect(() => {
+    // console.log('useResize.start', ref, ref.current)
     let previousWidth = null
     let previousHeight = null
 
@@ -48,10 +50,13 @@ export default (ref, onResize) => {
     )
 
     return () => {
+      // console.log('useResize.removeResizeListener')
       _detectElementResize.removeResizeListener(
         ref.current,
         onResizeCard
       )
     }
-  }, [onResize, ref])
+    // we can't use onResize because if we will pass arrow function here
+    // we will refresh effect each render call
+  }, conditions.concat(ref))
 }

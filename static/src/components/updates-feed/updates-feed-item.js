@@ -24,6 +24,7 @@ UpdatesFeedItemImage.propTypes = {
 const UpdatesFeedItem = ({ item, onResize }) => {
   const cardRef = useRef()
 
+  // TODO: actually we don't need to track resize of each item, we could pick only one
   useResizeComponent(cardRef, onResize)
 
   return (
