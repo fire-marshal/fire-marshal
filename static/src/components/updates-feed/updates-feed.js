@@ -35,12 +35,14 @@ const UpdatesFeed = ({
   /* FIXME just temporal solution */
   const hasMore = list.hasMore && !list.invalid
 
-  const leftColumn = (isList(viewMode) && isMap(viewMode)) ? 'left-column' : 'full-width'
+  const leftColumnClass = (isList(viewMode) && isMap(viewMode)) ? 'left-column' : 'full-width'
 
   return (
     <Fragment>
       <UpdatesFeedToolbar
+        follow={isRealtime}
         viewMode={viewMode}
+        onFollow={enableRealtime}
         onSelectOption={setViewMode}
       />
       {false && <FeedRealtimeUpdateNotification
@@ -52,7 +54,7 @@ const UpdatesFeed = ({
       />}
       <div className='container-for-list-and-map'>
         {
-          isList(viewMode) && <div className={`feed-list-container ${leftColumn}`}>
+          isList(viewMode) && <div className={`feed-list-container ${leftColumnClass}`}>
             <FeedOnDemandUpdatesNotification
               count={onDemandCount}
               onClick={moveOnDemandIdsToTheFeed}

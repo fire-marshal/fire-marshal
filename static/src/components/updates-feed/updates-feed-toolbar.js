@@ -24,26 +24,40 @@ UpdatesFeedToolbarItem.propTypes = {
   onSelect: PropTypes.func.isRequired
 }
 
-const UpdatesFeedToolbar = ({ viewMode, onSelectOption }) => (
-  <ul className='nav nav-pills list-group-item-secondary'>
-    <UpdatesFeedToolbarItem
-      id={viewModes.LIST} title='List' active={viewMode === viewModes.LIST}
-      onSelect={onSelectOption}
-    />
-    <UpdatesFeedToolbarItem
-      id={viewModes.LIST_N_MAP} title='List & Map' active={viewMode === viewModes.LIST_N_MAP}
-      onSelect={onSelectOption}
-    />
-    <UpdatesFeedToolbarItem
-      id={viewModes.MAP} title='Map' active={viewMode === viewModes.MAP}
-      onSelect={onSelectOption}
-    />
-  </ul>
+const UpdatesFeedToolbar = ({ follow, viewMode, onFollow, onSelectOption }) => (
+  <nav className="navbar navbar-expand navbar-light bg-light">
+    <ul className='navbar-nav nav-pills'>
+      <UpdatesFeedToolbarItem
+        id={viewModes.LIST} title='List' active={viewMode === viewModes.LIST}
+        onSelect={onSelectOption}
+      />
+      <UpdatesFeedToolbarItem
+        id={viewModes.LIST_N_MAP} title='List & Map' active={viewMode === viewModes.LIST_N_MAP}
+        onSelect={onSelectOption}
+      />
+      <UpdatesFeedToolbarItem
+        id={viewModes.MAP} title='Map' active={viewMode === viewModes.MAP}
+        onSelect={onSelectOption}
+      />
+    </ul>
+    <form className='form-inline ml-2'>
+      <label onClick={evt => evt.stopPropagation()}>
+        <input
+          checked={follow}
+          type='checkbox'
+          onChange={evt => onFollow(evt.target.checked)}
+        />&nbsp;
+        Follow Updates
+      </label>
+    </form>
+  </nav>
 )
 
 UpdatesFeedToolbar.displayName = 'UpdatesFeedToolbar'
 UpdatesFeedToolbar.propTypes = {
+  follow: PropTypes.bool.isRequired,
   viewMode: PropTypes.string.isRequired,
+  onFollow: PropTypes.func.isRequired,
   onSelectOption: PropTypes.func.isRequired
 }
 
