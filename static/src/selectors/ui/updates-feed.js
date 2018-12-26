@@ -44,11 +44,6 @@ export const getStartDateISO = createSelector(
   (date) => date && date.toISOString()
 )
 
-export const isMapVisible = createSelector(
-  [getUpdatesFeed],
-  (feed) => feed && feed.get('mapIsVisible')
-)
-
 export const isRealtime = createSelector(
   [getUpdatesFeed],
   (feed) => feed && feed.get('realtime')
