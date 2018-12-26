@@ -1,7 +1,10 @@
 .alert-card {
+  max-width: 612px;
+  margin: 0 auto;
+
   width: 100%;
 
-  .card-img-top{
+  .card-img-top {
     /*
      Issue: we need to scale height proportionally to width.
      here is temporal solution which works when we scale proportionally to view port

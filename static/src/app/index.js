@@ -1,7 +1,7 @@
 import 'core-js/shim' // included < Stage 4 proposals
 import 'regenerator-runtime/runtime'
 
-import { connectRouter, ConnectedRouter, routerMiddleware } from 'connected-react-router/immutable'
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router/immutable'
 import createHistory from 'history/createBrowserHistory'
 import Immutable from 'immutable'
 import React from 'react'
@@ -11,7 +11,7 @@ import createSagaMiddleware from 'redux-saga'
 import thunkMiddleware from 'redux-thunk'
 import * as ReselectTools from 'reselect-tools'
 
-import rootReducers from '../reducers'
+import createRootReducers from '../reducers'
 import rootSaga from '../sagas'
 import * as selectors from '../selectors'
 import { wsMiddleware } from '../middlewares/ws'
@@ -42,11 +42,11 @@ export function bootstrap (targetElm) {
   }
   /* eslint-enable */
 
-  const reducerAndRouter = connectRouter(history)(rootReducers)
+  const reducer = createRootReducers(history)
   const sagaMiddleware = createSagaMiddleware()
 
   const store = createStore(
-    reducerAndRouter,
+    reducer,
 
     initialState,
 
@@ -72,7 +72,7 @@ export function bootstrap (targetElm) {
 
   // hot reloading
   if (process.env.NODE_ENV !== 'production' && module.hot) {
-    module.hot.accept('./reducers', () => store.replaceReducer(reducerAndRouter))
+    module.hot.accept('./reducers', () => store.replaceReducer(reducer))
   }
 
   ReactDOM.render(

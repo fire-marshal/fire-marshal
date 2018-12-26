@@ -1,5 +1,6 @@
 .feed-on-demand-updates-notification {
-  position: sticky;
-  top: 56px;
+  position: absolute;
+  top: 0;
   z-index: 1;
+  width: 100%;
 }

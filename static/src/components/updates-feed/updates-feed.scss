@@ -2,10 +2,11 @@
   display: flex;
   justify-content: stretch;
   //height: 100vh;
-  >:first-child {
+  .left-column {
     max-width: 600px;
   }
-  >div {
+
+  > div {
     width: 100%;
   }
 }
@@ -13,5 +14,5 @@
 .feed-list-container {
   // Viewport-Percentage (or Viewport-Relative) Lengths
   // https://www.w3.org/TR/css3-values/#viewport-relative-lengths
-  height: calc(100vh - 56px);
+  height: calc(100vh - (56px + 40px));
 }

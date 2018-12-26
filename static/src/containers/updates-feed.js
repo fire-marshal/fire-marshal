@@ -27,7 +27,8 @@ export const UpdatesFeed = connect(
     },
 
     isMapVisible: updatesFeedSelector.isMapVisible(state, props),
-    isRealtime: updatesFeedSelector.isRealtime(state, props)
+    isRealtime: updatesFeedSelector.isRealtime(state, props),
+    viewMode: updatesFeedSelector.getViewMode(state, props)
   }),
 
   (dispatch, props) => ({
@@ -40,6 +41,7 @@ export const UpdatesFeed = connect(
     moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
     setMapVisibility: (visible) => dispatch(updatesFeedActions.setMapVisibility(visible)),
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
-    unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences())
+    unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
+    setViewMode: viewMode => dispatch(updatesFeedActions.setViewMode(viewMode))
   })
 )(UpdatesFeedComponent)
