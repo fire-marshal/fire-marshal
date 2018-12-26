@@ -1,6 +1,7 @@
 .feed-on-demand-updates-notification {
   position: absolute;
   top: 0;
-  z-index: 1;
+  transition: top 0.3s; /* Transition effect when sliding down (and up) */
   width: 100%;
+  z-index: 1;
 }

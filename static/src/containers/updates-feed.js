@@ -26,22 +26,20 @@ export const UpdatesFeed = connect(
       startDateISO: updatesFeedSelector.getStartDateISO(state, props)
     },
 
-    isMapVisible: updatesFeedSelector.isMapVisible(state, props),
     isRealtime: updatesFeedSelector.isRealtime(state, props),
     viewMode: updatesFeedSelector.getViewMode(state, props)
   }),
 
   (dispatch, props) => ({
+    enableRealtime: (enable) => dispatch(updatesFeedActions.enableRealtime(enable)),
     loadItemsAfter: ({ lat, long, startDateISO }) => dispatch(evidencesActions.fetchEvidences({
       lat,
       long,
       startDateISO
     })),
-    enableRealtime: (enable) => dispatch(updatesFeedActions.enableRealtime(enable)),
     moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
-    setMapVisibility: (visible) => dispatch(updatesFeedActions.setMapVisibility(visible)),
+    setViewMode: viewMode => dispatch(updatesFeedActions.setViewMode(viewMode)),
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
-    unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences()),
-    setViewMode: viewMode => dispatch(updatesFeedActions.setViewMode(viewMode))
+    unsubscribeUpdatesFeed: () => dispatch(evidencesSubscriber.unsubscribeEvidences())
   })
 )(UpdatesFeedComponent)

@@ -14,7 +14,6 @@ export const actionTypes = {
   CLEAR_ON_DEMAND: `${namespace}/CLEAR_ON_DEMAND`,
   INSERT_IDS_TO_THE_FEED: `${namespace}/INSERT_IDS_TO_THE_FEED`,
   MOVE_ON_DEMAND_IDS_TO_THE_FEED: `${namespace}/MOVE_ON_DEMAND_IDS_TO_THE_FEED`,
-  SET_MAP_VISIBILITY: `${namespace}/SET_MAP_VISIBILITY`,
   SET_REAL_TIME: `${namespace}/SET_REAL_TIME`,
   SET_VIEW_MODE: `${namespace}/SET_VIEW_MODE`
 }
@@ -43,11 +42,6 @@ export const enableRealtime = (enable) => ({
   }
 })
 
-export const setMapVisibility = (visible) => ({
-  type: actionTypes.SET_MAP_VISIBILITY,
-  payload: { visible }
-})
-
 export const setViewMode = (viewMode) => ({
   type: actionTypes.SET_VIEW_MODE,
   payload: { viewMode }
@@ -72,8 +66,6 @@ export default createReducer(
     data: Immutable.List(),
     // wait to merge feed list
     onDemand: Immutable.Set(),
-    // should we show map
-    mapIsVisible: false,
     // should we update feed list in realtime
     realtime: false,
     // feed view mode
@@ -127,9 +119,6 @@ export default createReducer(
         )
       }
     },
-
-    [actionTypes.SET_MAP_VISIBILITY]: (state, { payload: { visible } }) =>
-      state.set('mapIsVisible', visible),
 
     [actionTypes.SET_REAL_TIME]: (state, { payload: { enable } }) =>
       state.set('realtime', enable),

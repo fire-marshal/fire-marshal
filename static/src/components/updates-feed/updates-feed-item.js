@@ -1,8 +1,9 @@
 import './updates-feed-item.scss'
 
 import PropTypes from 'prop-types'
-import React, { useEffect, useRef } from 'react'
-import createDetectElementResize from '../../vendor/detect-element-resize'
+import React, { useRef } from 'react'
+
+import { useResizeComponent } from '../../hooks/use-resize-component'
 
 const UpdatesFeedItemImage = ({ img, title }) => {
   if (img && img.medium) {
@@ -20,53 +21,11 @@ UpdatesFeedItemImage.propTypes = {
   title: PropTypes.string
 }
 
-function getElSize (el) {
-  const height = el.offsetHeight || 0
-  const width = el.offsetWidth || 0
-
-  const style = window.getComputedStyle(el) || {}
-  const paddingLeft = parseInt(style.paddingLeft, 10) || 0
-  const paddingRight = parseInt(style.paddingRight, 10) || 0
-  const paddingTop = parseInt(style.paddingTop, 10) || 0
-  const paddingBottom = parseInt(style.paddingBottom, 10) || 0
-
-  const newHeight = height - paddingTop - paddingBottom
-  const newWidth = width - paddingLeft - paddingRight
-
-  // TODO: shouldn't it be newHeight?
-  return { height: newHeight, width: newWidth }
-}
-
 const UpdatesFeedItem = ({ item, onResize }) => {
   const cardRef = useRef()
 
-  useEffect(() => {
-    let previousWidth = null
-    let previousHeight = null
-
-    const onResizeCard = () => {
-      const newSize = getElSize(cardRef.current)
-      const { width, height } = newSize
-      if (width !== previousWidth || height !== previousHeight) {
-        onResize(newSize)
-        previousWidth = width
-        previousHeight = height
-      }
-    }
-
-    const _detectElementResize = createDetectElementResize()
-    _detectElementResize.addResizeListener(
-      cardRef.current,
-      onResizeCard
-    )
-
-    return () => {
-      _detectElementResize.removeResizeListener(
-        cardRef.current,
-        onResizeCard
-      )
-    }
-  }, [cardRef])
+  // TODO: actually we don't need to track resize of each item, we could pick only one
+  useResizeComponent(cardRef, onResize)
 
   return (
     <div
