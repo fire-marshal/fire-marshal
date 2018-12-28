@@ -20,7 +20,6 @@ export function useInnerSizeToCSSVars ({
     let vhPrevious = null
 
     const handler = () => {
-      console.log('resize!')
       let el = target ? target.current : window
       let vw = el.innerWidth * 0.01
       let vh = el.innerHeight * 0.01
@@ -34,12 +33,49 @@ export function useInnerSizeToCSSVars ({
       }
     }
 
-    window.addEventListener('resize', handler)
+    // FIXME: there is strange issue with getting innerHeight on rotation devices
+    // in resize handle
+
+    // without timeout
+    //
+    // [vertical]
+    //
+    // el.innerWidth 412
+    // el.innerHeight 604
+    //
+    // [horizontal]
+    //
+    // el.innerWidth 732
+    // el.innerHeight 284
+    //
+    // [vertical]
+    //
+    // el.innerWidth 732     <------ preserve old width
+    // el.innerHeight 1073   <------ scale height
+
+    // with timeout
+    //
+    // [vertical]
+    //
+    // el.innerWidth 412
+    // el.innerHeight 604
+    //
+    // [horizontal]
+    //
+    // el.innerWidth 732
+    // el.innerHeight 284
+    //
+    // el.innerWidth 412
+    // el.innerHeight 604
+
+    const lazyHandler = () => setTimeout(handler)
+
+    window.addEventListener('resize', lazyHandler)
 
     handler()
 
     return () => {
-      window.removeEventListener('resize', handler)
+      window.removeEventListener('resize', lazyHandler)
     }
   }, [target, heightName, widthName])
 }
