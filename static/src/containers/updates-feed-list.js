@@ -35,6 +35,6 @@ export const UpdatesFeedList = connect(
       startDateISO
     })),
     moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
-    subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),
+    subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload))
   })
 )(UpdatesFeedListComponent)

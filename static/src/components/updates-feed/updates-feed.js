@@ -36,13 +36,15 @@ const UpdatesFeed = ({
 
   return (
     <Fragment>
-      <UpdatesFeedToolbar
-        follow={isRealtime}
-        hasListAndMapOption={!small}
-        viewMode={viewMode}
-        onFollow={enableRealtime}
-        onSelectOption={setViewMode}
-      />
+      {!small && (
+        <UpdatesFeedToolbar
+          follow={isRealtime}
+          hasListAndMapOption={!small}
+          viewMode={viewMode}
+          onFollow={enableRealtime}
+          onSelectOption={setViewMode}
+        />
+      )}
       <div className='container-for-list-and-map'>
         {
           small ? (
@@ -71,6 +73,15 @@ const UpdatesFeed = ({
           )
         }
       </div>
+      {small && (
+        <UpdatesFeedToolbar
+          follow={isRealtime}
+          hasListAndMapOption={!small}
+          viewMode={viewMode}
+          onFollow={enableRealtime}
+          onSelectOption={setViewMode}
+        />
+      )}
     </Fragment>
   )
 }

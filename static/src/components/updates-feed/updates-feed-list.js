@@ -32,7 +32,7 @@ UpdatesFeedList.propTypes = {
 
   loadItemsAfter: PropTypes.func.isRequired,
   moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
-  subscribeUpdatesFeed: PropTypes.func.isRequired,
+  subscribeUpdatesFeed: PropTypes.func.isRequired
 }
 
 export default UpdatesFeedList
