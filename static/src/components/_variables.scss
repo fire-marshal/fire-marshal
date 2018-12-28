@@ -1,0 +1,14 @@
+$tabs-height: calc(56px + 56px);
+$viewport-height: calc(var(--vh, 1vh) * 100);
+$main-view-height:  calc(#{$viewport-height} - #{$tabs-height});
+
+/**
+ * fit element to the main view
+ * (fit to maximum visible height and width, except extra controls)
+ */
+@mixin fit-to-main-view() {
+  // Viewport-Percentage (or Viewport-Relative) Lengths
+  // https://www.w3.org/TR/css3-values/#viewport-relative-lengths
+  height: calc(100vh - #{$tabs-height}); /* Fallback for browsers that do not support Custom Properties */
+  height: $main-view-height;
+}
