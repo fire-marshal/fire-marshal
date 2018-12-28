@@ -24,7 +24,7 @@ UpdatesFeedToolbarItem.propTypes = {
   onSelect: PropTypes.func.isRequired
 }
 
-const UpdatesFeedToolbar = ({ follow, viewMode, onFollow, onSelectOption }) => (
+const UpdatesFeedToolbar = ({ follow, hasListAndMapOption, viewMode, onFollow, onSelectOption }) => (
   <nav className='navbar navbar-expand navbar-light bg-light'>
     <div className='collapse navbar-collapse'>
       <ul className='navbar-nav nav-pills'>
@@ -32,10 +32,12 @@ const UpdatesFeedToolbar = ({ follow, viewMode, onFollow, onSelectOption }) => (
           id={viewModes.LIST} title='List' active={viewMode === viewModes.LIST}
           onSelect={onSelectOption}
         />
-        <UpdatesFeedToolbarItem
-          id={viewModes.LIST_N_MAP} title='List & Map' active={viewMode === viewModes.LIST_N_MAP}
-          onSelect={onSelectOption}
-        />
+        {hasListAndMapOption && (
+          <UpdatesFeedToolbarItem
+            id={viewModes.LIST_N_MAP} title='List & Map' active={viewMode === viewModes.LIST_N_MAP}
+            onSelect={onSelectOption}
+          />
+        )}
         <UpdatesFeedToolbarItem
           id={viewModes.MAP} title='Map' active={viewMode === viewModes.MAP}
           onSelect={onSelectOption}
@@ -61,6 +63,7 @@ const UpdatesFeedToolbar = ({ follow, viewMode, onFollow, onSelectOption }) => (
 UpdatesFeedToolbar.displayName = 'UpdatesFeedToolbar'
 UpdatesFeedToolbar.propTypes = {
   follow: PropTypes.bool.isRequired,
+  hasListAndMapOption: PropTypes.bool.isRequired,
   viewMode: PropTypes.string.isRequired,
   onFollow: PropTypes.func.isRequired,
   onSelectOption: PropTypes.func.isRequired

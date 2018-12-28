@@ -3,12 +3,12 @@ import './updates-feed.scss'
 import PropTypes from 'prop-types'
 import React, { Fragment, memo, useEffect } from 'react'
 
-import { FeedOnDemandUpdatesNotification } from '../../components/feed-on-demand-notification'
+import { UpdatesFeedList } from '../../containers/updates-feed-list'
 import { isList, isMap } from '../../reducers/ui/updates-feed'
+import { useMediaQuery } from '../../hooks/use-media-query'
 
 import { MapContainer } from '../map'
 
-import { InfinityFeedList } from './infinity-feed-list'
 import UpdatesFeedToolbar from './updates-feed-toolbar'
 
 const UpdatesFeed = ({
@@ -30,35 +30,58 @@ const UpdatesFeed = ({
     }
   }, [])
 
+  const small = useMediaQuery('(max-width: 800px)')
+
   const leftColumnClass = (isList(viewMode) && isMap(viewMode)) ? 'left-column' : 'full-width'
 
   return (
     <Fragment>
-      <UpdatesFeedToolbar
-        follow={isRealtime}
-        viewMode={viewMode}
-        onFollow={enableRealtime}
-        onSelectOption={setViewMode}
-      />
+      {!small && (
+        <UpdatesFeedToolbar
+          follow={isRealtime}
+          hasListAndMapOption={!small}
+          viewMode={viewMode}
+          onFollow={enableRealtime}
+          onSelectOption={setViewMode}
+        />
+      )}
       <div className='container-for-list-and-map'>
         {
-          isList(viewMode) && <div className={`feed-list-container ${leftColumnClass}`}>
-            <FeedOnDemandUpdatesNotification
-              count={onDemandCount}
-              onClick={moveOnDemandIdsToTheFeed}
-            />
-            <InfinityFeedList
-              list={list}
-              user={user}
-              loadItemsAfter={loadItemsAfter}
-              subscribeUpdatesFeed={subscribeUpdatesFeed}
-            />
-          </div>
-        }
-        {
-          isMap(viewMode) && <MapContainer/>
+          small ? (
+            <>
+              {
+                isList(viewMode) ? (
+                  <div className='feed-list-container'>
+                    <UpdatesFeedList/>
+                  </div>
+                ) : (
+                  <MapContainer/>
+                )
+              }
+            </>
+          ) : (
+            <>
+              {
+                isList(viewMode) && <div className={`feed-list-container ${leftColumnClass}`}>
+                  <UpdatesFeedList/>
+                </div>
+              }
+              {
+                isMap(viewMode) && <MapContainer/>
+              }
+            </>
+          )
         }
       </div>
+      {small && (
+        <UpdatesFeedToolbar
+          follow={isRealtime}
+          hasListAndMapOption={!small}
+          viewMode={viewMode}
+          onFollow={enableRealtime}
+          onSelectOption={setViewMode}
+        />
+      )}
     </Fragment>
   )
 }
