@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 import React, { Fragment, memo, useEffect } from 'react'
 
 import { UpdatesFeedList } from '../../containers/updates-feed-list'
-import { isList, isMap } from '../../reducers/ui/updates-feed'
+import { useInnerSizeToCSSVars } from '../../hooks/use-inner-size-to-css-vars'
 import { useMediaQuery } from '../../hooks/use-media-query'
+import { isList, isMap } from '../../reducers/ui/updates-feed'
 
 import { MapContainer } from '../map'
 
@@ -29,6 +30,8 @@ const UpdatesFeed = ({
       unsubscribeUpdatesFeed()
     }
   }, [])
+
+  useInnerSizeToCSSVars()
 
   const small = !!useMediaQuery('(max-width: 800px)')
 

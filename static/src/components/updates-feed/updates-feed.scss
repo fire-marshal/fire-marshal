@@ -14,5 +14,6 @@
 .feed-list-container {
   // Viewport-Percentage (or Viewport-Relative) Lengths
   // https://www.w3.org/TR/css3-values/#viewport-relative-lengths
-  height: calc(100vh - (56px + 56px));
+  height: calc(100vh - (56px + 56px)); /* Fallback for browsers that do not support Custom Properties */
+  height: calc(calc(var(--vh, 1vh) * 100) - (56px + 56px));
 }
