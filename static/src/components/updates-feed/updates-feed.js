@@ -30,7 +30,7 @@ const UpdatesFeed = ({
     }
   }, [])
 
-  const small = useMediaQuery('(max-width: 800px)')
+  const small = !!useMediaQuery('(max-width: 800px)')
 
   const leftColumnClass = (isList(viewMode) && isMap(viewMode)) ? 'left-column' : 'full-width'
 
