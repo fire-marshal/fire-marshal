@@ -1,8 +1,13 @@
 import { createSelector } from 'reselect'
 
+import { getUI } from './'
+
 import { getEvidencesByIdRaw } from '../entities/evidences'
 
-const getUpdatesFeed = state => state.getIn(['ui', 'updatesFeed'])
+const getUpdatesFeed = createSelector(
+  [getUI],
+  ui => ui.get('updatesFeed')
+)
 
 export const getSortedIdsRaw = createSelector(
   [getUpdatesFeed],
@@ -26,6 +31,7 @@ export const getOnDemandCount = createSelector(
 
 export const getSortedItemsRaw = createSelector(
   [getSortedIdsRaw, getEvidencesByIdRaw],
+  // FIXME: updates each time when getEvidencesByIdRaw is changed
   (sortedIds, entityById) => sortedIds.map(id => entityById.get(id))
 )
 

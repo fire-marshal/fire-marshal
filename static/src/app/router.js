@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router'
 
 import { AddNewItemForm } from '../components/add-new-item'
 import { Landing } from '../components/landing'
-import { MapContainer } from '../components/map'
+import { FeedMap } from '../containers/feed-map'
 import { UpdatesFeed } from '../containers/updates-feed'
 
 import AppContainer from './container'
@@ -20,7 +20,7 @@ const AppRouter = ({ ConnectedRouter, history, store }) => (
           <Route exact path='/' render={() => <Landing />} />
           <Route path='/add-new-item' render={() => <AddNewItemForm />} />
           <Route path='/feed' render={() => <UpdatesFeed />} />
-          <Route path='/map' render={() => <MapContainer />} />
+          <Route path='/map' render={() => <FeedMap />} />
           <Route render={() => (<div>Miss</div>)} />
         </Switch>
       </AppContainer>
