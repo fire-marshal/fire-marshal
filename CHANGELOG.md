@@ -1,5 +1,23 @@
 # Change Log
 
+## [0.8.0](https://github.com/fire-marshal/fire-marshal/tree/0.8.0) (2019-01-01)
+[Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.7.0...0.8.0)
+
+**Implemented enhancements:**
+
+- hack mobile viewport [\#98](https://github.com/fire-marshal/fire-marshal/issues/98)
+- update deps and refactor code [\#90](https://github.com/fire-marshal/fire-marshal/issues/90)
+- screen adaptive layout for feed [\#80](https://github.com/fire-marshal/fire-marshal/issues/80)
+
+**Merged pull requests:**
+
+- show leaflet markers for loaded feed [\#103](https://github.com/fire-marshal/fire-marshal/pull/103) ([hyzhak](https://github.com/hyzhak))
+- Feature/98 hack mobile viewport [\#100](https://github.com/fire-marshal/fire-marshal/pull/100) ([hyzhak](https://github.com/hyzhak))
+- Feature/80 adaptive design of feed for small screens [\#97](https://github.com/fire-marshal/fire-marshal/pull/97) ([hyzhak](https://github.com/hyzhak))
+- Feature/80 adapt map to resize [\#95](https://github.com/fire-marshal/fire-marshal/pull/95) ([hyzhak](https://github.com/hyzhak))
+- Feature/3 presentation options list map and both [\#93](https://github.com/fire-marshal/fire-marshal/pull/93) ([hyzhak](https://github.com/hyzhak))
+- Feature/90 update deps and refactor [\#91](https://github.com/fire-marshal/fire-marshal/pull/91) ([hyzhak](https://github.com/hyzhak))
+
 ## [0.7.0](https://github.com/fire-marshal/fire-marshal/tree/0.7.0) (2018-12-24)
 [Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.6.0...0.7.0)
 
