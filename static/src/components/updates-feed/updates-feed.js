@@ -3,17 +3,16 @@ import './updates-feed.scss'
 import PropTypes from 'prop-types'
 import React, { Fragment, memo, useEffect } from 'react'
 
+import { FeedMap } from '../../containers/feed-map'
 import { UpdatesFeedList } from '../../containers/updates-feed-list'
 import { useInnerSizeToCSSVars } from '../../hooks/use-inner-size-to-css-vars'
 import { useMediaQuery } from '../../hooks/use-media-query'
 import { isList, isMap } from '../../reducers/ui/updates-feed'
 
-import { MapContainer } from '../map'
-
 import UpdatesFeedToolbar from './updates-feed-toolbar'
 
 const UpdatesFeed = ({
-  list, isRealtime, onDemandCount, user, viewMode,
+  listStartDateISO, isRealtime, onDemandCount, user, viewMode,
 
   enableRealtime, loadItemsAfter, moveOnDemandIdsToTheFeed,
   setViewMode, subscribeUpdatesFeed, unsubscribeUpdatesFeed
@@ -22,8 +21,7 @@ const UpdatesFeed = ({
     // FIXME: just temporal solution to send update each 5 seconds and check load
     const interval = setInterval(() => {
       const { location } = user
-      const { startDateISO } = list
-      subscribeUpdatesFeed({ location, startDateISO })
+      subscribeUpdatesFeed({ location, startDateISO: listStartDateISO })
     }, 5 * 1000)
     return () => {
       clearInterval(interval)
@@ -58,7 +56,7 @@ const UpdatesFeed = ({
                     <UpdatesFeedList/>
                   </div>
                 ) : (
-                  <MapContainer/>
+                  <div>TODO: MAP</div>
                 )
               }
             </>
@@ -70,7 +68,7 @@ const UpdatesFeed = ({
                 </div>
               }
               {
-                isMap(viewMode) && <MapContainer/>
+                isMap(viewMode) && <FeedMap/>
               }
             </>
           )
@@ -92,7 +90,7 @@ const UpdatesFeed = ({
 UpdatesFeed.displayName = 'UpdatesFeed'
 
 UpdatesFeed.propTypes = {
-  list: PropTypes.object.isRequired,
+  listStartDateISO: PropTypes.object.isRequired,
   isRealtime: PropTypes.bool.isRequired,
   onDemandCount: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired,
