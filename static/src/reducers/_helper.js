@@ -11,12 +11,10 @@ import produce from 'immer'
  */
 export function createReducer (initialState, handlers) {
   return function reducer (state = initialState, action) {
-    return produce(state, draft => {
-      if (handlers.hasOwnProperty(action.type)) {
-        return handlers[action.type](draft, action)
-      } else {
-        return draft
-      }
-    })
+    if (handlers.hasOwnProperty(action.type)) {
+      return produce(state, draft => handlers[action.type](draft, action))
+    } else {
+      return state
+    }
   }
 }
