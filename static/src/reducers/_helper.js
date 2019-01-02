@@ -10,12 +10,17 @@ import produce from 'immer'
  * @returns {function(*=, *=): Produced<*, void>}
  */
 export function createReducer (initialState, handlers) {
-  // wrap each handler to immer
-  handlers = Object.keys(handlers)
-    .map(key => produce((draft, action) => handlers[key](draft, action)))
+  // wrap each handler to Immer
+  handlers = Object.entries(handlers)
+    .reduce((acc, [key, handler]) => {
+      acc[key] = produce(
+        (draft, action) => handler(draft, action)
+      )
+      return acc
+    }, {})
 
   return function reducer (state = initialState, action) {
-    if (handlers.hasOwnProperty(action.type)) {
+    if (action && handlers.hasOwnProperty(action.type)) {
       return handlers[action.type](state, action)
     } else {
       return state

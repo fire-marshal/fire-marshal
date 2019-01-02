@@ -34,7 +34,7 @@ function * newEvidenceFromWss (action) {
     index = yield call(findPlaceToInsertItemInSortedList, item, sortBy)
   }
 
-  yield put(insertItem({ index, item, realTime }))
+  yield put(insertItem({ index, item }))
 }
 
 /**

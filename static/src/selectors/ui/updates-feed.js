@@ -1,14 +1,9 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 
-import { getUI } from './'
-
 import { getEvidencesByIdRaw } from '../entities/evidences'
 
-const getUpdatesFeed = createSelector(
-  [getUI],
-  ui => ui.updatesFeed
-)
+const getUpdatesFeed = state => state.ui.updatesFeed
 
 export const getSortedIds = createSelector(
   [getUpdatesFeed],
