@@ -2,23 +2,23 @@ import { createSelector } from 'reselect'
 
 export const getEvidences = state => state.entities.evidences
 
-const getEvidenceDataRaw = createSelector(
+const getEvidenceData = createSelector(
   [getEvidences],
   (evidences) => evidences.data
 )
 
-export const getEvidencesByIdRaw = createSelector(
-  [getEvidenceDataRaw],
+export const getEvidencesById = createSelector(
+  [getEvidenceData],
   (data) => data && data.byId
 )
 
 export const getTotalItems = createSelector(
-  [getEvidenceDataRaw],
+  [getEvidenceData],
   (data) => data && data.total
 )
 
 export const hasMore = createSelector(
-  [getEvidencesByIdRaw, getTotalItems],
+  [getEvidencesById, getTotalItems],
   (byId, total) => (byId && total > 0) ? (Object.keys(byId).length < total) : false
 )
 

@@ -26,6 +26,7 @@ describe.skip('selectors / ui / updates-feed', () => {
         }
       }))
 
+      const previousIds = updatesFeed.getSortedIds(state)
       const previousItems = updatesFeed.getSortedItems(state)
 
       // make unimportant changes
@@ -38,7 +39,9 @@ describe.skip('selectors / ui / updates-feed', () => {
         }
       }))
 
+      const newIds = updatesFeed.getSortedIds(state)
       const newItems = updatesFeed.getSortedItems(state)
+      expect(previousIds).to.be.equal(newIds)
       expect(previousItems).to.be.equal(newItems)
     })
   })
