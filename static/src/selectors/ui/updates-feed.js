@@ -7,7 +7,7 @@ import { getEvidencesByIdRaw } from '../entities/evidences'
 
 const getUpdatesFeed = createSelector(
   [getUI],
-  ui => ui.get('updatesFeed')
+  ui => ui.updatesFeed
 )
 
 export const getSortedIds = createSelector(
