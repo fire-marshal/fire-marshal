@@ -26,14 +26,14 @@ export const getSortedItems = createSelectorPrecise(
   getSortedIds,
   getEvidencesById,
   (sortedIds, entityById) => sortedIds.map(id => entityById[id])
-)(([sortedIdsOld, entityByIdOld], [sortedIdsNew, entityByIdNew]) => {
-  if (sortedIdsOld !== sortedIdsNew) {
+)(([sortedIdsLast, entityByIdLast], [sortedIds, entityById]) => {
+  if (sortedIdsLast !== sortedIds) {
     return false
   }
 
-  if (entityByIdOld !== entityByIdNew) {
+  if (entityByIdLast !== entityById) {
     // check all child elements whether any were shallowly changed
-    return sortedIdsNew.every(item => entityByIdOld[item.id] === entityByIdNew[item.id])
+    return sortedIds.every(item => entityByIdLast[item.id] === entityById[item.id])
   }
 
   return true
