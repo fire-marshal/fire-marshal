@@ -1,4 +1,3 @@
-import Immutable from 'immutable'
 import _ from 'lodash'
 
 import { createReducer } from '../_helper'
@@ -61,69 +60,62 @@ export const isList = (viewMode) => viewMode === viewModes.LIST || viewMode === 
 export const isMap = (viewMode) => viewMode === viewModes.MAP || viewMode === viewModes.LIST_N_MAP
 
 export default createReducer(
-  Immutable.Map({
+  {
     // feed list
-    data: Immutable.List(),
+    data: [],
     // wait to merge feed list
-    onDemand: Immutable.Set(),
+    onDemand: new Set(),
     // should we update feed list in realtime
     realtime: false,
     // feed view mode
     viewMode: viewModes.LIST
-  }),
+  },
 
   {
-    [actionTypes.CLEAR_ON_DEMAND]: (state) => state.set('onDemand', Immutable.Set()),
+    [actionTypes.CLEAR_ON_DEMAND]: (draft) => {
+      draft.onDemand = new Set()
+    },
 
-    [actionTypes.INSERT_IDS_TO_THE_FEED]: (state, { payload: { ids, indexes } }) =>
-      state.update(
-        'data', data => _.zip(indexes, ids)
-          .reduce(
-            (acc, [idx, id]) => acc.insert(idx, id),
-            data
-          )
-      ),
+    [actionTypes.INSERT_IDS_TO_THE_FEED]: (draft, { payload: { ids, indexes } }) => {
+      _.zip(indexes, ids).forEach(
+        ([idx, id]) => draft.data.splice(idx, 0, id)
+      )
+    },
 
-    [entitiesActionTypes.INSERT_ITEM]: (state, { payload: { index, item, realTime } }) => {
+    [entitiesActionTypes.INSERT_ITEM]: (draft, { payload: { index, item, realTime } }) => {
       if (realTime) {
         if (index !== undefined) {
-          return state.update(
-            'data', data => data.insert(index, item.id)
-          )
-        } else {
-          return state
+          draft.data.splice(index, 0, item.id)
         }
       } else {
-        return state.update(
-          'onDemand', onDemand => onDemand.add(item.id)
-        )
+        // Immer doesn't support Set https://github.com/mweststrate/immer#pitfalls
+        const onDemand = new Set(draft.onDemand)
+        onDemand.add(item.id)
+        draft.onDemand = onDemand
       }
     },
 
-    [entitiesActionTypes.INSERT_ITEMS]: (state, { payload: { indexes, items, realTime } }) => {
+    [entitiesActionTypes.INSERT_ITEMS]: (draft, { payload: { indexes, items, realTime } }) => {
       if (realTime) {
-        return state.update(
-          'data', data => _.zip(indexes, items)
-            .filter(([idx, item]) => idx !== undefined)
-            .reduce(
-              (acc, [idx, item]) => acc.insert(idx, item.id),
-              data
-            )
-        )
-      } else {
-        return state.update(
-          'onDemand', onDemand => items.reduce(
-            (acc, item) => acc.add(item.id),
-            onDemand
+        _.zip(indexes, items)
+          .filter(([idx, item]) => idx !== undefined)
+          .forEach(
+            ([idx, item]) => draft.data.splice(idx, 0, item.id)
           )
-        )
+      } else {
+        // Immer doesn't support Set https://github.com/mweststrate/immer#pitfalls
+        const onDemand = new Set(draft.onDemand)
+        items.forEach(item => onDemand.add(item.id))
+        draft.onDemand = onDemand
       }
     },
 
-    [actionTypes.SET_REAL_TIME]: (state, { payload: { enable } }) =>
-      state.set('realtime', enable),
+    [actionTypes.SET_REAL_TIME]: (draft, { payload: { enable } }) => {
+      draft.realtime = enable
+    },
 
-    [actionTypes.SET_VIEW_MODE]: (state, { payload: { viewMode } }) =>
-      state.set('viewMode', viewMode)
+    [actionTypes.SET_VIEW_MODE]: (draft, { payload: { viewMode } }) => {
+      draft.viewMode = viewMode
+    }
   }
 )

@@ -46,7 +46,7 @@ function * findPlaceToInsertItemsInSortedList (items, sortBy) {
   console.log('findPLaceTOInsertItemsInSortedList', items)
 
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
-  const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
+  const sortedIds = yield select(updatesFeedSelector.getSortedIds)
 
   return items.map(
     item => {

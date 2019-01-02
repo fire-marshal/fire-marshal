@@ -47,7 +47,7 @@ describe('sagas / move-on-demand-evidences-to-the-feed', () => {
       select(updatesFeedSelector.getOnDemand))
 
     expect(gen.next(ids).value).to.be.deep.equal(
-      select(updatesFeedSelector.getSortedIdsRaw))
+      select(updatesFeedSelector.getSortedIds))
 
     expect(gen.next(sortedIds).value).to.be.deep.equal(
       select(evidencesSelector.getEvidencesByIdRaw))
@@ -80,7 +80,7 @@ describe('sagas / move-on-demand-evidences-to-the-feed', () => {
       select(updatesFeedSelector.getOnDemand))
 
     expect(gen.next(ids).value).to.be.deep.equal(
-      select(updatesFeedSelector.getSortedIdsRaw))
+      select(updatesFeedSelector.getSortedIds))
 
     expect(gen.next(sortedIds).value).to.be.deep.equal(
       select(evidencesSelector.getEvidencesByIdRaw))

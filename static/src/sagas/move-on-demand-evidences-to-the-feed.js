@@ -37,7 +37,7 @@ export function * moveOnDemandToTheFeed () {
  */
 export function * findPlaceToInsertIds (sortBy) {
   const incomingUnsortedIds = yield select(updatesFeedSelector.getOnDemand)
-  const existingSortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
+  const existingSortedIds = yield select(updatesFeedSelector.getSortedIds)
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
 
   const values = incomingUnsortedIds.map(id => byIds.getIn([id].concat(sortBy)))

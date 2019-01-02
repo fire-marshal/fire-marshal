@@ -47,7 +47,7 @@ function * newEvidenceFromWss (action) {
  */
 function * findPlaceToInsertItemInSortedList (item, sortBy) {
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
-  const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
+  const sortedIds = yield select(updatesFeedSelector.getSortedIds)
   const newValue = _.get(item, sortBy)
 
   if (byIds.has(item.id)) {
