@@ -37,10 +37,10 @@ export function * moveOnDemandToTheFeed () {
  */
 export function * findPlaceToInsertIds (sortBy) {
   const incomingUnsortedIds = yield select(updatesFeedSelector.getOnDemand)
-  const existingSortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
+  const existingSortedIds = yield select(updatesFeedSelector.getSortedIds)
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
 
-  const values = incomingUnsortedIds.map(id => byIds.getIn([id].concat(sortBy)))
+  const values = Array.from(incomingUnsortedIds).map(id => _.get(byIds, [id].concat(sortBy)))
 
   // we could get unsorted ids so we should make them sorted
   const sortedIdAndValues = _.zip(incomingUnsortedIds, values).sort(
@@ -54,13 +54,13 @@ export function * findPlaceToInsertIds (sortBy) {
       console.log('itemValue', itemValue)
 
       function compareInplaceValue (idx) {
-        const inplaceId = existingSortedIds.get(idx)
-        return itemValue - byIds.getIn([inplaceId].concat(sortBy))
+        const inplaceId = existingSortedIds[idx]
+        return itemValue - _.get(byIds, [inplaceId].concat(sortBy))
       }
 
       return [id, binarySearchOfCallback(
         compareInplaceValue,
-        existingSortedIds.size
+        existingSortedIds.length
       )]
     }
   ))

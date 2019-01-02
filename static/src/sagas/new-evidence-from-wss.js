@@ -47,21 +47,21 @@ function * newEvidenceFromWss (action) {
  */
 function * findPlaceToInsertItemInSortedList (item, sortBy) {
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
-  const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
+  const sortedIds = yield select(updatesFeedSelector.getSortedIds)
   const newValue = _.get(item, sortBy)
 
-  if (byIds.has(item.id)) {
+  if (item.id in byIds) {
     // don't nest duplication entity
     return undefined
   }
 
   function getInplaceValue (idx) {
-    const inplaceId = sortedIds.get(idx)
-    return newValue - byIds.getIn([inplaceId].concat(sortBy))
+    const inplaceId = sortedIds[idx]
+    return newValue - _.get(byIds, [inplaceId].concat(sortBy))
   }
 
   return binarySearchOfCallback(
-    getInplaceValue, sortedIds.size
+    getInplaceValue, sortedIds.length
   )
 }
 

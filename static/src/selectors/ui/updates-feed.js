@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { createSelector } from 'reselect'
 
 import { getUI } from './'
@@ -6,43 +7,33 @@ import { getEvidencesByIdRaw } from '../entities/evidences'
 
 const getUpdatesFeed = createSelector(
   [getUI],
-  ui => ui.get('updatesFeed')
+  ui => ui.updatesFeed
 )
 
-export const getSortedIdsRaw = createSelector(
+export const getSortedIds = createSelector(
   [getUpdatesFeed],
-  (feed) => feed && feed.get('data')
-)
-
-export const getOnDemandRaw = createSelector(
-  [getUpdatesFeed],
-  (feed) => feed && feed.get('onDemand')
+  (feed) => feed && feed.data
 )
 
 export const getOnDemand = createSelector(
-  [getOnDemandRaw],
-  (raw) => raw && raw.toJS()
+  [getUpdatesFeed],
+  (feed) => feed && feed.onDemand
 )
 
 export const getOnDemandCount = createSelector(
-  [getOnDemandRaw],
+  [getOnDemand],
   (onDemandSet) => onDemandSet && onDemandSet.size
 )
 
-export const getSortedItemsRaw = createSelector(
-  [getSortedIdsRaw, getEvidencesByIdRaw],
-  // FIXME: updates each time when getEvidencesByIdRaw is changed
-  (sortedIds, entityById) => sortedIds.map(id => entityById.get(id))
-)
-
 export const getSortedItems = createSelector(
-  [getSortedItemsRaw],
-  raw => raw && raw.toJSON()
+  [getSortedIds, getEvidencesByIdRaw],
+  // FIXME: updates each time when getEvidencesByIdRaw is changed
+  (sortedIds, entityById) => sortedIds.map(id => entityById[id])
 )
 
 export const getStartDate = createSelector(
-  [getSortedIdsRaw, getEvidencesByIdRaw],
-  (sortedIds, entityById) => sortedIds && entityById && entityById.getIn([sortedIds.last(), 'when', 'estimation'])
+  [getSortedIds, getEvidencesByIdRaw],
+  (sortedIds, entityById) => sortedIds && entityById && _.get(entityById, [_.last(sortedIds), 'when', 'estimation'])
 )
 
 export const getStartDateISO = createSelector(
@@ -52,10 +43,10 @@ export const getStartDateISO = createSelector(
 
 export const isRealtime = createSelector(
   [getUpdatesFeed],
-  (feed) => feed && feed.get('realtime')
+  (feed) => feed && feed.realtime
 )
 
 export const getViewMode = createSelector(
   [getUpdatesFeed],
-  (feed) => feed && feed.get('viewMode')
+  (feed) => feed && feed.viewMode
 )

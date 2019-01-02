@@ -46,11 +46,11 @@ function * findPlaceToInsertItemsInSortedList (items, sortBy) {
   console.log('findPLaceTOInsertItemsInSortedList', items)
 
   const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
-  const sortedIds = yield select(updatesFeedSelector.getSortedIdsRaw)
+  const sortedIds = yield select(updatesFeedSelector.getSortedIds)
 
   return items.map(
     item => {
-      if (byIds.has(item.id)) {
+      if (item.id in byIds) {
         // don't nest duplication entities
         return undefined
       }
@@ -58,13 +58,13 @@ function * findPlaceToInsertItemsInSortedList (items, sortBy) {
       const itemValue = _.get(item, sortBy)
 
       function compareInplaceValue (idx) {
-        const inplaceId = sortedIds.get(idx)
-        return itemValue - byIds.getIn([inplaceId].concat(sortBy))
+        const inplaceId = sortedIds[idx]
+        return itemValue - _.get(byIds, [inplaceId].concat(sortBy))
       }
 
       return binarySearchOfCallback(
         compareInplaceValue,
-        sortedIds.size
+        sortedIds.length
       )
     }
   )

@@ -1,5 +1,3 @@
-import Immutable from 'immutable'
-
 import { createReducer } from '../_helper'
 
 import config from '../../config'
@@ -85,18 +83,18 @@ export const insertItems = (payload) => ({
 // it would be better to store information about some bigger events or related (connected)
 //
 export default createReducer(
-  Immutable.fromJS({
+  {
     inProgress: false,
     invalid: true,
     error: null,
     updateAt: null,
     data: {
       // items by its id
-      byId: Immutable.Map(),
+      byId: {},
       // total (globally, not only on this client) number of items
       total: 0
     }
-  }),
+  },
   {
     ...asyncReducer([
       actionTypes.APPEND_EVIDENCES_REQUEST,
@@ -104,26 +102,23 @@ export default createReducer(
       actionTypes.APPEND_EVIDENCES_ERROR
     ]),
 
-    [actionTypes.INSERT_ITEMS]: (state, { payload: { items, total } }) => {
+    [actionTypes.INSERT_ITEMS]: (draft, { payload: { items, total } }) => {
       // TODO: there we could optimize a little
       // we can element which we had before
       // so if we just replace old with new one
       // all dependent selectors will update it own state
       // but maybe we got the same item (not only by id but by content as well)
       // so we could check whether it really new
-      return state.update('data', data => data
-        .update('byId', byId =>
-          items.reduce((acc, item) => acc.set(item.id, Immutable.fromJS(item)), byId))
-        .set('total', total)
-      )
+      items.forEach((item) => {
+        draft.data.byId[item.id] = item
+      })
+
+      draft.total = total
     },
 
-    [actionTypes.INSERT_ITEM]: (state, { payload: { item } }) => {
-      return state.update('data', data => data
-      // TODO: because we can get the same item but with new data we should differ them
-      // and update total only in case of new item
-        .update('total', total => total + 1)
-        .update('byId', byId => byId.set(item.id, Immutable.fromJS(item))))
+    [actionTypes.INSERT_ITEM]: (draft, { payload: { item } }) => {
+      draft.data.byId[item.id] = item
+      draft.total = draft.total + 1
     }
   }
 )

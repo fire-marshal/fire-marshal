@@ -9,8 +9,8 @@ describe.skip('selectors / ui / updates-feed', () => {
     it('should return the same value in case when we got new entities but they are not part of sorted list', () => {
       // TODO: mock state
       const state = Immutable.fromJS({})
-      const previousItems = updatesFeed.getSortedItemsRaw(state)
-      const newItems = updatesFeed.getSortedItemsRaw(state)
+      const previousItems = updatesFeed.getSortedItems(state)
+      const newItems = updatesFeed.getSortedItems(state)
       expect(previousItems).to.be.equal(newItems)
     })
   })
