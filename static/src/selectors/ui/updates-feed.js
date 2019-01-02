@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
-// import createSelectorPrecise from '../../utils/reselector-precise'
+
+import createSelectorPrecise from '../../utils/reselector-precise'
 
 import { getEvidencesById } from '../entities/evidences'
 
@@ -21,23 +22,22 @@ export const getOnDemandCount = createSelector(
   (onDemandSet) => onDemandSet && onDemandSet.size
 )
 
-export const getSortedItems = createSelector(
+export const getSortedItems = createSelectorPrecise(
   getSortedIds,
   getEvidencesById,
   (sortedIds, entityById) => sortedIds.map(id => entityById[id])
-  // ([sortedIdsOld, entityByIdOld], [sortedIdsNew, entityByIdNew]) => {
-  //   if (sortedIdsOld !== sortedIdsNew) {
-  //     return false
-  //   }
-  //
-  //   if (entityByIdOld !== entityByIdNew) {
-  //     // check all child elements whether any were shallowly changed
-  //     return sortedIdsNew.every(item => entityByIdOld[item.id] === entityByIdNew[item.id])
-  //   }
-  //
-  //   return true
-  // }
-)
+)(([sortedIdsOld, entityByIdOld], [sortedIdsNew, entityByIdNew]) => {
+  if (sortedIdsOld !== sortedIdsNew) {
+    return false
+  }
+
+  if (entityByIdOld !== entityByIdNew) {
+    // check all child elements whether any were shallowly changed
+    return sortedIdsNew.every(item => entityByIdOld[item.id] === entityByIdNew[item.id])
+  }
+
+  return true
+})
 
 export const getStartDate = createSelector(
   [getSortedIds, getEvidencesById],

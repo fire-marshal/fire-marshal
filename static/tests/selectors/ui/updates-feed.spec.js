@@ -7,7 +7,7 @@ import * as updatesFeed from '../../../src/selectors/ui/updates-feed'
 
 const reducers = createRootReducers()
 
-describe.skip('selectors / ui / updates-feed', () => {
+describe('selectors / ui / updates-feed', () => {
   describe('#getSortedItemsRaw', () => {
     let state
 

@@ -1,5 +1,10 @@
 import { createSelectorCreator } from 'reselect'
 
+/**
+ * Create selector with custom validator
+ *
+ * @param funcs
+ */
 export default function createSelectorPrecise (...funcs) {
   return (areArgumentsEqual) => {
     function defaultMemoize (func) {
