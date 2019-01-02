@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-export const getEvidences = state => state.get('entities').evidences
+export const getEvidences = state => state.entities.evidences
 
 const getEvidenceDataRaw = createSelector(
   [getEvidences],

@@ -1,1 +1,1 @@
-export const getUI = state => state.get('ui')
+export const getUI = state => state.ui

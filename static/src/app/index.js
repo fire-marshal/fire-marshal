@@ -1,9 +1,8 @@
 import 'core-js/shim' // included < Stage 4 proposals
 import 'regenerator-runtime/runtime'
 
-import { ConnectedRouter, routerMiddleware } from 'connected-react-router/immutable'
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
 import createHistory from 'history/createBrowserHistory'
-import Immutable from 'immutable'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { applyMiddleware, compose, createStore } from 'redux'
@@ -26,7 +25,7 @@ import AppRouter from './router'
 export function bootstrap (targetElm) {
   const history = createHistory()
 
-  const initialState = Immutable.Map()
+  const initialState = {}
 
   /* eslint-disable ndo-underscore-dangle */
   let composeEnhancers
