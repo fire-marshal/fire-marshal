@@ -1,5 +1,3 @@
-import Immutable from 'immutable'
-
 /**
  * Build 2 or 3 handlers for request, received and error (optional) actions
  *
@@ -14,22 +12,25 @@ export default function asyncReducer (
   [request, receive, error = null]
 ) {
   const res = {
-    [request]: (state, { meta }) => state
-      .set('updateAt', meta.createdAt)
-      .set('inProgress', true),
+    [request]: (draft, { meta }) => {
+      draft.updateAt = meta.createdAt
+      draft.inProgress = true
+    },
 
-    [receive]: (state, { meta }) => state
-      .set('updateAt', meta.createdAt)
-      .set('inProgress', false)
-      .set('invalid', false)
+    [receive]: (draft, { meta }) => {
+      draft.updateAt = meta.createdAt
+      draft.inProgress = false
+      draft.invalid = false
+    }
   }
 
   if (error) {
-    res[error] = (state, { meta, payload }) => state
-      .set('updateAt', meta.createdAt)
-      .set('error', Immutable.fromJS(payload.error))
-      .set('inProgress', false)
-      .set('invalid', false)
+    res[error] = (draft, { meta, payload }) => {
+      draft.updateAt = meta.createdAt
+      draft.error = payload.error
+      draft.inProgress = false
+      draft.invalid = false
+    }
   }
 
   return res

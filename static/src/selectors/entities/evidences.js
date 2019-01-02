@@ -1,53 +1,38 @@
 import { createSelector } from 'reselect'
 
-export const getEvidences = state => state.getIn(['entities', 'evidences'])
+export const getEvidences = state => state.get('entities').evidences
 
 const getEvidenceDataRaw = createSelector(
   [getEvidences],
-  (evidences) => evidences && evidences.get('data')
-)
-
-export const getEvidenceItemsRaw = createSelector(
-  [getEvidenceDataRaw],
-  (data) => data && data.get('items')
-)
-
-export const getEvidenceItems = createSelector(
-  [getEvidenceItemsRaw],
-  (raw) => raw && raw.toJS()
+  (evidences) => evidences.data
 )
 
 export const getEvidencesByIdRaw = createSelector(
   [getEvidenceDataRaw],
-  (data) => data && data.get('byId')
+  (data) => data && data.byId
 )
 
 export const getTotalItems = createSelector(
   [getEvidenceDataRaw],
-  (data) => data && data.get('total')
+  (data) => data && data.total
 )
 
 export const hasMore = createSelector(
   [getEvidencesByIdRaw, getTotalItems],
-  (byId, total) => (byId && total > 0) ? (byId.size < total) : false
+  (byId, total) => (byId && total > 0) ? (Object.keys(byId).length < total) : false
 )
 
 export const getEvidenceItemsInProgress = createSelector(
   [getEvidences],
-  (evidences) => evidences && evidences.get('inProgress')
+  (evidences) => evidences && evidences.inProgress
 )
 
 export const getEvidenceItemsInvalid = createSelector(
   [getEvidences],
-  (evidences) => evidences && evidences.get('invalid')
+  (evidences) => evidences && evidences.invalid
 )
 
 export const getEvidenceError = createSelector(
   [getEvidences],
-  (evidences) => evidences && evidences.get('error')
-)
-
-export const getIdsRaw = createSelector(
-  [getEvidenceDataRaw],
-  (data) => data && data.get('ids')
+  (evidences) => evidences && evidences.error
 )

@@ -28,7 +28,7 @@ export const getOnDemandCount = createSelector(
 export const getSortedItems = createSelector(
   [getSortedIds, getEvidencesByIdRaw],
   // FIXME: updates each time when getEvidencesByIdRaw is changed
-  (sortedIds, entityById) => sortedIds.map(id => entityById.get(id).toJS())
+  (sortedIds, entityById) => sortedIds.map(id => entityById[id])
 )
 
 export const getStartDate = createSelector(

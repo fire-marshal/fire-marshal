@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-import Immutable from 'immutable'
 import { call, put, select } from 'redux-saga/effects'
 
 import { clearOnDemand, insertIdsToTheFeed } from '../../src/reducers/ui/updates-feed'
@@ -31,8 +30,8 @@ describe('sagas / move-on-demand-evidences-to-the-feed', () => {
 
   it('should find place to insert ids', () => {
     const ids = ['2', '4', '6']
-    const sortedIds = Immutable.List(['1', '3', '5', '7'])
-    const byIds = Immutable.fromJS({
+    const sortedIds = ['1', '3', '5', '7']
+    const byIds = {
       '1': { value: 7000 },
       '2': { value: 6000 },
       '3': { value: 5000 },
@@ -40,7 +39,7 @@ describe('sagas / move-on-demand-evidences-to-the-feed', () => {
       '5': { value: 3000 },
       '6': { value: 2000 },
       '7': { value: 1000 }
-    })
+    }
     const gen = findPlaceToInsertIds(['value'])
 
     expect(gen.next().value).to.be.deep.equal(
@@ -64,8 +63,8 @@ describe('sagas / move-on-demand-evidences-to-the-feed', () => {
 
   it('should find place to insert (even for messed) ids', () => {
     const ids = ['4', '2', '6']
-    const sortedIds = Immutable.List(['1', '3', '5', '7'])
-    const byIds = Immutable.fromJS({
+    const sortedIds = ['1', '3', '5', '7']
+    const byIds = {
       '1': { value: 7000 },
       '2': { value: 6000 },
       '3': { value: 5000 },
@@ -73,7 +72,7 @@ describe('sagas / move-on-demand-evidences-to-the-feed', () => {
       '5': { value: 3000 },
       '6': { value: 2000 },
       '7': { value: 1000 }
-    })
+    }
     const gen = findPlaceToInsertIds(['value'])
 
     expect(gen.next().value).to.be.deep.equal(
