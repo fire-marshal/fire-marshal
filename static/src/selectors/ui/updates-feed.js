@@ -1,14 +1,11 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 
-import { getUI } from './'
+import createSelectorPrecise from '../../utils/reselector-precise'
 
-import { getEvidencesByIdRaw } from '../entities/evidences'
+import { getEvidencesById } from '../entities/evidences'
 
-const getUpdatesFeed = createSelector(
-  [getUI],
-  ui => ui.updatesFeed
-)
+const getUpdatesFeed = state => state.ui.updatesFeed
 
 export const getSortedIds = createSelector(
   [getUpdatesFeed],
@@ -25,14 +22,25 @@ export const getOnDemandCount = createSelector(
   (onDemandSet) => onDemandSet && onDemandSet.size
 )
 
-export const getSortedItems = createSelector(
-  [getSortedIds, getEvidencesByIdRaw],
-  // FIXME: updates each time when getEvidencesByIdRaw is changed
+export const getSortedItems = createSelectorPrecise(
+  getSortedIds,
+  getEvidencesById,
   (sortedIds, entityById) => sortedIds.map(id => entityById[id])
-)
+)(([sortedIdsLast, entityByIdLast], [sortedIds, entityById]) => {
+  if (sortedIdsLast !== sortedIds) {
+    return false
+  }
+
+  if (entityByIdLast !== entityById) {
+    // check all child elements whether any were shallowly changed
+    return sortedIds.every(item => entityByIdLast[item.id] === entityById[item.id])
+  }
+
+  return true
+})
 
 export const getStartDate = createSelector(
-  [getSortedIds, getEvidencesByIdRaw],
+  [getSortedIds, getEvidencesById],
   (sortedIds, entityById) => sortedIds && entityById && _.get(entityById, [_.last(sortedIds), 'when', 'estimation'])
 )
 

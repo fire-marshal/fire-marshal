@@ -82,8 +82,8 @@ export default createReducer(
       )
     },
 
-    [entitiesActionTypes.INSERT_ITEM]: (draft, { payload: { index, item, realTime } }) => {
-      if (realTime) {
+    [entitiesActionTypes.INSERT_ITEM]: (draft, { payload: { index, item } }) => {
+      if (draft.realtime) {
         if (index !== undefined) {
           draft.data.splice(index, 0, item.id)
         }
@@ -95,8 +95,8 @@ export default createReducer(
       }
     },
 
-    [entitiesActionTypes.INSERT_ITEMS]: (draft, { payload: { indexes, items, realTime } }) => {
-      if (realTime) {
+    [entitiesActionTypes.INSERT_ITEMS]: (draft, { payload: { indexes, items } }) => {
+      if (draft.realtime) {
         _.zip(indexes, items)
           .filter(([idx, item]) => idx !== undefined)
           .forEach(

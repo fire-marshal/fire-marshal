@@ -45,7 +45,7 @@ function * receiveEvidences (action) {
 function * findPlaceToInsertItemsInSortedList (items, sortBy) {
   console.log('findPLaceTOInsertItemsInSortedList', items)
 
-  const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
+  const byIds = yield select(evidencesSelector.getEvidencesById)
   const sortedIds = yield select(updatesFeedSelector.getSortedIds)
 
   return items.map(

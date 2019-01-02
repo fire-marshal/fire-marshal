@@ -34,7 +34,7 @@ function * newEvidenceFromWss (action) {
     index = yield call(findPlaceToInsertItemInSortedList, item, sortBy)
   }
 
-  yield put(insertItem({ index, item, realTime }))
+  yield put(insertItem({ index, item }))
 }
 
 /**
@@ -46,7 +46,7 @@ function * newEvidenceFromWss (action) {
  * @returns {IterableIterator<*>}
  */
 function * findPlaceToInsertItemInSortedList (item, sortBy) {
-  const byIds = yield select(evidencesSelector.getEvidencesByIdRaw)
+  const byIds = yield select(evidencesSelector.getEvidencesById)
   const sortedIds = yield select(updatesFeedSelector.getSortedIds)
   const newValue = _.get(item, sortBy)
 

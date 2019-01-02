@@ -49,7 +49,7 @@ describe('sagas / move-on-demand-evidences-to-the-feed', () => {
       select(updatesFeedSelector.getSortedIds))
 
     expect(gen.next(sortedIds).value).to.be.deep.equal(
-      select(evidencesSelector.getEvidencesByIdRaw))
+      select(evidencesSelector.getEvidencesById))
 
     const res = gen.next(byIds)
 
@@ -82,7 +82,7 @@ describe('sagas / move-on-demand-evidences-to-the-feed', () => {
       select(updatesFeedSelector.getSortedIds))
 
     expect(gen.next(sortedIds).value).to.be.deep.equal(
-      select(evidencesSelector.getEvidencesByIdRaw))
+      select(evidencesSelector.getEvidencesById))
 
     const res = gen.next(byIds)
 

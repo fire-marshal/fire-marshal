@@ -1,7 +1,7 @@
+import _ from 'lodash'
 import { expect } from 'chai'
 
 import { binarySearchOfCallback } from '../../src/utils/binary-search'
-import Immutable from 'immutable'
 
 const naturalNumbers = value => idx => {
   if (idx < 0) {
@@ -46,7 +46,7 @@ describe('utils', () => {
         { itemValue: 2000, expectedIdx: 3 }
       ].forEach(({ itemValue, expectedIdx }) => {
         it(`should ${itemValue} => ${expectedIdx}`, () => {
-          const byIds = Immutable.fromJS({
+          const byIds = {
             '1': { value: 7000 }, // 0
             '2': { value: 6000 },
             '3': { value: 5000 }, // 1
@@ -54,14 +54,14 @@ describe('utils', () => {
             '5': { value: 3000 }, // 2
             '6': { value: 2000 },
             '7': { value: 1000 } // 3
-          })
-          const sortedIds = Immutable.List([
+          }
+          const sortedIds = [
             '1', '3', '5', '7'
-          ])
+          ]
 
           function comparator (idx) {
-            const inplaceId = sortedIds.get(idx)
-            return itemValue - byIds.getIn([inplaceId].concat('value'))
+            const inplaceId = sortedIds[idx]
+            return itemValue - _.get(byIds, [inplaceId].concat('value'))
           }
 
           const idx = binarySearchOfCallback(comparator, 3)

@@ -6,6 +6,6 @@ import ui from './ui'
 
 export default (history) => combineReducers({
   entities,
-  router: connectRouter(history),
+  router: history && connectRouter(history),
   ui
 })
