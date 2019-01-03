@@ -19,7 +19,7 @@ function * receiveEvidences (action) {
   let items = action.payload.items.map(processItem)
   const total = action.payload.total
 
-  const realTime = true
+  const realtime = true
   const sortBy = ['when', 'estimation']
 
   // we should sort items because we would need to
@@ -30,7 +30,7 @@ function * receiveEvidences (action) {
   yield put(insertItems({
     indexes: indexes.reverse(),
     items: items.reverse(),
-    realTime,
+    realtime,
     total
   }))
 }
