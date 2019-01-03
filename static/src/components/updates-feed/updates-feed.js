@@ -56,7 +56,7 @@ const UpdatesFeed = ({
                     <UpdatesFeedList/>
                   </div>
                 ) : (
-                  <div>TODO: MAP</div>
+                  <FeedMap/>
                 )
               }
             </>
