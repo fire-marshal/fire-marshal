@@ -26,15 +26,15 @@ function * newEvidenceFromWss (action) {
   // find the place for new item in a list of ids
   // - in case of on-demand:
   // add to the waiting list
-  const realTime = yield select(updatesFeedSelector.isRealtime)
+  const realtime = yield select(updatesFeedSelector.isRealtime)
   const sortBy = ['when', 'estimation']
 
   let index
-  if (realTime) {
+  if (realtime) {
     index = yield call(findPlaceToInsertItemInSortedList, item, sortBy)
   }
 
-  yield put(insertItem({ index, item }))
+  yield put(insertItem({ index, item, realtime }))
 }
 
 /**
