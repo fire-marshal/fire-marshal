@@ -23,7 +23,7 @@ const selectedFireIcon = L.icon({
 })
 
 const FeedMap = ({
-  listItems, selectedItem,
+  itemsBounce, listItems, selectedItem,
   onSelect, onUnSelect
 }) => {
   const mapRef = useRef()
@@ -80,6 +80,10 @@ const FeedMap = ({
       )
     })
 
+    if (itemsBounce) {
+      map.fitBounds(itemsBounce)
+    }
+
     return () => {
       markersLayer.clearLayers()
     }
@@ -107,6 +111,7 @@ FeedMap.displayName = 'FeedMap'
 
 FeedMap.propTypes = {
   listItems: PropTypes.array,
+  itemsBounce: PropTypes.arrayOf(PropTypes.array),
   selectedItem: PropTypes.object,
   onSelect: PropTypes.func.isRequired,
   onUnSelect: PropTypes.func.isRequired

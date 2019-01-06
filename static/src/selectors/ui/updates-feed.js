@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 
+import { extractLatLng } from '../../reducers/entities/model'
+import getBounce from '../../utils/map/get-bounce'
 import createSelectorPrecise from '../../utils/reselector-precise'
 
 import { getEvidencesById } from '../entities/evidences'
@@ -38,6 +40,11 @@ export const getSortedItems = createSelectorPrecise(
 
   return true
 })
+
+export const getItemsBounce = createSelector(
+  [getSortedItems],
+  items => items && getBounce(items.map(extractLatLng))
+)
 
 export const getStartDate = createSelector(
   [getSortedIds, getEvidencesById],

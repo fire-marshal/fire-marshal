@@ -10,6 +10,7 @@ import { FeedMap as FeedMapComponent } from '../components/feed-map'
 export const FeedMap = connect(
   (state, props) => ({
     invalidList: evidencesSelector.getEvidenceItemsInvalid(state, props),
+    itemsBounce: updatesFeedSelector.getItemsBounce(state, props),
     listError: evidencesSelector.getEvidenceError(state, props),
     listInProgress: evidencesSelector.getEvidenceItemsInProgress(state, props),
     listItems: updatesFeedSelector.getSortedItems(state, props),
