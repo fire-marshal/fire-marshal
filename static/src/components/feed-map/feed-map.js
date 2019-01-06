@@ -17,7 +17,7 @@ const leafletIcon = L.icon({
 
 const FeedMap = ({
   listItems, selectedItem,
-  onSelect
+  onSelect, onUnSelect
 }) => {
   const mapRef = useRef()
 
@@ -45,6 +45,12 @@ const FeedMap = ({
 
     layer = L.featureGroup().addTo(map)
     setSelectionLayer(layer)
+
+    map.on('click', onUnSelect)
+
+    return () => {
+      console.log('TODO: we may need to clean map')
+    }
   }, [mapRef])
 
   // evidences layer updater
@@ -67,8 +73,6 @@ const FeedMap = ({
       )
     })
 
-    map.on('click', () => onSelect(null))
-
     return () => {
       markersLayer.clearLayers()
     }
@@ -88,7 +92,7 @@ const FeedMap = ({
   }, [selectedItem, selectionLayer])
 
   return (
-    <div ref={mapRef} className='map-container' />
+    <div ref={mapRef} className='map-container'/>
   )
 }
 
@@ -97,7 +101,8 @@ FeedMap.displayName = 'FeedMap'
 FeedMap.propTypes = {
   listItems: PropTypes.array,
   selectedItem: PropTypes.object,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  onUnSelect: PropTypes.func.isRequired
 }
 
 export default FeedMap
