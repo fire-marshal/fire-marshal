@@ -13,6 +13,7 @@ export const actionTypes = {
   CLEAR_ON_DEMAND: `${namespace}/CLEAR_ON_DEMAND`,
   INSERT_IDS_TO_THE_FEED: `${namespace}/INSERT_IDS_TO_THE_FEED`,
   MOVE_ON_DEMAND_IDS_TO_THE_FEED: `${namespace}/MOVE_ON_DEMAND_IDS_TO_THE_FEED`,
+  SELECT_ITEM: `${namespace}/SELECT_ITEM`,
   SET_REAL_TIME: `${namespace}/SET_REAL_TIME`,
   SET_VIEW_MODE: `${namespace}/SET_VIEW_MODE`
 }
@@ -46,6 +47,11 @@ export const setViewMode = (viewMode) => ({
   payload: { viewMode }
 })
 
+export const selectItem = (itemId) => ({
+  type: actionTypes.SELECT_ITEM,
+  payload: { itemId }
+})
+
 //
 // reducers
 //
@@ -67,6 +73,8 @@ export default createReducer(
     onDemand: new Set(),
     // should we update feed list in realtime
     realtime: false,
+    // selected item ID
+    selectedId: null,
     // feed view mode
     viewMode: viewModes.LIST
   },
@@ -108,6 +116,10 @@ export default createReducer(
         items.forEach(item => onDemand.add(item.id))
         draft.onDemand = onDemand
       }
+    },
+
+    [actionTypes.SELECT_ITEM]: (draft, { payload: { itemId } }) => {
+      draft.selectedId = itemId
     },
 
     [actionTypes.SET_REAL_TIME]: (draft, { payload: { enable } }) => {

@@ -58,3 +58,13 @@ export const getViewMode = createSelector(
   [getUpdatesFeed],
   (feed) => feed && feed.viewMode
 )
+
+export const getSelectedId = createSelector(
+  [getUpdatesFeed],
+  (feed) => feed.selectedId
+)
+
+export const getSelectedItem = createSelector(
+  [getSelectedId, getEvidencesById],
+  (selectedId, entityById) => entityById[selectedId]
+)

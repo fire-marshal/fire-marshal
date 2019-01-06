@@ -15,19 +15,22 @@ const leafletIcon = L.icon({
   iconUrl: FireIcon
 })
 
-// FIXME: remove once we will fix bug of frequent update
-const FeedMap = ({ listItems }) => {
+const FeedMap = ({
+  listItems, selectedItem,
+  onSelect
+}) => {
   const mapRef = useRef()
 
   const [map, setMap] = useState()
   const [markersLayer, setMarkersLayer] = useState()
+  const [selectionLayer, setSelectionLayer] = useState()
 
   useResizeComponent(mapRef, () => {
     // panning will not occur
     map && map.invalidateSize({ pan: false })
   }, [map])
 
-  // TODO: should call map.invalidateSize() on resize
+  // map updater
   useEffect(() => {
     console.log('create map!')
     const map = L.map(mapRef.current).setView([51.505, -0.09], 4)
@@ -39,8 +42,12 @@ const FeedMap = ({ listItems }) => {
 
     let layer = L.featureGroup().addTo(map)
     setMarkersLayer(layer)
+
+    layer = L.featureGroup().addTo(map)
+    setSelectionLayer(layer)
   }, [mapRef])
 
+  // evidences layer updater
   useEffect(() => {
     if (!markersLayer) {
       console.log('markers layer is not ready yet')
@@ -56,13 +63,29 @@ const FeedMap = ({ listItems }) => {
     listItems.forEach(item => {
       markersLayer.addLayer(
         L.marker(item.location.center, { icon: leafletIcon })
+          .on('click', () => onSelect(item.id))
       )
     })
+
+    map.on('click', () => onSelect(null))
 
     return () => {
       markersLayer.clearLayers()
     }
   }, [listItems, markersLayer])
+
+  // selection layer updater
+  useEffect(() => {
+    if (selectionLayer && selectedItem && selectedItem.location) {
+      selectionLayer.addLayer(
+        L.circleMarker(selectedItem.location.center)
+      )
+    }
+
+    return () => {
+      selectionLayer && selectionLayer.clearLayers()
+    }
+  }, [selectedItem, selectionLayer])
 
   return (
     <div ref={mapRef} className='map-container' />
@@ -72,7 +95,9 @@ const FeedMap = ({ listItems }) => {
 FeedMap.displayName = 'FeedMap'
 
 FeedMap.propTypes = {
-  listItems: PropTypes.array
+  listItems: PropTypes.array,
+  selectedItem: PropTypes.object,
+  onSelect: PropTypes.func.isRequired
 }
 
 export default FeedMap
