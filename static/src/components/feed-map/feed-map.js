@@ -1,6 +1,6 @@
 import './map-container.scss'
 
-import MarkerIcon from 'leaflet/dist/images/marker-icon.png'
+import FireIcon from './fire-marker.png'
 
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -8,6 +8,12 @@ import PropTypes from 'prop-types'
 import React, { useState, useEffect, useRef } from 'react'
 
 import { useResizeComponent } from '../../hooks/use-resize-component'
+
+const leafletIcon = L.icon({
+  iconAnchor: [16, 37],
+  iconSize: [32, 37],
+  iconUrl: FireIcon
+})
 
 // FIXME: remove once we will fix bug of frequent update
 const FeedMap = ({ listItems }) => {
@@ -47,13 +53,9 @@ const FeedMap = ({ listItems }) => {
       return
     }
 
-    let icon = L.icon({
-      iconUrl: MarkerIcon
-    })
-
     listItems.forEach(item => {
       markersLayer.addLayer(
-        L.marker(item.location.center, { icon })
+        L.marker(item.location.center, { icon: leafletIcon })
       )
     })
 
