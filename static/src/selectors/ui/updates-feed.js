@@ -9,12 +9,12 @@ const getUpdatesFeed = state => state.ui.updatesFeed
 
 export const getSortedIds = createSelector(
   [getUpdatesFeed],
-  (feed) => feed && feed.data
+  (feed) => feed.data
 )
 
 export const getOnDemand = createSelector(
   [getUpdatesFeed],
-  (feed) => feed && feed.onDemand
+  (feed) => feed.onDemand
 )
 
 export const getOnDemandCount = createSelector(
