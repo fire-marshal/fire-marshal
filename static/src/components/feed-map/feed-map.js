@@ -1,6 +1,7 @@
 import './map-container.scss'
 
-import FireIcon from './fire-marker.png'
+import FireImage from './markers/fire-marker.png'
+import SelectedFireImage from './markers/fire-marker-selected.png'
 
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -9,10 +10,16 @@ import React, { useState, useEffect, useRef } from 'react'
 
 import { useResizeComponent } from '../../hooks/use-resize-component'
 
-const leafletIcon = L.icon({
+const fireIcon = L.icon({
   iconAnchor: [16, 37],
   iconSize: [32, 37],
-  iconUrl: FireIcon
+  iconUrl: FireImage
+})
+
+const selectedFireIcon = L.icon({
+  iconAnchor: [16, 37],
+  iconSize: [32, 37],
+  iconUrl: SelectedFireImage
 })
 
 const FeedMap = ({
@@ -68,7 +75,7 @@ const FeedMap = ({
 
     listItems.forEach(item => {
       markersLayer.addLayer(
-        L.marker(item.location.center, { icon: leafletIcon })
+        L.marker(item.location.center, { icon: fireIcon })
           .on('click', () => onSelect(item.id))
       )
     })
@@ -82,7 +89,7 @@ const FeedMap = ({
   useEffect(() => {
     if (selectionLayer && selectedItem && selectedItem.location) {
       selectionLayer.addLayer(
-        L.circleMarker(selectedItem.location.center)
+        L.marker(selectedItem.location.center, { icon: selectedFireIcon })
       )
     }
 
