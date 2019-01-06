@@ -17,8 +17,6 @@ export function * moveOnDemandToTheFeed () {
   const sortBy = ['when', 'estimation']
 
   const { ids, indexes } = yield call(findPlaceToInsertIds, sortBy)
-  console.log('ids', ids)
-  console.log('indexes', indexes)
 
   yield put(insertIdsToTheFeed({
     ids: ids.reverse(),
@@ -50,9 +48,6 @@ export function * findPlaceToInsertIds (sortBy) {
   // and then map to pair of id and index for insertion
   const [ ids, indexes ] = _.unzip(sortedIdAndValues.map(
     ([id, itemValue]) => {
-      console.log('id', id)
-      console.log('itemValue', itemValue)
-
       function compareInplaceValue (idx) {
         const inplaceId = existingSortedIds[idx]
         return itemValue - _.get(byIds, [inplaceId].concat(sortBy))

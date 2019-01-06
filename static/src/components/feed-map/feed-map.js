@@ -10,9 +10,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useResizeComponent } from '../../hooks/use-resize-component'
 
 // FIXME: remove once we will fix bug of frequent update
-let previousListItems
-let previousMarkersLayer
-
 const FeedMap = ({ listItems }) => {
   const mapRef = useRef()
 
@@ -39,9 +36,8 @@ const FeedMap = ({ listItems }) => {
   }, [mapRef])
 
   useEffect(() => {
-    console.log('put markets')
     if (!markersLayer) {
-      console.log('markers layer is not ready yey')
+      console.log('markers layer is not ready yet')
       return
     }
 
@@ -50,12 +46,6 @@ const FeedMap = ({ listItems }) => {
       // maybe we need to remove items we had before
       return
     }
-
-    console.log('previousListItems === listItems', previousListItems === listItems)
-    previousListItems = listItems
-
-    console.log('previousMarkersLayer === markersLayer', previousMarkersLayer === markersLayer)
-    previousMarkersLayer = markersLayer
 
     let icon = L.icon({
       iconUrl: MarkerIcon
@@ -68,7 +58,6 @@ const FeedMap = ({ listItems }) => {
     })
 
     return () => {
-      console.log('clear layers')
       markersLayer.clearLayers()
     }
   }, [listItems, markersLayer])
