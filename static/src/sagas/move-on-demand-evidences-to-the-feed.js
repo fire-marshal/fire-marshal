@@ -34,11 +34,11 @@ export function * moveOnDemandToTheFeed () {
  * @returns {IterableIterator<*>}
  */
 export function * findPlaceToInsertIds (sortBy) {
-  const incomingUnsortedIds = yield select(updatesFeedSelector.getOnDemand)
+  const incomingUnsortedIds = Array.from(yield select(updatesFeedSelector.getOnDemand))
   const existingSortedIds = yield select(updatesFeedSelector.getSortedIds)
   const byIds = yield select(evidencesSelector.getEvidencesById)
 
-  const values = Array.from(incomingUnsortedIds).map(id => _.get(byIds, [id].concat(sortBy)))
+  const values = incomingUnsortedIds.map(id => _.get(byIds, [id].concat(sortBy)))
 
   // we could get unsorted ids so we should make them sorted
   const sortedIdAndValues = _.zip(incomingUnsortedIds, values).sort(
