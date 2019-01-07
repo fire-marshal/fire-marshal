@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { viewModes } from '../../reducers/ui/updates-feed'
+import { viewModes, isMap } from '../../reducers/ui/updates-feed'
 
 const UpdatesFeedToolbarItem = ({ active, id, title, onSelect }) => {
   return (
@@ -24,7 +24,10 @@ UpdatesFeedToolbarItem.propTypes = {
   onSelect: PropTypes.func.isRequired
 }
 
-const UpdatesFeedToolbar = ({ follow, hasListAndMapOption, viewMode, onFollow, onSelectOption }) => (
+const UpdatesFeedToolbar = ({
+  follow, hasListAndMapOption, viewMode, isAutomaticMapFitting,
+  onAutoMapFittingChange, onFollow, onSelectOption
+}) => (
   <nav className='navbar navbar-expand navbar-light bg-light'>
     <div className='collapse navbar-collapse'>
       <ul className='navbar-nav nav-pills'>
@@ -45,17 +48,34 @@ const UpdatesFeedToolbar = ({ follow, hasListAndMapOption, viewMode, onFollow, o
       </ul>
     </div>
     <form className='form-inline ml-2 my-2'>
-      <label
-        className='form-check-label'
-        onClick={evt => evt.stopPropagation()}
-      >
-        <input
-          checked={follow}
-          type='checkbox'
-          onChange={evt => onFollow(evt.target.checked)}
-        />&nbsp;
-        Follow Updates
-      </label>
+      {isMap(viewMode) && (
+        <div className='mb-1 mr-sm-1'>
+          <label
+            className='form-check-label'
+            onClick={evt => evt.stopPropagation()}
+          >
+            <input
+              checked={isAutomaticMapFitting}
+              type='checkbox'
+              onChange={evt => onAutoMapFittingChange(evt.target.checked)}
+            />&nbsp;
+            Fit
+          </label>
+        </div>
+      )}
+      <div className='mb-1 mr-sm-1'>
+        <label
+          className='form-check-label'
+          onClick={evt => evt.stopPropagation()}
+        >
+          <input
+            checked={follow}
+            type='checkbox'
+            onChange={evt => onFollow(evt.target.checked)}
+          />&nbsp;
+          Follow
+        </label>
+      </div>
     </form>
   </nav>
 )
@@ -64,7 +84,10 @@ UpdatesFeedToolbar.displayName = 'UpdatesFeedToolbar'
 UpdatesFeedToolbar.propTypes = {
   follow: PropTypes.bool.isRequired,
   hasListAndMapOption: PropTypes.bool.isRequired,
+  isAutomaticMapFitting: PropTypes.bool.isRequired,
   viewMode: PropTypes.string.isRequired,
+
+  onAutoMapFittingChange: PropTypes.func.isRequired,
   onFollow: PropTypes.func.isRequired,
   onSelectOption: PropTypes.func.isRequired
 }

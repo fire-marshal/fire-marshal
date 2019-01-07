@@ -10,9 +10,11 @@ const namespace = `${require('../../../package').name}/UI/UPDATES_FEED`
 //
 
 export const actionTypes = {
+  AUTOMATIC_MAP_FITTING: `${namespace}/AUTOMATIC_MAP_FITTING`,
   CLEAR_ON_DEMAND: `${namespace}/CLEAR_ON_DEMAND`,
   INSERT_IDS_TO_THE_FEED: `${namespace}/INSERT_IDS_TO_THE_FEED`,
   MOVE_ON_DEMAND_IDS_TO_THE_FEED: `${namespace}/MOVE_ON_DEMAND_IDS_TO_THE_FEED`,
+  SELECT_ITEM: `${namespace}/SELECT_ITEM`,
   SET_REAL_TIME: `${namespace}/SET_REAL_TIME`,
   SET_VIEW_MODE: `${namespace}/SET_VIEW_MODE`
 }
@@ -20,6 +22,11 @@ export const actionTypes = {
 //
 // action creators
 //
+
+export const autoMapFitting = (value) => ({
+  type: actionTypes.AUTOMATIC_MAP_FITTING,
+  payload: { value }
+})
 
 export const clearOnDemand = () => ({
   type: actionTypes.CLEAR_ON_DEMAND
@@ -46,6 +53,11 @@ export const setViewMode = (viewMode) => ({
   payload: { viewMode }
 })
 
+export const selectItem = (itemId) => ({
+  type: actionTypes.SELECT_ITEM,
+  payload: { itemId }
+})
+
 //
 // reducers
 //
@@ -61,17 +73,25 @@ export const isMap = (viewMode) => viewMode === viewModes.MAP || viewMode === vi
 
 export default createReducer(
   {
+    // automatic map fitting
+    autoMapFitting: true,
     // feed list
     data: [],
     // wait to merge feed list
     onDemand: new Set(),
     // should we update feed list in realtime
     realtime: false,
+    // selected item ID
+    selectedId: null,
     // feed view mode
     viewMode: viewModes.LIST
   },
 
   {
+    [actionTypes.AUTOMATIC_MAP_FITTING]: (draft, { payload: { value } }) => {
+      draft.autoMapFitting = value
+    },
+
     [actionTypes.CLEAR_ON_DEMAND]: (draft) => {
       draft.onDemand = new Set()
     },
@@ -108,6 +128,10 @@ export default createReducer(
         items.forEach(item => onDemand.add(item.id))
         draft.onDemand = onDemand
       }
+    },
+
+    [actionTypes.SELECT_ITEM]: (draft, { payload: { itemId } }) => {
+      draft.selectedId = itemId
     },
 
     [actionTypes.SET_REAL_TIME]: (draft, { payload: { enable } }) => {

@@ -10,6 +10,7 @@ import { UpdatesFeed as UpdatesFeedComponent } from '../components/updates-feed'
 export const UpdatesFeed = connect(
   (state, props) => ({
     listStartDateISO: updatesFeedSelector.getStartDateISO(state, props),
+    isAutomaticMapFitting: updatesFeedSelector.isAutomaticMapFitting(state, props),
     isRealtime: updatesFeedSelector.isRealtime(state, props),
     onDemandCount: updatesFeedSelector.getOnDemandCount(state, props),
     user: {
@@ -26,6 +27,7 @@ export const UpdatesFeed = connect(
       long,
       startDateISO
     })),
+    onAutoMapFittingChange: (fit) => dispatch(updatesFeedActions.autoMapFitting(fit)),
     moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
     setViewMode: viewMode => dispatch(updatesFeedActions.setViewMode(viewMode)),
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload)),

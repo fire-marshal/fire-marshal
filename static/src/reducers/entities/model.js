@@ -14,3 +14,12 @@ export function processItem (evidence) {
     }
   }
 }
+
+/**
+ * get latlng of evidence
+ *
+ * @param evidence
+ */
+export function extractLatLng (evidence) {
+  return evidence.location.center
+}
