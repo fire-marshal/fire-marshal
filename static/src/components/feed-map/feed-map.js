@@ -80,8 +80,11 @@ const FeedMap = ({
 
   useEffect(() => {
     userIsMoving(!isAutomaticMapFitting)
-    // if (isAutomaticMapFitting) {
-    // }
+
+    if (itemsBounce && isAutomaticMapFitting && map) {
+      computerIsMoving(true)
+      map.fitBounds(itemsBounce)
+    }
   }, [isAutomaticMapFitting])
 
   useResizeComponent(mapRef, () => {

@@ -89,7 +89,7 @@ UpdatesFeedToolbar.propTypes = {
 
   onAutoMapFittingChange: PropTypes.func.isRequired,
   onFollow: PropTypes.func.isRequired,
-  onSelectOption: PropTypes.func.isRequired,
+  onSelectOption: PropTypes.func.isRequired
 }
 
 export default UpdatesFeedToolbar
