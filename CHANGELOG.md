@@ -1,5 +1,24 @@
 # Change Log
 
+## [0.9.0](https://github.com/fire-marshal/fire-marshal/tree/0.9.0) (2019-01-07)
+[Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.8.0...0.9.0)
+
+**Implemented enhancements:**
+
+- place fire events on map [\#102](https://github.com/fire-marshal/fire-marshal/issues/102)
+- give a chance to Immer [\#66](https://github.com/fire-marshal/fire-marshal/issues/66)
+
+**Fixed bugs:**
+
+- too frequent update of updatesFeed.getSortedItemsRaw [\#104](https://github.com/fire-marshal/fire-marshal/issues/104)
+
+**Merged pull requests:**
+
+- Feature/102 place fire on map [\#109](https://github.com/fire-marshal/fire-marshal/pull/109) ([hyzhak](https://github.com/hyzhak))
+- Hotfix/revert realtime items inserts [\#107](https://github.com/fire-marshal/fire-marshal/pull/107) ([hyzhak](https://github.com/hyzhak))
+- Bugfix/104 too often update of updates feed.get sorted items raw [\#106](https://github.com/fire-marshal/fire-marshal/pull/106) ([hyzhak](https://github.com/hyzhak))
+- Feature/66 immer [\#105](https://github.com/fire-marshal/fire-marshal/pull/105) ([hyzhak](https://github.com/hyzhak))
+
 ## [0.8.0](https://github.com/fire-marshal/fire-marshal/tree/0.8.0) (2019-01-01)
 [Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.7.0...0.8.0)
 

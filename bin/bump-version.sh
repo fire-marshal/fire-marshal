@@ -77,7 +77,7 @@ echo -e "$checkit  regenerate changelog"
 (cd ${ROOT}; git-generate-changelog --issue-line-labels alexa assistant dialog experiment optimization)
 
 echo -e "$checkit  commit changelog"
-git add CHANGELOG.md
+git add ${ROOT}/CHANGELOG.md
 git commit -am ":scroll: changelog $PACKAGE_VERSION"
 
 echo -e "$checkit  push change log"
