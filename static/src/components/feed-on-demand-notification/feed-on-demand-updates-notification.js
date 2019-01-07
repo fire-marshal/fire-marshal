@@ -1,16 +1,19 @@
 import './feed-on-demand-updates-notification.scss'
 
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React from 'react'
 
-import { useVisibleOnScrollUp } from '../../hooks'
+// import { useVisibleOnScrollUp } from '../../hooks'
 
 const FeedOnDemandUpdatesNotification = ({ count, onClick }) => {
-  const [visible, setVisibility] = useState(true)
   // FIXME: doesn't work yet because we should listen scroll of particular element
-  useVisibleOnScrollUp({ setVisibility })
+  // const [visible, setVisibility] = useState(true)
+  // useVisibleOnScrollUp({ setVisibility })
+  // if (!visible) {
+  //   return null
+  // }
 
-  if (count === 0 || !visible) {
+  if (count === 0) {
     return null
   }
 
