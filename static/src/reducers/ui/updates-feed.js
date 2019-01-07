@@ -10,6 +10,7 @@ const namespace = `${require('../../../package').name}/UI/UPDATES_FEED`
 //
 
 export const actionTypes = {
+  AUTOMATIC_MAP_FITTING: `${namespace}/AUTOMATIC_MAP_FITTING`,
   CLEAR_ON_DEMAND: `${namespace}/CLEAR_ON_DEMAND`,
   INSERT_IDS_TO_THE_FEED: `${namespace}/INSERT_IDS_TO_THE_FEED`,
   MOVE_ON_DEMAND_IDS_TO_THE_FEED: `${namespace}/MOVE_ON_DEMAND_IDS_TO_THE_FEED`,
@@ -21,6 +22,11 @@ export const actionTypes = {
 //
 // action creators
 //
+
+export const automaticMapFitting = (value) => ({
+  type: actionTypes.AUTOMATIC_MAP_FITTING,
+  payload: { value }
+})
 
 export const clearOnDemand = () => ({
   type: actionTypes.CLEAR_ON_DEMAND
@@ -67,6 +73,8 @@ export const isMap = (viewMode) => viewMode === viewModes.MAP || viewMode === vi
 
 export default createReducer(
   {
+    // automatic map fitting
+    autoMapFitting: true,
     // feed list
     data: [],
     // wait to merge feed list
@@ -80,6 +88,10 @@ export default createReducer(
   },
 
   {
+    [actionTypes.AUTOMATIC_MAP_FITTING]: (draft, { payload: { value } }) => {
+      draft.automaticMapFitting = value
+    },
+
     [actionTypes.CLEAR_ON_DEMAND]: (draft) => {
       draft.onDemand = new Set()
     },

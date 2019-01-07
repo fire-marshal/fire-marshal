@@ -8,6 +8,6 @@ export default function getBounce (items) {
     bounce[0][1] = Math.min(bounce[0][1], item[1])
     bounce[1][0] = Math.max(bounce[1][0], item[0])
     bounce[1][1] = Math.max(bounce[1][1], item[1])
-    return bounce;
+    return bounce
   }, [[Number.MAX_VALUE, Number.MAX_VALUE], [-Number.MAX_VALUE, -Number.MAX_VALUE]])
 }

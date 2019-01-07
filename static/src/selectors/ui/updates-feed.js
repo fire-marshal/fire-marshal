@@ -9,6 +9,11 @@ import { getEvidencesById } from '../entities/evidences'
 
 const getUpdatesFeed = state => state.ui.updatesFeed
 
+export const isAutomaticMapFitting = createSelector(
+  [getUpdatesFeed],
+  (feed) => feed.autoMapFitting
+)
+
 export const getSortedIds = createSelector(
   [getUpdatesFeed],
   (feed) => feed.data

@@ -10,6 +10,7 @@ import { FeedMap as FeedMapComponent } from '../components/feed-map'
 export const FeedMap = connect(
   (state, props) => ({
     invalidList: evidencesSelector.getEvidenceItemsInvalid(state, props),
+    isAutomaticMapFitting: updatesFeedSelector.isAutomaticMapFitting(state, props),
     itemsBounce: updatesFeedSelector.getItemsBounce(state, props),
     listError: evidencesSelector.getEvidenceError(state, props),
     listInProgress: evidencesSelector.getEvidenceItemsInProgress(state, props),
@@ -26,6 +27,7 @@ export const FeedMap = connect(
       startDateISO
     })),
     onSelect: itemId => dispatch(updatesFeedActions.selectItem(itemId)),
-    onUnSelect: () => dispatch(updatesFeedActions.selectItem(null))
+    onUnSelect: () => dispatch(updatesFeedActions.selectItem(null)),
+    onUserMove: () => dispatch(updatesFeedActions.autoMapFitting(false))
   })
 )(FeedMapComponent)
