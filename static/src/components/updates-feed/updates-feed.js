@@ -12,9 +12,9 @@ import { isList, isMap } from '../../reducers/ui/updates-feed'
 import UpdatesFeedToolbar from './updates-feed-toolbar'
 
 const UpdatesFeed = ({
-  listStartDateISO, isRealtime, onDemandCount, user, viewMode,
+  listStartDateISO, isAutomaticMapFitting, isRealtime, onDemandCount, user, viewMode,
 
-  enableRealtime, loadItemsAfter, moveOnDemandIdsToTheFeed,
+  onAutoMapFittingChange, enableRealtime, loadItemsAfter, moveOnDemandIdsToTheFeed,
   setViewMode, subscribeUpdatesFeed, unsubscribeUpdatesFeed
 }) => {
   useEffect(() => {
@@ -41,7 +41,9 @@ const UpdatesFeed = ({
         <UpdatesFeedToolbar
           follow={isRealtime}
           hasListAndMapOption={!small}
+          isAutomaticMapFitting={isAutomaticMapFitting}
           viewMode={viewMode}
+          onAutoMapFittingChange={onAutoMapFittingChange}
           onFollow={enableRealtime}
           onSelectOption={setViewMode}
         />
@@ -78,7 +80,9 @@ const UpdatesFeed = ({
         <UpdatesFeedToolbar
           follow={isRealtime}
           hasListAndMapOption={!small}
+          isAutomaticMapFitting={isAutomaticMapFitting}
           viewMode={viewMode}
+          onAutoMapFittingChange={onAutoMapFittingChange}
           onFollow={enableRealtime}
           onSelectOption={setViewMode}
         />
@@ -91,6 +95,7 @@ UpdatesFeed.displayName = 'UpdatesFeed'
 
 UpdatesFeed.propTypes = {
   listStartDateISO: PropTypes.object.isRequired,
+  isAutomaticMapFitting: PropTypes.bool,
   isRealtime: PropTypes.bool.isRequired,
   onDemandCount: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired,
@@ -98,6 +103,7 @@ UpdatesFeed.propTypes = {
 
   loadItemsAfter: PropTypes.func.isRequired,
   enableRealtime: PropTypes.func.isRequired,
+  onAutoMapFittingChange: PropTypes.func.isRequired,
   moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
   setViewMode: PropTypes.func.isRequired,
   subscribeUpdatesFeed: PropTypes.func.isRequired,

@@ -23,7 +23,7 @@ export const actionTypes = {
 // action creators
 //
 
-export const automaticMapFitting = (value) => ({
+export const autoMapFitting = (value) => ({
   type: actionTypes.AUTOMATIC_MAP_FITTING,
   payload: { value }
 })
@@ -89,7 +89,7 @@ export default createReducer(
 
   {
     [actionTypes.AUTOMATIC_MAP_FITTING]: (draft, { payload: { value } }) => {
-      draft.automaticMapFitting = value
+      draft.autoMapFitting = value
     },
 
     [actionTypes.CLEAR_ON_DEMAND]: (draft) => {
