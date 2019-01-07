@@ -41,7 +41,7 @@ class InfinityList extends React.PureComponent {
     }
   }
 
-  scrollToItem(idx) {
+  scrollToItem (idx) {
     this._list.current.scrollToItem(idx, 'center')
   }
 

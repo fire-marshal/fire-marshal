@@ -100,7 +100,7 @@ export class InfinityFeedList extends React.Component {
     this._infinityList.current.scrollToItem(idx)
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     if (this.props.selectedId !== prevProps.selectedId) {
       this._scrollToItem(this.props.selectedId)
     }
