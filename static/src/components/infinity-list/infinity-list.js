@@ -20,6 +20,11 @@ class InfinityList extends React.PureComponent {
     width: PropTypes.number.isRequired
   }
 
+  constructor (props) {
+    super(props)
+    this._list = React.createRef()
+  }
+
   @bind
   _isItemLoaded ({ index }) {
     const { hasMoreItems, itemCount } = this.props
@@ -36,6 +41,10 @@ class InfinityList extends React.PureComponent {
     }
   }
 
+  scrollToItem(idx) {
+    this._list.current.scrollToItem(idx, 'center')
+  }
+
   render () {
     const { hasMoreItems, loadMore, height, itemKey, itemSize, width } = this.props
     const itemCount = hasMoreItems ? this.props.itemCount + 1 : this.props.itemCount
@@ -47,6 +56,7 @@ class InfinityList extends React.PureComponent {
       >
         {({ onItemsRendered }) => (
           <List
+            ref={this._list}
             height={height}
             itemCount={itemCount}
             itemKey={itemKey}

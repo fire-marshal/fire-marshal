@@ -11,13 +11,6 @@ import UpdatesFeedListComponent from '../components/updates-feed/updates-feed-li
 
 export const UpdatesFeedList = connect(
   (state, props) => ({
-    user: {
-      // TODO: we should pass real user's position
-      location: { lat: 0, long: 0 }
-    },
-
-    onDemandCount: updatesFeedSelector.getOnDemandCount(state, props),
-
     list: {
       inProgress: evidencesSelector.getEvidenceItemsInProgress(state, props),
       invalid: evidencesSelector.getEvidenceItemsInvalid(state, props),
@@ -25,6 +18,15 @@ export const UpdatesFeedList = connect(
       items: updatesFeedSelector.getSortedItems(state, props),
       hasMore: evidencesSelector.hasMore(state, props),
       startDateISO: updatesFeedSelector.getStartDateISO(state, props)
+    },
+
+    onDemandCount: updatesFeedSelector.getOnDemandCount(state, props),
+
+    selectedItem: updatesFeedSelector.getSelectedItem(state, props),
+
+    user: {
+      // TODO: we should pass real user's position
+      location: { lat: 0, long: 0 }
     }
   }),
 

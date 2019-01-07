@@ -14,6 +14,7 @@ export class InfinityFeedList extends React.Component {
 
   static propTypes = {
     list: PropTypes.object.isRequired,
+    selectedId: PropTypes.string,
     user: PropTypes.object.isRequired,
 
     loadItemsAfter: PropTypes.func.isRequired,
@@ -22,6 +23,7 @@ export class InfinityFeedList extends React.Component {
 
   constructor (props) {
     super(props)
+    this._infinityList = React.createRef()
     this._itemWidth = null
     this._itemHeight = null
     this.state = {
@@ -93,6 +95,17 @@ export class InfinityFeedList extends React.Component {
     )
   }
 
+  _scrollToItem (id) {
+    const idx = this.props.list.items.findIndex(i => i.id === id)
+    this._infinityList.current.scrollToItem(idx)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedId !== prevProps.selectedId) {
+      this._scrollToItem(this.props.selectedId)
+    }
+  }
+
   shouldComponentUpdate (nextProps, nextState) {
     return nextProps.list !== this.props.list ||
       nextProps.user !== this.props.user ||
@@ -124,6 +137,7 @@ export class InfinityFeedList extends React.Component {
       <AutoSizer>
         {({ height, width }) => (
           <InfinityList
+            ref={this._infinityList}
             height={height}
             itemCount={itemCount}
             itemKey={this._itemKey}
