@@ -1,6 +1,6 @@
 {
   "name": "@fire-marshal/server",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Spot That Fire project of NASA Space App Challenge",
   "main": "experiments/google-trends.js",
   "scripts": {

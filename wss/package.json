@@ -1,6 +1,6 @@
 {
   "name": "@fire-marshal/wss",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "websocker server for fire-marshal project",
   "main": "index.js",
   "directories": {
