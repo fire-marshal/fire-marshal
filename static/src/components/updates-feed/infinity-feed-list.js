@@ -119,6 +119,7 @@ export class InfinityFeedList extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
     return nextProps.list !== this.props.list ||
       nextProps.user !== this.props.user ||
+      nextProps.selectedId !== this.props.selectedId ||
       nextState.itemHeight !== this.state.itemHeight
   }
 
