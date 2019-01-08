@@ -80,3 +80,8 @@ export const getSelectedItem = createSelector(
   [getSelectedId, getEvidencesById],
   (selectedId, entityById) => entityById[selectedId]
 )
+
+export const getSelectionSource = createSelector(
+  [getUpdatesFeed],
+  (feed) => feed.selectionSource
+)

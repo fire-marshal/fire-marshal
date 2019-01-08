@@ -21,7 +21,7 @@ UpdatesFeedItemImage.propTypes = {
   title: PropTypes.string
 }
 
-const UpdatesFeedItem = ({ item, onResize }) => {
+const UpdatesFeedItem = ({ isSelected, item, onMouseOver, onResize }) => {
   const cardRef = useRef()
 
   // TODO: actually we don't need to track resize of each item, we could pick only one
@@ -29,8 +29,9 @@ const UpdatesFeedItem = ({ item, onResize }) => {
 
   return (
     <div
-      className='card alert-card'
+      className={`card alert-card ${isSelected ? 'highlighted' : ''}`}
       ref={cardRef}
+      onMouseOver={() => onMouseOver(item)}
     >
       <UpdatesFeedItemImage img={item.img}/>
       <div className='card-body'>
@@ -48,7 +49,9 @@ const UpdatesFeedItem = ({ item, onResize }) => {
 
 UpdatesFeedItem.displayName = 'UpdatesFeedItem'
 UpdatesFeedItem.propTypes = {
+  isSelected: PropTypes.bool,
   item: PropTypes.object.isRequired,
+  onMouseOver: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired
 }
 

@@ -26,7 +26,7 @@ export const FeedMap = connect(
       long,
       startDateISO
     })),
-    onSelect: itemId => dispatch(updatesFeedActions.selectItem(itemId)),
+    onSelect: itemId => dispatch(updatesFeedActions.selectItem(itemId, 'map')),
     onUnSelect: () => dispatch(updatesFeedActions.selectItem(null)),
     onUserMove: () => dispatch(updatesFeedActions.autoMapFitting(false))
   })

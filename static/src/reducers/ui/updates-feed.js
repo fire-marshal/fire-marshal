@@ -53,9 +53,9 @@ export const setViewMode = (viewMode) => ({
   payload: { viewMode }
 })
 
-export const selectItem = (itemId) => ({
+export const selectItem = (itemId, source) => ({
   type: actionTypes.SELECT_ITEM,
-  payload: { itemId }
+  payload: { itemId, source }
 })
 
 //
@@ -83,6 +83,8 @@ export default createReducer(
     realtime: false,
     // selected item ID
     selectedId: null,
+    // where item was selected (ex. map, list, etc)
+    selectionSource: null,
     // feed view mode
     viewMode: viewModes.LIST
   },
@@ -130,8 +132,9 @@ export default createReducer(
       }
     },
 
-    [actionTypes.SELECT_ITEM]: (draft, { payload: { itemId } }) => {
+    [actionTypes.SELECT_ITEM]: (draft, { payload: { itemId, source } }) => {
       draft.selectedId = itemId
+      draft.selectionSource = source
     },
 
     [actionTypes.SET_REAL_TIME]: (draft, { payload: { enable } }) => {

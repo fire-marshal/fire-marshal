@@ -15,8 +15,10 @@ export class InfinityFeedList extends React.Component {
   static propTypes = {
     list: PropTypes.object.isRequired,
     selectedId: PropTypes.string,
+    selectionSource: PropTypes.string,
     user: PropTypes.object.isRequired,
 
+    onSelect: PropTypes.func.isRequired,
     loadItemsAfter: PropTypes.func.isRequired,
     subscribeUpdatesFeed: PropTypes.func.isRequired
   }
@@ -75,13 +77,20 @@ export class InfinityFeedList extends React.Component {
   }
 
   @bind
+  _onItemOver (item) {
+    this.props.onSelect(item.id)
+  }
+
+  @bind
   _renderItem ({ index, style }) {
     const { list } = this.props
     const item = list.items[index]
     return (
       <div style={style}>
         <UpdatesFeedItem
+          isSelected={item.id === this.props.selectedId}
           item={item}
+          onMouseOver={this._onItemOver}
           onResize={this._onItemResize}
         />
       </div>
@@ -97,12 +106,13 @@ export class InfinityFeedList extends React.Component {
 
   _scrollToItem (id) {
     const idx = this.props.list.items.findIndex(i => i.id === id)
-    this._infinityList.current.scrollToItem(idx)
+    this._infinityList.current.scrollToItem(idx, 'center')
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.selectedId !== prevProps.selectedId) {
-      this._scrollToItem(this.props.selectedId)
+    const { selectedId, selectionSource } = this.props
+    if (selectedId !== prevProps.selectedId && selectionSource !== 'list') {
+      this._scrollToItem(selectedId)
     }
   }
 

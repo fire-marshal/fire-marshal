@@ -6,8 +6,8 @@ import FeedOnDemandUpdatesNotification from '../feed-on-demand-notification/feed
 import { InfinityFeedList } from './infinity-feed-list'
 
 const UpdatesFeedList = ({
-  list, onDemandCount, selectedItem, user,
-  loadItemsAfter, moveOnDemandIdsToTheFeed, subscribeUpdatesFeed
+  list, onDemandCount, selectedItem, selectionSource, user,
+  onSelect, loadItemsAfter, moveOnDemandIdsToTheFeed, subscribeUpdatesFeed
 }) => (
   <>
     <FeedOnDemandUpdatesNotification
@@ -17,7 +17,9 @@ const UpdatesFeedList = ({
     <InfinityFeedList
       list={list}
       selectedId={selectedItem && selectedItem.id}
+      selectionSource={selectionSource}
       user={user}
+      onSelect={onSelect}
       loadItemsAfter={loadItemsAfter}
       subscribeUpdatesFeed={subscribeUpdatesFeed}
     />
@@ -30,8 +32,10 @@ UpdatesFeedList.propTypes = {
   list: PropTypes.object.isRequired,
   onDemandCount: PropTypes.number.isRequired,
   selectedItem: PropTypes.object,
+  selectionSource: PropTypes.string,
   user: PropTypes.object.isRequired,
 
+  onSelect: PropTypes.func.isRequired,
   loadItemsAfter: PropTypes.func.isRequired,
   moveOnDemandIdsToTheFeed: PropTypes.func.isRequired,
   subscribeUpdatesFeed: PropTypes.func.isRequired

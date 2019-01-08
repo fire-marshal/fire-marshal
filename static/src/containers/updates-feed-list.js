@@ -23,6 +23,7 @@ export const UpdatesFeedList = connect(
     onDemandCount: updatesFeedSelector.getOnDemandCount(state, props),
 
     selectedItem: updatesFeedSelector.getSelectedItem(state, props),
+    selectionSource: updatesFeedSelector.getSelectionSource(state, props),
 
     user: {
       // TODO: we should pass real user's position
@@ -36,6 +37,7 @@ export const UpdatesFeedList = connect(
       long,
       startDateISO
     })),
+    onSelect: itemId => dispatch(updatesFeedActions.selectItem(itemId, 'list')),
     moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload))
   })
