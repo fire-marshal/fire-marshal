@@ -74,7 +74,7 @@ const FeedMap = ({
 
   const [map, setMap] = useState()
   const [markersLayer, setMarkersLayer] = useState()
-  const [selectionLayer, setSelectionLayer] = useState()
+  const [markerById, setMarkerById] = useState({})
 
   const [isUserMoving, userIsMoving, , computerIsMoving] = useUserIsMoving({ map, onUserMove })
 
@@ -108,9 +108,6 @@ const FeedMap = ({
     let layer = L.featureGroup().addTo(map)
     setMarkersLayer(layer)
 
-    layer = L.featureGroup().addTo(map)
-    setSelectionLayer(layer)
-
     map.on('click', onUnSelect)
 
     return () => {
@@ -131,12 +128,19 @@ const FeedMap = ({
       return
     }
 
-    listItems.forEach(item => {
-      markersLayer.addLayer(
-        L.marker(item.location.center, { icon: fireIcon })
-          .on('click', () => onSelect(item.id))
-      )
+    const markerById = listItems.map(item => {
+      const { id } = item
+      const marker = L.marker(item.location.center, { icon: fireIcon })
+        .on('click', () => onSelect(id))
+      markersLayer.addLayer(marker)
+      return { marker, id }
     })
+      .reduce((acc, { marker, id }) => {
+        acc[id] = marker
+        return acc
+      }, {})
+
+    setMarkerById(markerById)
 
     if (itemsBounce && !isUserMoving) {
       computerIsMoving(true)
@@ -148,12 +152,17 @@ const FeedMap = ({
     }
   }, [listItems, markersLayer])
 
-  // selection layer updater
+  // selection style updater
   useEffect(() => {
-    if (selectionLayer && selectedItem && selectedItem.location) {
-      selectionLayer.addLayer(
-        L.marker(selectedItem.location.center, { icon: selectedFireIcon })
-      )
+    let lastSelectedMarker = null
+    if (selectedItem && selectedItem.location && markerById) {
+      const selectedMarker = markerById[selectedItem.id]
+
+      if (selectedMarker) {
+        lastSelectedMarker = selectedMarker
+        selectedMarker.setZIndexOffset(1000)
+        selectedMarker.setIcon(selectedFireIcon)
+      }
 
       if (selectionSource !== 'map') {
         if (!map.getBounds().contains(selectedItem.location.center)) {
@@ -164,9 +173,13 @@ const FeedMap = ({
     }
 
     return () => {
-      selectionLayer && selectionLayer.clearLayers()
+      // revert unselected marker style
+      if (lastSelectedMarker) {
+        lastSelectedMarker.setZIndexOffset(0)
+        lastSelectedMarker.setIcon(fireIcon)
+      }
     }
-  }, [selectedItem, selectionLayer])
+  }, [selectedItem, markerById])
 
   return (
     <div ref={mapRef} className='map-container'/>
