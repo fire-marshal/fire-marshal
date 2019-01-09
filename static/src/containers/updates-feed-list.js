@@ -6,18 +6,10 @@ import * as evidencesSubscriber from '../reducers/evidences-subscriber'
 import * as updatesFeedActions from '../reducers/ui/updates-feed'
 import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 
-// import { UpdatesFeedList as UpdatesFeedListComponent } from '../components/updates-feed'
 import UpdatesFeedListComponent from '../components/updates-feed/updates-feed-list'
 
 export const UpdatesFeedList = connect(
   (state, props) => ({
-    user: {
-      // TODO: we should pass real user's position
-      location: { lat: 0, long: 0 }
-    },
-
-    onDemandCount: updatesFeedSelector.getOnDemandCount(state, props),
-
     list: {
       inProgress: evidencesSelector.getEvidenceItemsInProgress(state, props),
       invalid: evidencesSelector.getEvidenceItemsInvalid(state, props),
@@ -25,6 +17,18 @@ export const UpdatesFeedList = connect(
       items: updatesFeedSelector.getSortedItems(state, props),
       hasMore: evidencesSelector.hasMore(state, props),
       startDateISO: updatesFeedSelector.getStartDateISO(state, props)
+    },
+
+    listOfItemsWithSelection: updatesFeedSelector.getSortedItemsWithSelection(state, props),
+
+    onDemandCount: updatesFeedSelector.getOnDemandCount(state, props),
+
+    selectedItem: updatesFeedSelector.getSelectedItem(state, props),
+    selectionSource: updatesFeedSelector.getSelectionSource(state, props),
+
+    user: {
+      // TODO: we should pass real user's position
+      location: { lat: 0, long: 0 }
     }
   }),
 
@@ -34,6 +38,7 @@ export const UpdatesFeedList = connect(
       long,
       startDateISO
     })),
+    onSelect: itemId => dispatch(updatesFeedActions.selectItem(itemId, 'list')),
     moveOnDemandIdsToTheFeed: () => dispatch(updatesFeedActions.moveOnDemandIdsToTheFeed()),
     subscribeUpdatesFeed: (payload) => dispatch(evidencesSubscriber.subscribeEvidences(payload))
   })

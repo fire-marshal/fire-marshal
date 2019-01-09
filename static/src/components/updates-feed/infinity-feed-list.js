@@ -14,14 +14,19 @@ export class InfinityFeedList extends React.Component {
 
   static propTypes = {
     list: PropTypes.object.isRequired,
+    listOfItemsWithSelection: PropTypes.array.isRequired,
+    selectedId: PropTypes.string,
+    selectionSource: PropTypes.string,
     user: PropTypes.object.isRequired,
 
+    onSelect: PropTypes.func.isRequired,
     loadItemsAfter: PropTypes.func.isRequired,
     subscribeUpdatesFeed: PropTypes.func.isRequired
   }
 
   constructor (props) {
     super(props)
+    this._infinityList = React.createRef()
     this._itemWidth = null
     this._itemHeight = null
     this.state = {
@@ -73,13 +78,23 @@ export class InfinityFeedList extends React.Component {
   }
 
   @bind
+  _onSelectItem (item) {
+    const { id } = item
+    if (this.props.selectedId !== id) {
+      this.props.onSelect(id)
+    }
+  }
+
+  @bind
   _renderItem ({ index, style }) {
-    const { list } = this.props
-    const item = list.items[index]
+    const { listOfItemsWithSelection } = this.props
+    const item = listOfItemsWithSelection[index]
     return (
       <div style={style}>
         <UpdatesFeedItem
+          isSelected={item.isSelected}
           item={item}
+          onSelect={this._onSelectItem}
           onResize={this._onItemResize}
         />
       </div>
@@ -93,15 +108,28 @@ export class InfinityFeedList extends React.Component {
     )
   }
 
+  _scrollToItem (id) {
+    const idx = this.props.list.items.findIndex(i => i.id === id)
+    this._infinityList.current.scrollToItem(idx, 'center')
+  }
+
+  componentDidUpdate (prevProps) {
+    const { selectedId, selectionSource } = this.props
+    if (selectedId && selectedId !== prevProps.selectedId && selectionSource !== 'list') {
+      this._scrollToItem(selectedId)
+    }
+  }
+
   shouldComponentUpdate (nextProps, nextState) {
     return nextProps.list !== this.props.list ||
       nextProps.user !== this.props.user ||
+      nextProps.selectedId !== this.props.selectedId ||
       nextState.itemHeight !== this.state.itemHeight
   }
 
   render () {
     const {
-      list
+      list, listOfItemsWithSelection
     } = this.props
 
     const {
@@ -116,7 +144,7 @@ export class InfinityFeedList extends React.Component {
       throw new Error('incorrect infinityFeedListItemHeight value', itemHeight)
     }
 
-    const itemCount = list.items ? list.items.length : 0
+    const itemCount = listOfItemsWithSelection ? listOfItemsWithSelection.length : 0
     const hasMore = list.hasMore && !list.invalid
     /* FIXME just temporal solution */
 
@@ -124,10 +152,12 @@ export class InfinityFeedList extends React.Component {
       <AutoSizer>
         {({ height, width }) => (
           <InfinityList
+            ref={this._infinityList}
             height={height}
             itemCount={itemCount}
             itemKey={this._itemKey}
             itemSize={itemHeight}
+            listOfItemsWithSelection={listOfItemsWithSelection}
             loadMore={this._loadBefore}
             hasMoreItems={hasMore}
             fallback={this._renderFallback}

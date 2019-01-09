@@ -13,11 +13,17 @@ class InfinityList extends React.PureComponent {
     hasMoreItems: PropTypes.bool,
     fallback: PropTypes.func.isRequired,
     itemCount: PropTypes.number.isRequired,
-    loadMore: PropTypes.func.isRequired,
-    height: PropTypes.number.isRequired,
     itemKey: PropTypes.func.isRequired,
     itemSize: PropTypes.number.isRequired,
+    listOfItemsWithSelection: PropTypes.array,
+    loadMore: PropTypes.func.isRequired,
+    height: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired
+  }
+
+  constructor (props) {
+    super(props)
+    this._list = React.createRef()
   }
 
   @bind
@@ -36,10 +42,16 @@ class InfinityList extends React.PureComponent {
     }
   }
 
+  scrollToItem (idx) {
+    this._list.current.scrollToItem(idx, 'center')
+  }
+
   render () {
-    const { hasMoreItems, loadMore, height, itemKey, itemSize, width } = this.props
+    const { hasMoreItems, loadMore, height, itemKey, itemSize, listOfItemsWithSelection, width } = this.props
     const itemCount = hasMoreItems ? this.props.itemCount + 1 : this.props.itemCount
 
+    // I need to pass custom field (`customFields`) to an list to force re-render
+    // in case of changes in list of selection
     return (
       <InfiniteLoader
         itemCount={itemCount}
@@ -47,10 +59,12 @@ class InfinityList extends React.PureComponent {
       >
         {({ onItemsRendered }) => (
           <List
+            ref={this._list}
             height={height}
             itemCount={itemCount}
             itemKey={itemKey}
             itemSize={itemSize}
+            customFields={listOfItemsWithSelection}
             width={width}
             onItemsRendered={onItemsRendered}
           >
