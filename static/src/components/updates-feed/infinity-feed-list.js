@@ -77,8 +77,11 @@ export class InfinityFeedList extends React.Component {
   }
 
   @bind
-  _onItemOver (item) {
-    this.props.onSelect(item.id)
+  _onSelectItem (item) {
+    const { id } = item
+    if (this.props.selectedId !== id) {
+      this.props.onSelect(id)
+    }
   }
 
   @bind
@@ -90,7 +93,7 @@ export class InfinityFeedList extends React.Component {
         <UpdatesFeedItem
           isSelected={item.id === this.props.selectedId}
           item={item}
-          onSelect={this._onItemOver}
+          onSelect={this._onSelectItem}
           onResize={this._onItemResize}
         />
       </div>
