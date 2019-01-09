@@ -90,7 +90,7 @@ export class InfinityFeedList extends React.Component {
         <UpdatesFeedItem
           isSelected={item.id === this.props.selectedId}
           item={item}
-          onMouseOver={this._onItemOver}
+          onSelect={this._onItemOver}
           onResize={this._onItemResize}
         />
       </div>
