@@ -85,3 +85,11 @@ export const getSelectionSource = createSelector(
   [getUpdatesFeed],
   (feed) => feed.selectionSource
 )
+
+// mix extra field - isSelected
+// we should make it part of a list because component react-window
+// which we use to render long list of items, re-render items when gets new list
+export const getSortedItemsWithSelection = createSelector(
+  [getSortedItems, getSelectedId],
+  (items, selectedId) => items.map(i => ({ ...i, isSelected: (i.id === selectedId) }))
+)

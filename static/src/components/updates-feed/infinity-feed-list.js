@@ -14,6 +14,7 @@ export class InfinityFeedList extends React.Component {
 
   static propTypes = {
     list: PropTypes.object.isRequired,
+    listOfItemsWithSelection: PropTypes.array.isRequired,
     selectedId: PropTypes.string,
     selectionSource: PropTypes.string,
     user: PropTypes.object.isRequired,
@@ -86,12 +87,12 @@ export class InfinityFeedList extends React.Component {
 
   @bind
   _renderItem ({ index, style }) {
-    const { list } = this.props
-    const item = list.items[index]
+    const { listOfItemsWithSelection } = this.props
+    const item = listOfItemsWithSelection[index]
     return (
       <div style={style}>
         <UpdatesFeedItem
-          isSelected={item.id === this.props.selectedId}
+          isSelected={item.isSelected}
           item={item}
           onSelect={this._onSelectItem}
           onResize={this._onItemResize}
@@ -128,7 +129,7 @@ export class InfinityFeedList extends React.Component {
 
   render () {
     const {
-      list
+      list, listOfItemsWithSelection
     } = this.props
 
     const {
@@ -143,7 +144,7 @@ export class InfinityFeedList extends React.Component {
       throw new Error('incorrect infinityFeedListItemHeight value', itemHeight)
     }
 
-    const itemCount = list.items ? list.items.length : 0
+    const itemCount = listOfItemsWithSelection ? listOfItemsWithSelection.length : 0
     const hasMore = list.hasMore && !list.invalid
     /* FIXME just temporal solution */
 
@@ -156,6 +157,7 @@ export class InfinityFeedList extends React.Component {
             itemCount={itemCount}
             itemKey={this._itemKey}
             itemSize={itemHeight}
+            listOfItemsWithSelection={listOfItemsWithSelection}
             loadMore={this._loadBefore}
             hasMoreItems={hasMore}
             fallback={this._renderFallback}

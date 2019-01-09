@@ -6,7 +6,6 @@ import * as evidencesSubscriber from '../reducers/evidences-subscriber'
 import * as updatesFeedActions from '../reducers/ui/updates-feed'
 import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 
-// import { UpdatesFeedList as UpdatesFeedListComponent } from '../components/updates-feed'
 import UpdatesFeedListComponent from '../components/updates-feed/updates-feed-list'
 
 export const UpdatesFeedList = connect(
@@ -19,6 +18,8 @@ export const UpdatesFeedList = connect(
       hasMore: evidencesSelector.hasMore(state, props),
       startDateISO: updatesFeedSelector.getStartDateISO(state, props)
     },
+
+    listOfItemsWithSelection: updatesFeedSelector.getSortedItemsWithSelection(state, props),
 
     onDemandCount: updatesFeedSelector.getOnDemandCount(state, props),
 
