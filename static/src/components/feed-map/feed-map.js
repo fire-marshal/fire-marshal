@@ -67,7 +67,7 @@ const useUserIsMoving = ({ map, onUserMove }) => {
 }
 
 const FeedMap = ({
-  isAutomaticMapFitting, itemsBounce, listItems, selectedItem,
+  isAutomaticMapFitting, itemsBounce, listItems, selectedItem, selectionSource,
   onSelect, onUnSelect, onUserMove
 }) => {
   const mapRef = useRef()
@@ -154,6 +154,13 @@ const FeedMap = ({
       selectionLayer.addLayer(
         L.marker(selectedItem.location.center, { icon: selectedFireIcon })
       )
+
+      if (selectionSource !== 'map') {
+        if (!map.getBounds().contains(selectedItem.location.center)) {
+          computerIsMoving(true)
+          map && map.flyTo(selectedItem.location.center)
+        }
+      }
     }
 
     return () => {
@@ -173,6 +180,7 @@ FeedMap.propTypes = {
   itemsBounce: PropTypes.arrayOf(PropTypes.array),
   listItems: PropTypes.array,
   selectedItem: PropTypes.object,
+  selectionSource: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
   onUnSelect: PropTypes.func.isRequired,
   onUserMove: PropTypes.func.isRequired
