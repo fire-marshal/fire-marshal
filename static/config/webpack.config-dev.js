@@ -1,7 +1,6 @@
-const nodeExternals = require('webpack-node-externals')
-
 module.exports = {
   mode: 'development',
+
   module: {
     rules: [
       // TODO: setup styles
@@ -17,7 +16,8 @@ module.exports = {
       }
     ]
   },
-  target: 'node',
-  externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
+
+  target: 'web',
+
   devtool: 'inline-cheap-module-source-map'
 };
