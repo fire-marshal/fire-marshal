@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production cd public && parcel --out-dir ../build build index.html",
+    "build:webpack": "webpack --config ./config/webpack.config-dev.js",
     "lint": "eslint src tests",
     "start": "NODE_ENV=development cd public && parcel --hmr-hostname 0.0.0.0 --hmr-port 7001 --out-dir ../build --cache-dir ../.cache watch index.html",
     "test": "mocha-webpack --opts ./tests/mocha.opts",
@@ -62,6 +63,7 @@
     "nyc": "^13.1.0",
     "sinon": "^7.1.1",
     "sinon-chai": "^3.2.0",
+    "webpack-cli": "^3.2.1",
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {

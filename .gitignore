@@ -67,6 +67,7 @@ typings/
 
 # build
 server/api/swagger
+static/dist
 
 # MacOS
 .DS_Store
