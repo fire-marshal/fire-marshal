@@ -15,7 +15,7 @@ class InfinityList extends React.PureComponent {
     itemCount: PropTypes.number.isRequired,
     itemKey: PropTypes.func.isRequired,
     itemSize: PropTypes.number.isRequired,
-    listOfItemsWithSelection: PropTypes.array,
+    itemData: PropTypes.array,
     loadMore: PropTypes.func.isRequired,
     height: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired
@@ -33,12 +33,12 @@ class InfinityList extends React.PureComponent {
   }
 
   @bind
-  _renderItem (args) {
+  _renderItem (props) {
     const { fallback, children } = this.props
-    if (this._isItemLoaded(args)) {
-      return children(args)
+    if (this._isItemLoaded(props)) {
+      return children(props)
     } else {
-      return fallback(args)
+      return fallback(props)
     }
   }
 
@@ -47,7 +47,7 @@ class InfinityList extends React.PureComponent {
   }
 
   render () {
-    const { hasMoreItems, loadMore, height, itemKey, itemSize, listOfItemsWithSelection, width } = this.props
+    const { hasMoreItems, loadMore, height, itemKey, itemSize, itemData, width } = this.props
     const itemCount = hasMoreItems ? this.props.itemCount + 1 : this.props.itemCount
 
     // I need to pass custom field (`customFields`) to an list to force re-render
@@ -63,8 +63,8 @@ class InfinityList extends React.PureComponent {
             height={height}
             itemCount={itemCount}
             itemKey={itemKey}
+            itemData={itemData}
             itemSize={itemSize}
-            customFields={listOfItemsWithSelection}
             width={width}
             onItemsRendered={onItemsRendered}
           >
