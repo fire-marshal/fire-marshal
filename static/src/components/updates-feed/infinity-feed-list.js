@@ -86,9 +86,8 @@ export class InfinityFeedList extends React.Component {
   }
 
   @bind
-  _renderItem ({ index, style }) {
-    const { listOfItemsWithSelection } = this.props
-    const item = listOfItemsWithSelection[index]
+  _renderItem ({ data, index, style }) {
+    const item = data[index]
     return (
       <div style={style}>
         <UpdatesFeedItem
@@ -157,7 +156,7 @@ export class InfinityFeedList extends React.Component {
             itemCount={itemCount}
             itemKey={this._itemKey}
             itemSize={itemHeight}
-            listOfItemsWithSelection={listOfItemsWithSelection}
+            itemData={listOfItemsWithSelection}
             loadMore={this._loadBefore}
             hasMoreItems={hasMore}
             fallback={this._renderFallback}
