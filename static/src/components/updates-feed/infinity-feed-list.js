@@ -86,17 +86,16 @@ export class InfinityFeedList extends React.Component {
   }
 
   @bind
-  _renderItem ({ data, index, style }) {
-    const item = data[index]
+  _renderItem ({ ...props }) {
+    // we can rid of that function and put items + onSelect + onResize in one
+    // itemsData prop, but it doesn't make a lot of sense until we have class here
+    // more details https://react-window.now.sh/#/examples/list/memoized-list-items
     return (
-      <div style={style}>
-        <UpdatesFeedItem
-          isSelected={item.isSelected}
-          item={item}
-          onSelect={this._onSelectItem}
-          onResize={this._onItemResize}
-        />
-      </div>
+      <UpdatesFeedItem
+        onSelect={this._onSelectItem}
+        onResize={this._onItemResize}
+        {...props}
+      />
     )
   }
 
@@ -145,7 +144,6 @@ export class InfinityFeedList extends React.Component {
 
     const itemCount = listOfItemsWithSelection ? listOfItemsWithSelection.length : 0
     const hasMore = list.hasMore && !list.invalid
-    /* FIXME just temporal solution */
 
     return (
       <AutoSizer>

@@ -33,12 +33,12 @@ class InfinityList extends React.PureComponent {
   }
 
   @bind
-  _renderItem (args) {
+  _renderItem (props) {
     const { fallback, children } = this.props
-    if (this._isItemLoaded(args)) {
-      return children(args)
+    if (this._isItemLoaded(props)) {
+      return children(props)
     } else {
-      return fallback(args)
+      return fallback(props)
     }
   }
 

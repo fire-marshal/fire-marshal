@@ -21,26 +21,32 @@ UpdatesFeedItemImage.propTypes = {
   title: PropTypes.string
 }
 
-const UpdatesFeedItem = ({ isSelected, item, onResize, onSelect }) => {
+const UpdatesFeedItem = ({
+  data, index, style,
+  onResize, onSelect
+}) => {
   const cardRef = useRef()
+  const item = data[index]
 
   // TODO: actually we don't need to track resize of each item, we could pick only one
   useResizeComponent(cardRef, onResize)
 
   return (
-    <div
-      className={`card alert-card ${isSelected ? 'highlighted' : ''}`}
-      ref={cardRef}
-      onClick={() => onSelect(item)}
-    >
-      <UpdatesFeedItemImage img={item.img}/>
-      <div className='card-body'>
-        <h5 className='card-title'>{item.title}</h5>
-        <div className='card-text'>
-          <div>{item.when.exactlyAt.toString()}</div>
-          <div>tags: {item.tags}</div>
-          <div>power: {item.power}</div>
-          <div>@{item.author}</div>
+    <div style={style}>
+      <div
+        className={`card alert-card ${item.isSelected ? 'highlighted' : ''}`}
+        ref={cardRef}
+        onClick={() => onSelect(item)}
+      >
+        <UpdatesFeedItemImage img={item.img}/>
+        <div className='card-body'>
+          <h5 className='card-title'>{item.title}</h5>
+          <div className='card-text'>
+            <div>{item.when.exactlyAt.toString()}</div>
+            <div>tags: {item.tags}</div>
+            <div>power: {item.power}</div>
+            <div>@{item.author}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -49,8 +55,9 @@ const UpdatesFeedItem = ({ isSelected, item, onResize, onSelect }) => {
 
 UpdatesFeedItem.displayName = 'UpdatesFeedItem'
 UpdatesFeedItem.propTypes = {
-  isSelected: PropTypes.bool,
-  item: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  style: PropTypes.object,
   onResize: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired
 }
