@@ -44,7 +44,7 @@ services:
       - ./static:/code
       - ./wss:/wss
       - /code/node_modules
-      - static-sync:/code/build
+      - static-sync:/code/dist
 
   swagger-ui:
     image: swaggerapi/swagger-ui

@@ -1,6 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const webpack = require('webpack')
-
 
 module.exports = {
   mode: 'development',
@@ -28,12 +26,17 @@ module.exports = {
     ]
   },
 
+  devServer: {
+    compress: true,
+    historyApiFallback: true,
+    port: 7001
+  },
+
   plugins: [
-    new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({ template: './public/index.html' })
   ],
 
   target: 'web',
 
   devtool: 'inline-cheap-module-source-map'
-};
+}
