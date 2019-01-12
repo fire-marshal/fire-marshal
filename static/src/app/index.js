@@ -71,7 +71,7 @@ export function bootstrap (targetElm) {
 
   // hot reloading
   if (process.env.NODE_ENV !== 'production' && module.hot) {
-    module.hot.accept('./reducers', () => store.replaceReducer(reducer))
+    module.hot.accept('../reducers', () => store.replaceReducer(reducer))
   }
 
   ReactDOM.render(
