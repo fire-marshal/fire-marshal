@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { hot } from 'react-hot-loader/root'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router'
 
@@ -34,4 +35,4 @@ AppRouter.propTypes = {
   store: PropTypes.object.isRequired
 }
 
-export default AppRouter
+export default hot(AppRouter)
