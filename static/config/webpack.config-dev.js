@@ -17,9 +17,22 @@ module.exports = merge(common, {
     port: 7001
   },
 
+  module: {
+    rules: [
+      {
+        test: /\.(jpg|gif|png|woff|woff2|eot|ttf|svg)$/,
+        use: [
+          {
+            loader: 'url-loader'
+          }
+        ]
+      }
+    ]
+  },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ],
 
-  devtool: 'cheap-module-eval-source-map'
+  devtool: 'eval-source-map'
 })
