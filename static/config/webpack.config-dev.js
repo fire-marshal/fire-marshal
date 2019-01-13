@@ -31,6 +31,10 @@ module.exports = merge(common, {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      __DEV__: true
+    }),
+
     new webpack.HotModuleReplacementPlugin()
   ],
 

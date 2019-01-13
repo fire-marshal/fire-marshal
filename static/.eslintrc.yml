@@ -46,6 +46,9 @@ rules:
   react-hooks/rules-of-hooks:
     - error
 
+globals:
+  __DEV__: true
+
 settings:
   react:
     version: 16.6.3
