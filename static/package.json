@@ -4,7 +4,7 @@
   "description": "static project of fire-marshal",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config ./config/webpack.config-dev.js",
+    "build": "webpack --config ./config/webpack.config-prod.js",
     "lint": "eslint src tests",
     "start": "webpack-dev-server --config ./config/webpack.config-dev.js",
     "test": "mocha-webpack --opts ./tests/mocha.opts",
@@ -72,6 +72,7 @@
     "url-loader": "^1.1.2",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.2.1",
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {

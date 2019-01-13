@@ -1,46 +1,12 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 
-module.exports = {
+const common = require('./webpack.config-common')
+
+module.exports = merge(common, {
   mode: 'development',
 
-  module: {
-    rules: [
-      {
-        test: /\.s?css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-      },
-      {
-        test: /\.(jpg|gif|png|woff|woff2|eot|ttf|svg)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-              fallback: 'file-loader',
-              // outputPath: '/assets/fonts',
-              // name: '[name].[ext]?hash=[hash]'
-            }
-          },
-          {
-            loader: 'image-webpack-loader',
-            options: {}
-          }
-        ]
-      }
-    ]
-  },
+  target: 'web',
 
   devServer: {
     compress: true,
@@ -52,20 +18,8 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin(
-      ['dist'],
-      {
-        root: path.resolve(__dirname, '..')
-      }),
-
-    new HtmlWebpackPlugin({
-      template: './public/index.html'
-    }),
-
     new webpack.HotModuleReplacementPlugin()
   ],
 
-  target: 'web',
-
   devtool: 'cheap-module-eval-source-map'
-}
+})
