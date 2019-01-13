@@ -46,9 +46,11 @@ export function configureStore (initialState = {}, history) {
   if (__DEV__ && module.hot) {
     module.hot.accept('../reducers', () => {
       console.info('update reducers')
-      import('../reducers').then(createRootReducers => {
-        store.replaceReducer(createRootReducers(history))
-      })
+      import('../reducers')
+        .then(createRootReducersModule => {
+          const createRootReducers = createRootReducersModule.default
+          store.replaceReducer(createRootReducers(history))
+        })
     })
 
     module.hot.accept('../sagas', () => {
