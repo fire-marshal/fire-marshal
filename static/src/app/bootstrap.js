@@ -21,35 +21,30 @@ export function bootstrap (targetElm) {
     reselectToolsSetup(store)
   }
 
-  let renderRoot = () => {
-    import('./router')
-      .then(AppRouterModule => {
-        const AppRouter = AppRouterModule.default
-        ReactDOM.render(
-          <AppRouter history={history} store={store}/>,
-          targetElm
-        )
-      })
+  let renderRoot = async () => {
+    const AppRouter = (await import('./router')).default
+    ReactDOM.render(
+      <AppRouter history={history} store={store}/>,
+      targetElm
+    )
   }
 
   if (module.hot && __DEV__) {
     // Support hot reloading of components
     // and display an overlay for runtime errors
-    const renderError = (error) => {
-      import('redbox-react')
-        .then(RedBox => {
-          ReactDOM.render(
-            <RedBox error={error}/>,
-            targetElm
-          )
-        })
+    const renderError = async (error) => {
+      const RedBox = await import('redbox-react')
+      ReactDOM.render(
+        <RedBox error={error}/>,
+        targetElm
+      )
     }
 
-    const render = () => {
+    const render = async () => {
       try {
-        renderRoot()
+        await renderRoot()
       } catch (error) {
-        renderError(error)
+        await renderError(error)
       }
     }
 
