@@ -1,4 +1,6 @@
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
@@ -33,8 +35,7 @@ module.exports = {
           },
           {
             loader: 'image-webpack-loader',
-            options: {
-            }
+            options: {}
           }
         ]
       }
@@ -51,6 +52,12 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(
+      ['dist'],
+      {
+        root: path.resolve(__dirname, '..')
+      }),
+
     new HtmlWebpackPlugin({
       template: './public/index.html'
     }),
