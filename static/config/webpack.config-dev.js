@@ -20,19 +20,14 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        test: /\.(jpg|gif|pngwoff|woff2|eot|ttf|svg)$/,
-        loader: 'url-loader'
-      },
-      {
-        test: /\.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              mimetype: 'image/png'
-            }
-          }
-        ]
+        test: /\.(jpg|gif|png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          fallback: 'file-loader',
+          // outputPath: '/assets/fonts',
+          // name: '[name].[ext]?hash=[hash]'
+        }
       }
     ]
   },
