@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk'
 
 import { wsMiddleware } from '../middlewares/ws'
 import createRootReducers from '../reducers'
-import rootSaga from '../sagas'
+import { SagaManager } from '../sagas'
 
 export function configureStore (initialState = {}, history) {
   /* eslint-disable no-underscore-dangle */
@@ -50,14 +50,16 @@ export function configureStore (initialState = {}, history) {
       store.replaceReducer(createRootReducers(history))
     })
 
-    module.hot.accept('../sagas', () => {
-      console.info('TODO:update sagas')
-      // SagaManager.cancelSagas(store);
-      // require('../sagas/SagaManager').default.startSagas(sagaMiddleware);
+    module.hot.accept('../sagas', async () => {
+      console.info('update sagas')
+      const { SagaManager } = await import('../sagas')
+      SagaManager.cancelSagas(store);
+      SagaManager.startSagas(sagaMiddleware)
     })
   }
 
-  sagaMiddleware.run(rootSaga)
+  // sagaMiddleware.run(rootSaga)
+  SagaManager.startSagas(sagaMiddleware)
 
   return store
 }
