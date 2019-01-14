@@ -30,6 +30,9 @@ export function bootstrap (targetElm) {
   }
 
   if (module.hot && __DEV__) {
+    // inspired by
+    // https://gist.github.com/markerikson/dc6cee36b5b6f8d718f2e24a249e0491
+    // of @markerikson
     // Support hot reloading of components
     // and display an overlay for runtime errors
     const renderError = async (error) => {

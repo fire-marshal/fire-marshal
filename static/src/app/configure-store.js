@@ -53,7 +53,7 @@ export function configureStore (initialState = {}, history) {
     module.hot.accept('../sagas', async () => {
       console.info('update sagas')
       const { SagaManager } = await import('../sagas')
-      SagaManager.cancelSagas(store);
+      SagaManager.cancelSagas(store)
       SagaManager.startSagas(sagaMiddleware)
     })
   }
