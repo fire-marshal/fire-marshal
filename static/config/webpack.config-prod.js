@@ -1,5 +1,6 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
@@ -12,6 +13,16 @@ module.exports = merge(common, {
   devtool: 'source-map',
 
   target: 'web',
+
+  optimization: {
+    minimizer: [
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: {
+          map: { inline: false }
+        }
+      })
+    ]
+  },
 
   output: {
     filename: '[name].[contenthash].js'

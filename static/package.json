@@ -68,6 +68,7 @@
     "mocha-webpack": "2.0.0-beta.0",
     "null-loader": "^0.1.1",
     "nyc": "^13.1.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "redbox-react": "^1.6.0",
     "sass-loader": "^7.1.0",
     "sinon": "^7.1.1",
