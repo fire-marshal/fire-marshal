@@ -8,6 +8,10 @@ import ReactDOM from 'react-dom'
 import { configureStore } from './configure-store'
 import { reselectToolsSetup } from './reselect-tools-setup'
 
+// we don't need to split app here (so router is added statically)
+// later it will be replace on HOT reloading
+import './router'
+
 /**
  * Bootstrap react app
  *

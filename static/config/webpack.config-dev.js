@@ -20,6 +20,14 @@ module.exports = merge(common, {
   module: {
     rules: [
       {
+        test: /\.s?css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      {
         test: /\.(jpg|gif|png|woff|woff2|eot|ttf|svg)$/,
         use: [
           {
