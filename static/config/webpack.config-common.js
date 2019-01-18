@@ -4,7 +4,7 @@ module.exports = {
   mode: 'development',
 
   entry: {
-    // polyfills: './src/polyfills.js',
+    polyfills: './src/polyfills.js',
     index: './src/index.js'
   },
 
