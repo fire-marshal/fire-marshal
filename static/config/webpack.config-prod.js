@@ -21,7 +21,19 @@ module.exports = merge(common, {
           map: { inline: false }
         }
       })
-    ]
+    ],
+
+    runtimeChunk: 'single',
+
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
   },
 
   output: {
@@ -83,7 +95,7 @@ module.exports = merge(common, {
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css'
+      chunkFilename: '[name].[hash].css'
     })
   ]
 })
