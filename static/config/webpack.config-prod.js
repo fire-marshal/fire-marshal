@@ -30,7 +30,9 @@ module.exports = merge(common, {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all'
+          chunks (chunk) {
+            return chunk.name !== 'polyfills'
+          }
         }
       }
     }

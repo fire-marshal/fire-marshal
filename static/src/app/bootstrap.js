@@ -1,6 +1,3 @@
-import 'core-js/shim' // included < Stage 4 proposals
-import 'regenerator-runtime/runtime'
-
 import createHistory from 'history/createBrowserHistory'
 import React from 'react'
 import ReactDOM from 'react-dom'
