@@ -7,3 +7,10 @@ services:
       # open for hmr websocket communication
       # details in static/package.json
       - "7001:7001"
+
+  web:
+    image: nginx
+    environment:
+      - STATIC_LOCATION=http://static:7001
+    volumes:
+      - ./nginx/server.dev.template:/etc/nginx/conf.d/server.template
