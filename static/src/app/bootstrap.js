@@ -1,3 +1,8 @@
+// support generators
+// TODO: could we compile with native support of generators,
+// and fallback to polyfill
+import 'regenerator-runtime/runtime'
+
 import createHistory from 'history/createBrowserHistory'
 import React from 'react'
 import ReactDOM from 'react-dom'
