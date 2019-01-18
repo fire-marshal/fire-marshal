@@ -84,6 +84,10 @@ module.exports = merge(common, {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      __DEV__: false
+    }),
+
     new webpack.HashedModuleIdsPlugin(),
 
     new webpack.ProgressPlugin(),

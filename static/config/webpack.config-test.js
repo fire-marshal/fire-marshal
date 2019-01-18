@@ -22,7 +22,7 @@ module.exports = {
       { test: /\.css$/, loader: 'null-loader' }, {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'babel-loader'
       },
       {
         test: /\.(jpg|gif|png|woff|woff2|eot|ttf|svg)$/,
