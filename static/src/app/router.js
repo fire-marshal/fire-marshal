@@ -4,14 +4,16 @@ import React, { lazy, Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router'
 
-// import AddNewItemForm from '../components/add-new-item'
-const AddNewItemForm = lazy(() => import(/* webpackChunkName: "add-new-item" */'../components/add-new-item'));
-
 import { Landing } from '../components/landing'
 import { FeedMap } from '../containers/feed-map'
 import { UpdatesFeed } from '../containers/updates-feed'
 
 import AppContainer from './container'
+
+const AddNewItemForm = lazy(
+  () => import(
+    /* webpackChunkName: "add-new-item" */ '../components/add-new-item')
+)
 
 const AppRouter = ({ history, store }) => (
   <Provider store={store}>
