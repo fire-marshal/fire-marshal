@@ -24,9 +24,6 @@ const Navbar = () => (
         <li className='nav-item'>
           <Link to='/feed' className='nav-item nav-link'>Watch</Link>
         </li>
-        <li className='nav-item'>
-          <Link to='/map' className='nav-item nav-link'>Map</Link>
-        </li>
       </ul>
     </div>
   </nav>

@@ -4,19 +4,16 @@ import React, { lazy, Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router'
 
-import { FeedMap } from '../containers/feed-map'
-import { UpdatesFeed } from '../containers/updates-feed'
-
 import AppContainer from './container'
 
 const AddNewItemForm = lazy(
-  () => import(
-    /* webpackChunkName: "add-new-item" */ '../components/add-new-item')
+  () => import(/* webpackChunkName: "add-new-item" */ '../components/add-new-item')
 )
-
 const Landing = lazy(
-  () => import(
-    /* webpackChunkName: "landing" */ '../components/landing')
+  () => import(/* webpackChunkName: "landing" */ '../components/landing')
+)
+const UpdatesFeed = lazy(
+  () => import(/* webpackChunkName: "updates-feed" */ '../containers/updates-feed')
 )
 
 const AppRouter = ({ history, store }) => (
@@ -27,8 +24,7 @@ const AppRouter = ({ history, store }) => (
           <Switch>
             <Route exact path='/' component={Landing} />
             <Route path='/add-new-item' component={AddNewItemForm} />
-            <Route path='/feed' render={() => <UpdatesFeed />} />
-            <Route path='/map' render={() => <FeedMap />} />
+            <Route path='/feed' component={UpdatesFeed} />
             <Route render={() => (<div>Miss</div>)} />
           </Switch>
         </Suspense>
