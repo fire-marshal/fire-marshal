@@ -7,7 +7,7 @@ import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 
 import { UpdatesFeed as UpdatesFeedComponent } from '../components/updates-feed'
 
-export const UpdatesFeed = connect(
+export default connect(
   (state, props) => ({
     listStartDateISO: updatesFeedSelector.getStartDateISO(state, props),
     isAutomaticMapFitting: updatesFeedSelector.isAutomaticMapFitting(state, props),

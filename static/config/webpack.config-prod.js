@@ -31,7 +31,7 @@ module.exports = merge(common, {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks (chunk) {
-            return chunk.name !== 'polyfills'
+            return chunk.hasRuntime() && !['polyfills'].includes(chunk.name)
           }
         }
       }

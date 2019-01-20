@@ -55,7 +55,7 @@ const UpdatesFeedItem = ({
 
 UpdatesFeedItem.displayName = 'UpdatesFeedItem'
 UpdatesFeedItem.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   index: PropTypes.number.isRequired,
   style: PropTypes.object,
   onResize: PropTypes.func.isRequired,
