@@ -4,6 +4,13 @@ import { withRouter } from 'react-router'
 
 const extractModuleName = /.*\/(?<fileName>[\w-..]*)/
 
+/**
+ * Because of issue:
+ * https://github.com/facebook/react/issues/14254
+ *
+ * we can't reload module
+ *
+ */
 class LazyLoadingErrorBoundary extends React.Component {
   static displayName = 'LazyLoadingErrorBoundary'
 
