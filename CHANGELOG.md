@@ -1,5 +1,22 @@
 # Change Log
 
+## [0.10.0](https://github.com/fire-marshal/fire-marshal/tree/0.10.0) (2019-01-21)
+[Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.9.0...0.10.0)
+
+**Implemented enhancements:**
+
+- use itemData prop to pass data list to react-window [\#112](https://github.com/fire-marshal/fire-marshal/issues/112)
+- sync list with map [\#101](https://github.com/fire-marshal/fire-marshal/issues/101)
+- split app in submodules and load them lazily [\#89](https://github.com/fire-marshal/fire-marshal/issues/89)
+- replace parceljs with webpack [\#76](https://github.com/fire-marshal/fire-marshal/issues/76)
+
+**Merged pull requests:**
+
+- Feature/89 split to submodules [\#117](https://github.com/fire-marshal/fire-marshal/pull/117) ([hyzhak](https://github.com/hyzhak))
+- Feature/76 use webpack [\#115](https://github.com/fire-marshal/fire-marshal/pull/115) ([hyzhak](https://github.com/hyzhak))
+- Bugfix/use item data for react window [\#113](https://github.com/fire-marshal/fire-marshal/pull/113) ([hyzhak](https://github.com/hyzhak))
+- Feature/101 sync list and map big screen [\#110](https://github.com/fire-marshal/fire-marshal/pull/110) ([hyzhak](https://github.com/hyzhak))
+
 ## [0.9.0](https://github.com/fire-marshal/fire-marshal/tree/0.9.0) (2019-01-07)
 [Full Changelog](https://github.com/fire-marshal/fire-marshal/compare/0.8.0...0.9.0)
 
