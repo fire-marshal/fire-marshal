@@ -5,7 +5,7 @@ import { extractLatLng } from '../../reducers/entities/model'
 import getBounce from '../../utils/map/get-bounce'
 import createSelectorPrecise from '../../utils/reselector-precise'
 
-import { getEvidencesById } from '../entities/evidences'
+import { getEvidencesById, getTotalItems } from '../entities/evidences'
 
 const getUpdatesFeed = state => state.ui.updatesFeed
 
@@ -17,6 +17,11 @@ export const isAutomaticMapFitting = createSelector(
 export const getSortedIds = createSelector(
   [getUpdatesFeed],
   (feed) => feed.data
+)
+
+export const hasMore = createSelector(
+  [getSortedIds, getTotalItems],
+  (sortedIds, total) => sortedIds ? (sortedIds.length < total) : false
 )
 
 export const getOnDemand = createSelector(

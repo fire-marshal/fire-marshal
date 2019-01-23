@@ -2,19 +2,11 @@ import './full-screen-spinner.scss'
 
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ScaleLoader } from 'react-spinners'
+
+import Spinner from './spinner'
 
 const FullScreenSpinner = ({ loading = true }) => (
-  <div className='full-screen-spinner-container'>
-    <ScaleLoader
-      loading={loading}
-      color={'#cce5ff'}
-      height={64}
-      width={4}
-      margin={'2px'}
-      radius={2}
-    />
-  </div>
+  <div className='full-screen-spinner-container'><Spinner loading={loading}/></div>
 )
 
 FullScreenSpinner.displayName = 'FullScreenSpinner'

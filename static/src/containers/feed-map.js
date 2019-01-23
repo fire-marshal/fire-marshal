@@ -15,7 +15,7 @@ export const FeedMap = connect(
     listError: evidencesSelector.getEvidenceError(state, props),
     listInProgress: evidencesSelector.getEvidenceItemsInProgress(state, props),
     listItems: updatesFeedSelector.getSortedItems(state, props),
-    hasMoreItems: evidencesSelector.hasMore(state, props),
+    hasMoreItems: updatesFeedSelector.hasMore(state, props),
     selectedItem: updatesFeedSelector.getSelectedItem(state, props),
     selectionSource: updatesFeedSelector.getSelectionSource(state, props),
     startDateISO: updatesFeedSelector.getStartDateISO(state, props)

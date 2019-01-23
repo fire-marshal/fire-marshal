@@ -55,10 +55,10 @@ const UpdatesFeed = ({
               {
                 isList(viewMode) ? (
                   <div className='feed-list-container'>
-                    <UpdatesFeedList/>
+                    <UpdatesFeedList />
                   </div>
                 ) : (
-                  <FeedMap/>
+                  <FeedMap />
                 )
               }
             </>
@@ -66,11 +66,11 @@ const UpdatesFeed = ({
             <>
               {
                 isList(viewMode) && <div className={`feed-list-container ${leftColumnClass}`}>
-                  <UpdatesFeedList/>
+                  <UpdatesFeedList />
                 </div>
               }
               {
-                isMap(viewMode) && <FeedMap/>
+                isMap(viewMode) && <FeedMap />
               }
             </>
           )
