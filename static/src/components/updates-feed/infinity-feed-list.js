@@ -144,7 +144,7 @@ export class InfinityFeedList extends React.Component {
     }
 
     const itemCount = listOfItemsWithSelection ? listOfItemsWithSelection.length : 0
-    const hasMore = list.hasMore && !list.invalid
+    const hasMore = (list.hasMore && !list.invalid) || list.inProgress
 
     return (
       <AutoSizer>
