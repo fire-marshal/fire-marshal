@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 
 import * as evidencesActions from '../reducers/entities/evidences'
-import * as evidencesSelector from '../selectors/entities/evidences'
 import * as evidencesSubscriber from '../reducers/evidences-subscriber'
 import * as updatesFeedActions from '../reducers/ui/updates-feed'
+import * as evidencesSelector from '../selectors/entities/evidences'
 import * as updatesFeedSelector from '../selectors/ui/updates-feed'
 
 import UpdatesFeedListComponent from '../components/updates-feed/updates-feed-list'
@@ -15,7 +15,8 @@ export const UpdatesFeedList = connect(
       invalid: evidencesSelector.getEvidenceItemsInvalid(state, props),
       error: evidencesSelector.getEvidenceError(state, props),
       items: updatesFeedSelector.getSortedItems(state, props),
-      hasMore: evidencesSelector.hasMore(state, props),
+      total: evidencesSelector.getTotalItems(state, props),
+      hasMore: updatesFeedSelector.hasMore(state, props),
       startDateISO: updatesFeedSelector.getStartDateISO(state, props)
     },
 

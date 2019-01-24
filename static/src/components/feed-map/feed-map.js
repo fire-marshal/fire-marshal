@@ -182,7 +182,7 @@ const FeedMap = ({
   }, [selectedItem, markerById])
 
   return (
-    <div ref={mapRef} className='map-container'/>
+    <div ref={mapRef} className='map-container' />
   )
 }
 

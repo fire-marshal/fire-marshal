@@ -7,6 +7,7 @@ import config from '../../config'
 
 import { InfinityList } from '../infinity-list'
 
+import TileSpinner from './tile-spinner'
 import UpdatesFeedItem from './updates-feed-item'
 
 export class InfinityFeedList extends React.Component {
@@ -102,7 +103,7 @@ export class InfinityFeedList extends React.Component {
   @bind
   _renderFallback ({ index, style }) {
     return (
-      <div key={index} style={style} className='loader'>Loading ...</div>
+      <TileSpinner key={index} style={style} />
     )
   }
 
@@ -143,7 +144,7 @@ export class InfinityFeedList extends React.Component {
     }
 
     const itemCount = listOfItemsWithSelection ? listOfItemsWithSelection.length : 0
-    const hasMore = list.hasMore && !list.invalid
+    const hasMore = (list.hasMore && !list.invalid) || list.inProgress
 
     return (
       <AutoSizer>

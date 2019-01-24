@@ -4,9 +4,10 @@ import React, { lazy, Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router'
 
-import AppContainer from './container'
-
+import { FullScreenSpinner } from '../components/spinners'
 import { lazyLoadingErrorBoundary } from '../error-boundaries/lazy-loading-error-boundary'
+
+import AppContainer from './container'
 
 const AddNewItemForm = lazyLoadingErrorBoundary(lazy(
   () => import(/* webpackChunkName: "add-new-item" */ '../components/add-new-item')
@@ -22,7 +23,7 @@ const AppRouter = ({ history, store }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <AppContainer>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<FullScreenSpinner />}>
           <Switch>
             <Route exact path='/' component={Landing} />
             <Route path='/add-new-item' component={AddNewItemForm} />

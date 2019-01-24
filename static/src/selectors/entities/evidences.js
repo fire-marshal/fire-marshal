@@ -17,11 +17,6 @@ export const getTotalItems = createSelector(
   (data) => data && data.total
 )
 
-export const hasMore = createSelector(
-  [getEvidencesById, getTotalItems],
-  (byId, total) => (byId && total > 0) ? (Object.keys(byId).length < total) : false
-)
-
 export const getEvidenceItemsInProgress = createSelector(
   [getEvidences],
   (evidences) => evidences && evidences.inProgress

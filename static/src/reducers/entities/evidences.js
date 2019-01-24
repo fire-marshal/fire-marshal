@@ -113,7 +113,7 @@ export default createReducer(
         draft.data.byId[item.id] = item
       })
 
-      draft.total = total
+      draft.data.total = total
     },
 
     [actionTypes.INSERT_ITEM]: (draft, { payload: { item } }) => {
